@@ -1,0 +1,196 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "knowledge-layer.fullname" . }}
+  labels:
+    {{- include "knowledge-layer.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "knowledge-layer.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        {{- toYaml .Values.podAnnotations | nindent 8 }}
+      labels:
+        {{- include "knowledge-layer.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "knowledge-layer.fullname" . }}
+      automountServiceAccountToken: false
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: knowledge
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: [ALL]
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          env:
+            - name: KNOWLEDGE_AUTH_MODE
+              value: oidc
+            - name: KNOWLEDGE_SOURCE_POLICY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.existingSecret.name | quote }}
+                  key: {{ .Values.existingSecret.sourcePolicyKey | quote }}
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.existingSecret.name | quote }}
+                  key: {{ .Values.existingSecret.databaseUrlKey | quote }}
+            - name: KNOWLEDGE_OIDC_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.existingSecret.name | quote }}
+                  key: {{ .Values.existingSecret.oidcClientSecretKey | quote }}
+            - name: KNOWLEDGE_OIDC_SESSION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.existingSecret.name | quote }}
+                  key: {{ .Values.existingSecret.sessionKeyKey | quote }}
+            {{- if .Values.existingSecret.contextReceiptKeysKey }}
+            - name: KNOWLEDGE_CONTEXT_RECEIPT_KEYS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.existingSecret.name | quote }}
+                  key: {{ .Values.existingSecret.contextReceiptKeysKey | quote }}
+            {{- end }}
+            - name: KNOWLEDGE_PUBLIC_URL
+              value: {{ .Values.oidc.publicUrl | quote }}
+            - name: KNOWLEDGE_OIDC_ISSUER
+              value: {{ .Values.oidc.issuer | quote }}
+            - name: KNOWLEDGE_OIDC_CLIENT_ID
+              value: {{ .Values.oidc.clientId | quote }}
+            - name: KNOWLEDGE_OIDC_AUDIENCE
+              value: {{ .Values.oidc.audience | quote }}
+            - name: KNOWLEDGE_OIDC_JWKS_URI
+              value: {{ .Values.oidc.jwksUri | quote }}
+            - name: KNOWLEDGE_OIDC_ALLOWED_GROUP
+              value: {{ .Values.oidc.allowedGroup | quote }}
+            - name: KNOWLEDGE_OIDC_STEWARD_GROUP
+              value: {{ .Values.oidc.stewardGroup | quote }}
+            - name: KNOWLEDGE_OIDC_GROUP_CLAIM
+              value: {{ .Values.oidc.groupClaim | quote }}
+            - name: KNOWLEDGE_OIDC_AGENT_SCOPE
+              value: {{ .Values.oidc.agentScope | quote }}
+            - name: KNOWLEDGE_OIDC_LOGIN_SCOPES
+              value: {{ .Values.oidc.loginScopes | quote }}
+            - name: KNOWLEDGE_OIDC_BROWSER_SESSION_SECONDS
+              value: {{ .Values.oidc.browserSessionSeconds | quote }}
+            - name: KNOWLEDGE_ENABLED_KINDS
+              value: {{ .Values.connectors.enabledKinds | quote }}
+            - name: KNOWLEDGE_AGENT_SOURCE_MANAGEMENT
+              value: {{ ternary "1" "0" .Values.connectors.agentSourceManagement | quote }}
+            - name: KNOWLEDGE_AGENT_AUTONOMY
+              value: {{ ternary "1" "0" .Values.connectors.agentAutonomy | quote }}
+            - name: KNOWLEDGE_AGENT_ALLOWED_KINDS
+              value: {{ .Values.connectors.agentAllowedKinds | quote }}
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+          startupProbe:
+            httpGet:
+              path: /api/ready
+              port: http
+            failureThreshold: 30
+            periodSeconds: 2
+          readinessProbe:
+            httpGet:
+              path: /api/ready
+              port: http
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: http
+            periodSeconds: 20
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+        {{- if .Values.worker.enabled }}
+        - name: refresh-worker
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["python", "-m", "knowledge_layer.worker"]
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: [ALL]
+          env:
+            - name: KNOWLEDGE_AUTH_MODE
+              value: oidc
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.existingSecret.name | quote }}
+                  key: {{ .Values.existingSecret.databaseUrlKey | quote }}
+            - name: KNOWLEDGE_SOURCE_POLICY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.existingSecret.name | quote }}
+                  key: {{ .Values.existingSecret.sourcePolicyKey | quote }}
+            - name: KNOWLEDGE_REFRESH_TIMEOUT_SECONDS
+              value: {{ .Values.worker.timeoutSeconds | quote }}
+            - name: KNOWLEDGE_ENABLED_KINDS
+              value: {{ .Values.connectors.enabledKinds | quote }}
+            {{- if .Values.sourceVolume.enabled }}
+            - name: KNOWLEDGE_FIXTURE_ROOT
+              value: {{ .Values.sourceVolume.mountPath | quote }}
+            {{- end }}
+            {{- range .Values.sourceSecretRefs }}
+            - name: {{ .name | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .secretName | quote }}
+                  key: {{ .secretKey | quote }}
+            {{- end }}
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            {{- if .Values.sourceVolume.enabled }}
+            - name: sources
+              mountPath: {{ .Values.sourceVolume.mountPath | quote }}
+              readOnly: true
+            {{- end }}
+          resources:
+            {{- toYaml .Values.worker.resources | nindent 12 }}
+        {{- end }}
+      volumes:
+        - name: tmp
+          emptyDir:
+            sizeLimit: 64Mi
+        {{- if .Values.sourceVolume.enabled }}
+        - name: sources
+          persistentVolumeClaim:
+            claimName: {{ .Values.sourceVolume.existingClaim | quote }}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

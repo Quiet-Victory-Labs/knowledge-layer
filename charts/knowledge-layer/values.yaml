@@ -1,0 +1,90 @@
+replicaCount: 1
+
+migration:
+  # Run a guarded schema upgrade before the application Deployment changes.
+  enabled: true
+
+worker:
+  enabled: true
+  timeoutSeconds: 300
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: "1"
+      memory: 1Gi
+
+image:
+  repository: knowledge-layer
+  tag: "0.1.0"
+  pullPolicy: IfNotPresent
+imagePullSecrets: []
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 8000
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  host: ""
+  tlsSecretName: ""
+
+oidc:
+  publicUrl: ""
+  issuer: ""
+  clientId: ""
+  audience: ""
+  jwksUri: ""
+  allowedGroup: ""
+  stewardGroup: ""
+  groupClaim: groups
+  agentScope: knowledge.agent
+  loginScopes: "openid profile email"
+  browserSessionSeconds: 900
+
+connectors:
+  enabledKinds: ""
+  agentSourceManagement: false
+  # Requires reviewed policy, OIDC service scope and direct source manage grant.
+  agentAutonomy: false
+  agentAllowedKinds: ""
+
+# Create this Secret outside the chart with the customer's secret manager.
+existingSecret:
+  name: ""
+  databaseUrlKey: database-url
+  oidcClientSecretKey: oidc-client-secret
+  sessionKeyKey: session-key
+  sourcePolicyKey: source-policy
+  # Optional JSON key ring for receipt continuity across API restarts.
+  # Changing environment-backed keys requires restarting the Deployment.
+  contextReceiptKeysKey: ""
+
+# Optional operator-provisioned source files. The image contains no demo data.
+sourceVolume:
+  enabled: false
+  existingClaim: ""
+  mountPath: /data/sources
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: "1"
+    memory: 1Gi
+
+podAnnotations: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+# Optional additional source credentials. Names are restricted to
+# KNOWLEDGE_SOURCE_*; values always come from existing Kubernetes Secrets.
+sourceSecretRefs: []

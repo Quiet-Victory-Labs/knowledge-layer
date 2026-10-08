@@ -1,0 +1,6 @@
+apiVersion: v2
+name: knowledge-layer
+description: Single-organization knowledge-layer pilot with external PostgreSQL and OIDC
+type: application
+version: 0.1.0
+appVersion: "0.1.0"

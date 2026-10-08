@@ -1,0 +1,39 @@
+@prefix kl: <https://knowledge-layer.example/ontology#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# A bounded collective navigation projection, not a single-source snapshot.
+kl:WorkspaceSetShape a sh:NodeShape ; sh:targetNode kl:WorkspaceGraph ;
+  sh:property [ sh:path [ sh:inversePath rdf:type ] ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] .
+
+kl:WorkspaceShape a sh:NodeShape ; sh:targetClass kl:WorkspaceGraph ;
+  sh:property [ sh:path kl:truncated ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:boolean ] ;
+  sh:property [ sh:path kl:trustPolicy ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path kl:visibleNode ; sh:nodeKind sh:IRI ; sh:node kl:WorkspaceNodeShape ] ;
+  sh:property [ sh:path kl:visibleRelationship ; sh:nodeKind sh:IRI ; sh:node kl:WorkspaceRelationshipShape ] .
+
+kl:WorkspaceNodeShape a sh:NodeShape ;
+  sh:property [ sh:path rdfs:label ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path kl:nodeKind ; sh:minCount 1 ; sh:maxCount 1 ; sh:in ("source" "asset" "field" "document" "ontology" "concept" "shared_term" "metric" "evidence" "assertion") ] ;
+  sh:property [ sh:path kl:status ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path kl:trustState ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path kl:recordId ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+  sh:or (
+    [ sh:property [ sh:path kl:nodeKind ; sh:hasValue "shared_term" ] ;
+      sh:property [ sh:path kl:status ; sh:hasValue "candidate" ] ;
+      sh:property [ sh:path kl:trustState ; sh:hasValue "possible_shared_term" ] ]
+    [ sh:property [ sh:path kl:connectionId ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ]
+  ) .
+
+kl:WorkspaceRelationshipShape a sh:NodeShape ;
+  sh:property [ sh:path kl:subject ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ; sh:node kl:WorkspaceNodeShape ] ;
+  sh:property [ sh:path kl:object ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ; sh:node kl:WorkspaceNodeShape ] ;
+  sh:property [ sh:path kl:predicateName ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path kl:status ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path kl:trustState ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] .
+
+kl:NoAutomaticIdentityShape a sh:NodeShape ; sh:targetSubjectsOf owl:sameAs ;
+  sh:property [ sh:path owl:sameAs ; sh:maxCount 0 ] .

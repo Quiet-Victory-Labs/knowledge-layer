@@ -1,0 +1,97 @@
+{
+  "schema_version": "reviewed-history-candidates-v1",
+  "reviewed_candidates": [
+    {
+      "object": "3f93a222d2109f7ce54704cfc14ed91abcd5bbc9",
+      "path_sha256": "0bffd556ca63a56dd4c35e3daf1ec08049aede86c49bde32506ab5166f92c6bb",
+      "candidate_sha1": "3e46de4a200858e8b40889d48a405019dd5e726f",
+      "kind": "Basic Auth Credentials",
+      "review_basis": "synthetic_refusal_or_redaction_test_canary"
+    },
+    {
+      "object": "5cd6a1066c244b05106c1b45e36288f10f3f8f65",
+      "path_sha256": "7a53a1ff7a10ae626e0b193f9876aed024d8f40e43a52e75ae7901172c3d0f8f",
+      "candidate_sha1": "e80721793c24ae14edfca9b26ad406a9815cd3ff",
+      "kind": "Basic Auth Credentials",
+      "review_basis": "synthetic_refusal_or_redaction_test_canary"
+    },
+    {
+      "object": "5cd6a1066c244b05106c1b45e36288f10f3f8f65",
+      "path_sha256": "7a53a1ff7a10ae626e0b193f9876aed024d8f40e43a52e75ae7901172c3d0f8f",
+      "candidate_sha1": "ea17ca52471521840747e8797282b7edb471a23c",
+      "kind": "Secret Keyword",
+      "review_basis": "synthetic_environment_variable_reference"
+    },
+    {
+      "object": "5cd6a1066c244b05106c1b45e36288f10f3f8f65",
+      "path_sha256": "7a53a1ff7a10ae626e0b193f9876aed024d8f40e43a52e75ae7901172c3d0f8f",
+      "candidate_sha1": "f016a73e7d64f930f5dc1588b24c4256f75b9e14",
+      "kind": "Secret Keyword",
+      "review_basis": "synthetic_environment_variable_reference"
+    },
+    {
+      "object": "784525908b37cc67c96d0b9b6843689487b387f1",
+      "path_sha256": "e541264f494dbe315e4619a133e3907117b13aaef9d6b4acd0b5fd5a4666db86",
+      "candidate_sha1": "dffa599aade890e6a0efa205bf6e8986eae788ce",
+      "kind": "Secret Keyword",
+      "review_basis": "synthetic_environment_variable_reference"
+    },
+    {
+      "object": "9160230a2225c4a3092b3c7b1bf81b9774ff8e35",
+      "path_sha256": "0bffd556ca63a56dd4c35e3daf1ec08049aede86c49bde32506ab5166f92c6bb",
+      "candidate_sha1": "3e46de4a200858e8b40889d48a405019dd5e726f",
+      "kind": "Basic Auth Credentials",
+      "review_basis": "synthetic_refusal_or_redaction_test_canary"
+    },
+    {
+      "object": "c3ccfdb91de65c70fd8aa51f7fd2e71a97a2b3e8",
+      "path_sha256": "8faed3d8471e2a6f0e29faca092f97cd189914b70247e74ef0f5929b6cc8fc25",
+      "candidate_sha1": "15e3eda1173f85a999bbd98228b16b6a07df8752",
+      "kind": "Secret Keyword",
+      "review_basis": "synthetic_environment_variable_reference"
+    },
+    {
+      "object": "d419d0615735d3fccedc01290bffb0a8ea2fd4c2",
+      "path_sha256": "3909e20c2c7a69b10879fb3e20b8ca12dc6621cecd307c9b70aa48745cd96d1b",
+      "candidate_sha1": "9bde35ef0ead6ae08e691552062a890e82a0b2a0",
+      "kind": "Secret Keyword",
+      "review_basis": "synthetic_environment_variable_reference"
+    },
+    {
+      "object": "d5ca51c73d4462ff668ba86114ebc224d307f749",
+      "path_sha256": "8faed3d8471e2a6f0e29faca092f97cd189914b70247e74ef0f5929b6cc8fc25",
+      "candidate_sha1": "15e3eda1173f85a999bbd98228b16b6a07df8752",
+      "kind": "Secret Keyword",
+      "review_basis": "synthetic_environment_variable_reference"
+    },
+    {
+      "object": "df6b91de00e11e06335fcedada51c5b9021d7d27",
+      "path_sha256": "1cf8cd31e2902d504faa50375495e1ca292349c8c846aadaf500beb48a42cd9e",
+      "candidate_sha1": "07f7029d7c556707ceb36e31b9a0a84404ef7eda",
+      "kind": "Secret Keyword",
+      "review_basis": "synthetic_environment_variable_reference"
+    },
+    {
+      "object": "ee48f06696fc9d2331268e5980133c8f9f8ef4eb",
+      "path_sha256": "41e675e4af3a5612b0dcc3426acf8b20ed144cd1752868b61cda3e5906cf74ab",
+      "candidate_sha1": "578d744958794a728ec447adcf02e8f38d41e2de",
+      "kind": "Secret Keyword",
+      "review_basis": "synthetic_environment_variable_reference"
+    },
+    {
+      "object": "ee48f06696fc9d2331268e5980133c8f9f8ef4eb",
+      "path_sha256": "41e675e4af3a5612b0dcc3426acf8b20ed144cd1752868b61cda3e5906cf74ab",
+      "candidate_sha1": "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8",
+      "kind": "Basic Auth Credentials",
+      "review_basis": "synthetic_refusal_or_redaction_test_canary"
+    },
+    {
+      "object": "fc7c20eeab639ce1a9752bb11aa1f81b032a58fd",
+      "path_sha256": "0bffd556ca63a56dd4c35e3daf1ec08049aede86c49bde32506ab5166f92c6bb",
+      "candidate_sha1": "3e46de4a200858e8b40889d48a405019dd5e726f",
+      "kind": "Basic Auth Credentials",
+      "review_basis": "synthetic_refusal_or_redaction_test_canary"
+    }
+  ],
+  "scope": "Exact immutable historical blob, path hash, candidate hash and detector rule only. No live credentials are approved."
+}

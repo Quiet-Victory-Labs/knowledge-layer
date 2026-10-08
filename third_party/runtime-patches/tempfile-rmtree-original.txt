@@ -1,0 +1,43 @@
+    @classmethod
+    def _rmtree(cls, name, ignore_errors=False, repeated=False):
+        def onexc(func, path, exc):
+            # On DragonFly BSD, UF_NOUNLINK removal fails with EISDIR, not EPERM.
+            if isinstance(exc, (PermissionError, IsADirectoryError)):
+                if repeated and path == name:
+                    if ignore_errors:
+                        return
+                    raise
+
+                try:
+                    if path != name:
+                        _resetperms(_os.path.dirname(path))
+                    _resetperms(path)
+
+                    try:
+                        _os.unlink(path)
+                    except IsADirectoryError:
+                        cls._rmtree(path, ignore_errors=ignore_errors)
+                    except PermissionError:
+                        # The PermissionError handler was originally added for
+                        # FreeBSD in directories, but it seems that it is raised
+                        # on Windows too.
+                        # bpo-43153: Calling _rmtree again may
+                        # raise NotADirectoryError and mask the PermissionError.
+                        # So we must re-raise the current PermissionError if
+                        # path is not a directory.
+                        if not _os.path.isdir(path) or _os.path.isjunction(path):
+                            if ignore_errors:
+                                return
+                            raise
+                        cls._rmtree(path, ignore_errors=ignore_errors,
+                                    repeated=(path == name))
+                except FileNotFoundError:
+                    pass
+            elif isinstance(exc, FileNotFoundError):
+                pass
+            else:
+                if not ignore_errors:
+                    raise
+
+        _shutil.rmtree(name, onexc=onexc)
+

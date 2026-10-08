@@ -1,0 +1,34 @@
+name: Bug report
+description: Report reproducible incorrect behavior using synthetic data.
+title: "bug: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: "Do not include credentials, private data, or vulnerabilities. Report security issues privately as described in SECURITY.md."
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+    validations:
+      required: true
+  - type: dropdown
+    id: profile
+    attributes:
+      label: Deployment profile
+      options: [Local Compose, OIDC pilot, Helm pilot, Other]
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction with synthetic data
+      description: Give exact steps and sanitized inputs.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true

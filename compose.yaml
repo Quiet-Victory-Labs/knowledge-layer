@@ -1,0 +1,51 @@
+name: knowledge-layer
+
+services:
+  postgres:
+    image: postgres:18.6-alpine
+    environment:
+      POSTGRES_USER: ${KNOWLEDGE_DB_USER:-knowledge_layer}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run python scripts/init_env.py first}
+      POSTGRES_DB: ${KNOWLEDGE_DB_NAME:-knowledge_layer}
+    volumes:
+      - knowledge_postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${KNOWLEDGE_DB_USER:-knowledge_layer} -d ${KNOWLEDGE_DB_NAME:-knowledge_layer}"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        KNOWLEDGE_RUNTIME_EXTRAS: ${KNOWLEDGE_RUNTIME_EXTRAS:-}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/ready', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 5s
+    environment:
+      KNOWLEDGE_AUTH_MODE: demo
+      DATABASE_URL: postgresql+psycopg://${KNOWLEDGE_DB_USER:-knowledge_layer}:${POSTGRES_PASSWORD}@postgres:5432/${KNOWLEDGE_DB_NAME:-knowledge_layer}
+      KNOWLEDGE_SOURCE_LOCAL_POSTGRES: postgresql://${KNOWLEDGE_DB_USER:-knowledge_layer}:${POSTGRES_PASSWORD}@postgres:5432/${KNOWLEDGE_DB_NAME:-knowledge_layer}
+      KNOWLEDGE_SOURCE_DEMO_POSTGRES: postgresql://${KNOWLEDGE_DB_USER:-knowledge_layer}:${POSTGRES_PASSWORD}@postgres:5432/${KNOWLEDGE_DB_NAME:-knowledge_layer}
+      KNOWLEDGE_AGENT_TOKEN: ${KNOWLEDGE_AGENT_TOKEN:?Run python scripts/init_env.py first}
+      KNOWLEDGE_AGENT_SOURCE_MANAGEMENT: "1"
+      KNOWLEDGE_AGENT_ALLOWED_KINDS: local_files
+      KNOWLEDGE_FIXTURE_ROOT: /data/sources
+    volumes:
+      - ./data/connectable:/data/sources:ro
+    ports:
+      - "127.0.0.1:${KNOWLEDGE_API_PORT:-8000}:8000"
+      - "127.0.0.1:${KNOWLEDGE_UI_PORT:-4173}:8000"
+
+volumes:
+  knowledge_postgres_data:
+    name: ${KNOWLEDGE_DATA_VOLUME:-knowledge-layer-data}
+    external: ${KNOWLEDGE_DATA_VOLUME_EXTERNAL:-false}

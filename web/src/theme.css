@@ -1,0 +1,56 @@
+:root {
+  color-scheme: light;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --default-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --code-font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --gray-2: #f9f9f8;
+  --gray-4: #e8e8e6;
+  --gray-5: #dededb;
+  --gray-10: #777773;
+  --gray-11: #62625e;
+  --gray-12: #20201f;
+  --green-8: #5bb98b;
+  --green-9: #18794e;
+  --green-10: #146c46;
+  --accent-9: var(--green-9);
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --font-size-1: 12px;
+  --font-size-2: 14px;
+  --line-height-2: 1.5;
+}
+
+.ui-theme { min-height: 100vh; font-family: var(--default-font-family); }
+.ui-text { line-height: 1.5; }
+.ui-text:is(p) { margin: 0; }
+.ui-text-1 { font-size: 12px; }
+.ui-text-2 { font-size: 14px; }
+.ui-text-3 { font-size: 16px; }
+.ui-weight-medium { font-weight: 600; }
+.ui-weight-bold { font-weight: 700; }
+.ui-color-gray { color: var(--gray-11); }
+.ui-color-green { color: #18794e; }
+.ui-color-red { color: #b4232a; }
+.ui-color-orange, .ui-color-amber { color: #925100; }
+.ui-heading { margin: 0; color: var(--gray-12); font-weight: 650; line-height: 1.2; letter-spacing: -.02em; }
+.ui-heading-3 { font-size: 16px; }
+.ui-heading-4 { font-size: 20px; }
+.ui-heading-5 { font-size: 24px; }
+.ui-heading-6 { font-size: 30px; }
+.ui-heading-7 { font-size: clamp(28px, 4vw, 36px); }
+.ui-input { display: block; width: 100%; min-height: 38px; padding: 8px 12px; border: 1px solid #c9cac7; border-radius: 8px; color: var(--gray-12); background: #fff; font: 14px/1.45 var(--default-font-family); }
+.ui-input:hover:not(:disabled) { border-color: #777773; }
+.ui-input:focus-visible { outline: 2px solid var(--green-9); outline-offset: 2px; }
+.ui-input[aria-invalid="true"] { border-color: #b4232a; }
+.ui-input:disabled { background: var(--gray-2); color: var(--gray-10); cursor: not-allowed; }
+.ui-select { cursor: pointer; padding-right: 30px; }
+.ui-textarea { min-height: 90px; resize: vertical; }
+.ui-button { text-transform: none !important; font-weight: 600 !important; min-height: 36px; }
+.ui-button-ghost { padding-inline: 8px !important; }
+.MuiTab-root { text-transform: none !important; min-height: 44px !important; font-weight: 600 !important; }
+.ui-dialog-content { padding: 24px; max-height: min(90vh, 960px); overflow: auto; }
+.ui-dialog-content .ui-heading { margin-bottom: 8px; }
+@media (max-width: 600px) { .ui-dialog-content { padding: 20px; } }

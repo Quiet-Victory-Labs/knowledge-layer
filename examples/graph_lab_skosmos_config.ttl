@@ -1,0 +1,35 @@
+@prefix : <#> .
+@prefix skosmos: <http://purl.org/net/skosmos#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+:config a skosmos:Configuration ;
+ skosmos:sparqlEndpoint <http://host.docker.internal:4182/sparql> ;
+ skosmos:sparqlDialect "Generic" ;
+ skosmos:sparqlCollationEnabled false ;
+ skosmos:sparqlTimeout 30 ;
+ skosmos:httpTimeout 5 ;
+ skosmos:serviceName "Example vocabulary · Skosmos" ;
+ skosmos:languages ( [ rdfs:label "en" ; rdf:value "en_US.utf8" ] ) ;
+ skosmos:searchResultsSize 20 ;
+ skosmos:transitiveLimit 1000 ;
+ skosmos:rdfListItemsLimit 1000 ;
+ skosmos:templateCache "/tmp/skosmos-template-cache" ;
+ skosmos:logCaughtExceptions false ;
+ skosmos:logBrowserConsole false ;
+ skosmos:feedbackAddress "" ;
+ skosmos:globalPlugins () .
+:example a skosmos:Vocabulary, void:Dataset ;
+ dc:title "Example knowledge vocabulary"@en ;
+ skosmos:shortName "Example" ;
+ skosmos:mainConceptScheme <urn:kl:scheme:example> ;
+ void:uriSpace "urn:kl:node:" ;
+ skosmos:language "en" ;
+ skosmos:defaultLanguage "en" ;
+ skosmos:showTopConcepts true ;
+ skosmos:fullAlphabeticalIndex true ;
+ skosmos:groupClass skos:Collection ;
+ void:sparqlEndpoint <http://host.docker.internal:4182/sparql> ;
+ skosmos:sparqlGraph <urn:kl:graph:vocabulary> .

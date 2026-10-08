@@ -1,0 +1,42 @@
+name: Connector or catalog proposal
+description: Propose or contribute a new data source connector, lakehouse catalog, or enterprise metadata adapter.
+title: "connector: "
+labels: [connector, integration]
+body:
+  - type: markdown
+    attributes:
+      value: "Knowledge Layer operates on **zero customer row retention** — only bounded schemas, statistical distributions, and cited document passages are processed. Do not include live customer credentials or private data."
+  - type: dropdown
+    id: connector_type
+    attributes:
+      label: Connector Category
+      description: What type of source or catalog are you proposing?
+      options:
+        - "Cloud Data Warehouse / Analytical DB (e.g. Databricks SQL, StarRocks, DuckDB, Doris)"
+        - "Lakehouse Format & REST Catalog (e.g. Apache Iceberg, Delta Lake, Apache Hudi)"
+        - "Enterprise Metadata Catalog (e.g. Alation, Collibra, Atlan, OpenMetadata, DataHub)"
+        - "Document / Unstructured Store (e.g. Sharepoint, Confluence, Notion, Box)"
+        - "Transactional / Operational Database (e.g. MySQL, Oracle, Spanner, CockroachDB)"
+    validations:
+      required: true
+  - type: textarea
+    id: system_details
+    attributes:
+      label: Target System & Authentication Protocol
+      description: Name the target system, official client libraries/APIs, and authentication mechanism (e.g. OAuth 2.0, token, OIDC).
+    validations:
+      required: true
+  - type: textarea
+    id: metadata_scope
+    attributes:
+      label: Bounded Metadata & Evidence Scope
+      description: What schemas, columns, constraints, foreign keys, or document passages will this connector extract? How does it avoid row-data egress?
+    validations:
+      required: true
+  - type: textarea
+    id: permissions_and_failure
+    attributes:
+      label: Permissions, Quotas & Failure Mode
+      description: What minimal read-only permissions are required? How should the connector fail safely when denied access or throttled?
+    validations:
+      required: true

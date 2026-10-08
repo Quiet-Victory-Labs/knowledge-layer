@@ -1,0 +1,79 @@
+[project]
+name = "knowledge-layer"
+version = "0.1.0"
+description = "Self-hosted, evidence-backed semantic context for external agents"
+readme = "README.md"
+requires-python = ">=3.14,<3.15"
+license = "Apache-2.0"
+authors = [
+  { name = "Quiet Victory Labs", email = "hello@quietvictorylabs.com" },
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Framework :: FastAPI",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3.14",
+]
+
+dependencies = [
+  "alembic>=1.20,<2",
+  "authlib>=1.8,<2",
+  "fastapi>=0.116,<1",
+  "httpx>=0.28,<1",
+  "itsdangerous>=2.2,<3",
+  "jsonschema>=4.25,<5",
+  "mcp>=2.2,<3",
+  "psycopg[binary]>=3.2,<4",
+  "pydantic>=2.11,<3",
+  "pyjwt[crypto]>=2.15,<3",
+  "pypdf>=6.19,<7",
+  "rapidfuzz>=3.13,<4",
+  "rdflib>=7.1,<8",
+  "sqlalchemy>=2.0,<3",
+  "tzdata>=2026.1,<2027",
+  "uvicorn[standard]>=0.35,<1",
+]
+
+[project.urls]
+Homepage = "https://github.com/Quiet-Victory-Labs/knowledge-layer"
+Repository = "https://github.com/Quiet-Victory-Labs/knowledge-layer"
+Issues = "https://github.com/Quiet-Victory-Labs/knowledge-layer/issues"
+Documentation = "https://github.com/Quiet-Victory-Labs/knowledge-layer#readme"
+
+[project.optional-dependencies]
+iceberg = ["pyiceberg[pyarrow,s3fs]>=0.10,<1", "pyarrow>=20,<24", "boto3>=1.38,<2"]
+objects = ["boto3>=1.38,<2"]
+clickhouse = ["clickhouse-connect>=1.9,<2"]
+snowflake = ["snowflake-connector-python>=4.7,<5"]
+bigquery = ["google-auth>=2.40,<3"]
+drive = ["google-auth>=2.40,<3"]
+search = ["fastembed>=0.7,<1"]
+semantic-validation = ["pyshacl>=0.40.1,<0.41"]
+graph-lab = ["pyoxigraph==0.5.11"]
+dev = ["pytest>=8.3,<10", "pytest-cov>=6,<8", "ruff>=0.12,<1"]
+
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/knowledge_layer"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "/src", "/pyproject.toml", "/uv.lock", "/README.md", "/LICENSE", "/NOTICE",
+  "/docs", "/examples", "/scripts", "/skills", "/charts", "/third_party", "/Dockerfile", "/Dockerfile.chainguard", "/Dockerfile.postgres",
+  "/compose.yaml", "/knowledge-layer", "/.dockerignore", "/.env.example", "/web/src", "/web/index.html",
+  "/web/package.json", "/web/package-lock.json", "/web/tsconfig*.json", "/web/vite.config.*",
+  "/tests/fixtures/enterprise_benchmark",
+  "/data/connectable/northstar", "/data/connectable/juniper", "/CHANGELOG.md",
+  "/CONTRIBUTING.md", "/GOVERNANCE.md", "/RELEASING.md", "/SECURITY.md", "/SUPPORT.md", "/deploy",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "."]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py314"

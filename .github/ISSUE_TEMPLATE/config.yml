@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security issue
+    url: https://github.com/Quiet-Victory-Labs/knowledge-layer/security/policy
+    about: Follow the private reporting instructions; do not open a public issue.
+  - name: Usage and support
+    url: https://github.com/Quiet-Victory-Labs/knowledge-layer/blob/main/SUPPORT.md
+    about: Check the support guide before opening a reproducible bug report.

@@ -1,0 +1,33 @@
+[Unit]
+Description=Knowledge Layer source-scoped refresh coordinator
+After=docker.service network-online.target
+Requires=docker.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=knowledge-worker
+Group=knowledge-worker
+SupplementaryGroups=docker
+WorkingDirectory=/opt/knowledge-layer
+EnvironmentFile=/etc/knowledge-layer/source-worker.env
+ExecStart=/opt/knowledge-layer/.venv/bin/python -m knowledge_layer.worker
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=75
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+TasksMax=128
+MemoryMax=768M
+
+[Install]
+WantedBy=multi-user.target

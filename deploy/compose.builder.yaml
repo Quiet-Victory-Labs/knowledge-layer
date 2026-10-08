@@ -1,0 +1,32 @@
+# Optional model-endpoint builder. Apply with the OIDC pilot compose file.
+# Native Codex/Claude/Cursor builders run on the host with their existing login.
+services:
+  builder:
+    image: ${KNOWLEDGE_IMAGE:?Set a digest-pinned image}
+    restart: on-failure:3
+    read_only: true
+    user: "${KNOWLEDGE_RUN_UID:?}:${KNOWLEDGE_RUN_GID:?}"
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 32
+    mem_limit: 256m
+    tmpfs: ["/tmp:rw,noexec,nosuid,size=8m,uid=${KNOWLEDGE_RUN_UID:?},gid=${KNOWLEDGE_RUN_GID:?},mode=0700"]
+    command: ["python", "-m", "knowledge_layer.build_worker", "--watch", "--max-seconds", "86400"]
+    environment:
+      KNOWLEDGE_GATEWAY_URL: ${KNOWLEDGE_PUBLIC_URL:?Set authenticated HTTPS gateway}
+      KNOWLEDGE_AGENT_TOKEN_FILE: /run/secrets/build_agent_token
+      MODEL_CHAT_COMPLETIONS_URL: ${MODEL_CHAT_COMPLETIONS_URL:?Set compatible HTTPS endpoint}
+      MODEL_NAME: ${MODEL_NAME:?Set chosen model}
+      MODEL_API_KEY_FILE: /run/secrets/build_model_token
+      MODEL_ALLOW_REMOTE: "1"
+    volumes:
+      - type: bind
+        source: ${KNOWLEDGE_BUILD_AGENT_TOKEN_FILE:?Set scoped short-lived agent token file}
+        target: /run/secrets/build_agent_token
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${KNOWLEDGE_BUILD_MODEL_TOKEN_FILE:?Set model token file}
+        target: /run/secrets/build_model_token
+        read_only: true
+        bind: {create_host_path: false}

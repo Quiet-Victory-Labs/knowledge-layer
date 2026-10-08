@@ -1,0 +1,3 @@
+asset_id,asset_name,client_id,retirement_date,active_flag
+AST-102,Retired pump controller,CL-44,2025-12-15,false
+AST-096,Legacy air handler,CL-31,2025-11-01,false

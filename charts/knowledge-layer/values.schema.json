@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["image", "oidc", "connectors", "existingSecret"],
+  "properties": {
+    "migration": {"type": "object", "required": ["enabled"], "additionalProperties": false,
+      "properties": {"enabled": {"type": "boolean"}}},
+    "worker": {"type": "object", "required": ["enabled", "timeoutSeconds"], "additionalProperties": false,
+      "properties": {"enabled": {"type": "boolean"},
+        "timeoutSeconds": {"type": "integer", "minimum": 30, "maximum": 900},
+        "resources": {"type": "object"}}},
+    "image": {"type": "object", "required": ["repository", "tag"], "properties": {
+      "repository": {"type": "string", "minLength": 1}, "tag": {"type": "string", "minLength": 1}
+    }},
+    "oidc": {"type": "object", "required": ["publicUrl", "issuer", "clientId", "audience", "jwksUri", "allowedGroup", "stewardGroup"], "properties": {
+      "publicUrl": {"type": "string", "pattern": "^https://[^/]+/?$"},
+      "issuer": {"type": "string", "pattern": "^https://"},
+      "clientId": {"type": "string", "minLength": 1},
+      "audience": {"type": "string", "minLength": 1},
+      "jwksUri": {"type": "string", "pattern": "^https://"},
+      "allowedGroup": {"type": "string", "minLength": 1},
+      "stewardGroup": {"type": "string", "minLength": 1},
+      "loginScopes": {"type": "string", "pattern": "(^| )openid( |$)", "maxLength": 972},
+      "browserSessionSeconds": {"type": "integer", "minimum": 60, "maximum": 3600}
+    }},
+    "connectors": {"type": "object", "required": ["enabledKinds"], "properties": {
+      "enabledKinds": {"type": "string", "minLength": 1},
+      "agentAllowedKinds": {"type": "string"}
+    }},
+    "existingSecret": {"type": "object", "required": ["name", "sourcePolicyKey"], "properties": {
+      "name": {"type": "string", "minLength": 1},
+      "contextReceiptKeysKey": {"type": "string", "maxLength": 253, "pattern": "^[A-Za-z0-9._-]*$"},
+      "sourcePolicyKey": {"type": "string", "minLength": 1}
+    }},
+    "replicaCount": {"type": "integer", "minimum": 1, "maximum": 1},
+    "sourceSecretRefs": {"type": "array", "items": {"type": "object", "required": ["name", "secretName", "secretKey"], "additionalProperties": false, "properties": {
+      "name": {"type": "string", "pattern": "^KNOWLEDGE_SOURCE_[A-Z0-9_]{1,64}$"},
+      "secretName": {"type": "string", "minLength": 1},
+      "secretKey": {"type": "string", "minLength": 1}
+    }}}
+  },
+  "allOf": [
+    {"if": {"properties": {"ingress": {"properties": {"enabled": {"const": true}}}}},
+     "then": {"properties": {"ingress": {"properties": {"host": {"minLength": 1}, "tlsSecretName": {"minLength": 1}}}}}},
+    {"if": {"properties": {"sourceVolume": {"properties": {"enabled": {"const": true}}}}},
+     "then": {"properties": {"sourceVolume": {"properties": {"existingClaim": {"minLength": 1}}}}}}
+  ]
+}

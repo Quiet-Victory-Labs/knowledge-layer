@@ -1,0 +1,19 @@
+[Unit]
+Description=Knowledge Layer bounded logical PostgreSQL backup
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+User=root
+UMask=0077
+WorkingDirectory=/srv/knowledge-layer/install
+ExecStart=/usr/bin/python3 /opt/knowledge-layer-ops/backup_registry.py --install /srv/knowledge-layer/install --output /srv/knowledge-layer/backups
+TimeoutStartSec=600
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ReadWritePaths=/srv/knowledge-layer/backups
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,4 @@
+asset_id,asset_name,client_id,site_code,active_flag
+AST-102,North pump controller,CL-22,SEA-3,true
+AST-108,Roof telemetry gateway,CL-31,PDX-1,true
+AST-115,East lift motor,CL-22,SEA-3,true

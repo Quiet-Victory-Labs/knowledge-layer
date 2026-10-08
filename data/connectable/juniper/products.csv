@@ -1,0 +1,3 @@
+product_id,sku,name,gtin,status
+JP-100,SKU-100,Juniper oat milk,00012345000018,active
+JP-200,SKU-200,Juniper coffee beans,00012345000025,active

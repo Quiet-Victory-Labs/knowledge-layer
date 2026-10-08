@@ -1,0 +1,26 @@
+{
+    servers {
+        timeouts {
+            read_header 5s
+            read_body 10s
+            idle 30s
+        }
+        max_header_size 32KB
+    }
+}
+
+# Declare the redirect listener explicitly so global server budgets apply.
+http://{$KNOWLEDGE_HOST} {
+    redir https://{$KNOWLEDGE_HOST}{uri} permanent
+}
+
+{$KNOWLEDGE_HOST} {
+    reverse_proxy api:8000
+    header {
+        Strict-Transport-Security "max-age=31536000"
+        X-Content-Type-Options nosniff
+        Referrer-Policy no-referrer
+    }
+    # Access logs are deliberately disabled: request URLs can contain terms.
+    # Deliver the application's bounded access events to protected storage.
+}

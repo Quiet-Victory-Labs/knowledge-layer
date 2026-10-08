@@ -1,0 +1,1540 @@
+{
+  "schema_version": "publisher-notices-v1",
+  "legal_approved": false,
+  "attestation_signatures_verified": false,
+  "corresponding_source_verified": false,
+  "scope_note": "Package-specific publisher texts supplement the exact locked amd64 archive identities recorded here. These are not asserted to have been distributed in those archives. Registry attestation claims are matched to package digest and source revision; signatures are not independently verified. Tokenizers uses the locked sdist route in the archive collector. Copyright, complete native transitive notices and corresponding-source obligations require review.",
+  "entries": [
+    {
+      "id": "pypi-flatbuffers-25.12.19-flatbuffers-LICENSE",
+      "ecosystem": "pypi",
+      "name": "flatbuffers",
+      "version": "25.12.19",
+      "notice_type": "license",
+      "source_url": "https://raw.githubusercontent.com/google/flatbuffers/7e163021e59cca4f8e1e35a7c828b5c6b7915953/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "source_commit": "7e163021e59cca4f8e1e35a7c828b5c6b7915953",
+      "locked_archive_url": "https://files.pythonhosted.org/packages/e8/2d/d2a548598be01649e2d46231d151a6c56d10b964d94043a335ae56ea2d92/flatbuffers-25.12.19-py2.py3-none-any.whl",
+      "locked_archive_digest": "sha256:7634f50c427838bb021c2d66a3d1168e9d199b0607e6329399f04846d42e20b4",
+      "binding": {
+        "kind": "version_manifest",
+        "repository": "google/flatbuffers",
+        "proofs": [
+          {
+            "role": "version_manifest",
+            "url": "https://raw.githubusercontent.com/google/flatbuffers/7e163021e59cca4f8e1e35a7c828b5c6b7915953/python/flatbuffers/_version.py",
+            "sha256": "b24df5adb6160ec7a827123d610d5f611f8c3314404f2aac9ed28012fec3ee92",
+            "format": "python_literal",
+            "version_field": "__version__"
+          },
+          {
+            "role": "release_tag",
+            "url": "https://api.github.com/repos/google/flatbuffers/git/matching-refs/tags/v25.12.19",
+            "sha256": "e9c12c7d2c78999111ff7d9c99e0446b9d0565b3df0cadaa493944fbfe6b5496",
+            "ref": "refs/tags/v25.12.19"
+          },
+          {
+            "role": "peeled_tag",
+            "url": "https://api.github.com/repos/google/flatbuffers/git/tags/282dcb1c3266b45600510da4810092f6ec4c85f2",
+            "sha256": "a1dcfc34d3905d3092fb4be3abf06c60f5933ce9af3d311d95867f25919958ce"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pypi-loguru-0.7.3-loguru-LICENSE",
+      "ecosystem": "pypi",
+      "name": "loguru",
+      "version": "0.7.3",
+      "notice_type": "license",
+      "source_url": "https://raw.githubusercontent.com/Delgan/loguru/ae3bfd1b85b6b4a3db535f69b975687c79498be4/LICENSE",
+      "sha256": "b35d026cc7aca9d5859a02eb87ddf7a386a24c986838651bd1f283f94e003327",
+      "source_commit": "ae3bfd1b85b6b4a3db535f69b975687c79498be4",
+      "locked_archive_url": "https://files.pythonhosted.org/packages/0c/29/0348de65b8cc732daa3e33e67806420b2ae89bdce2b04af740289c5c6c8c/loguru-0.7.3-py3-none-any.whl",
+      "locked_archive_digest": "sha256:31a33c10c8e1e10422bfd431aeb5d351c7cf7fa671e3c4df004162264b28220c",
+      "binding": {
+        "kind": "version_manifest",
+        "repository": "Delgan/loguru",
+        "proofs": [
+          {
+            "role": "version_manifest",
+            "url": "https://raw.githubusercontent.com/Delgan/loguru/ae3bfd1b85b6b4a3db535f69b975687c79498be4/loguru/__init__.py",
+            "sha256": "196e5e0ff9f2234516dcb9385ccbf6524c0a6d72b0a97ca5c81bd225a7c3df19",
+            "format": "python_literal",
+            "version_field": "__version__"
+          },
+          {
+            "role": "release_tag",
+            "url": "https://api.github.com/repos/Delgan/loguru/git/matching-refs/tags/0.7.3",
+            "sha256": "ba54242d85df02679bae33c0301241e891456dcabb644e67ba7f06c05dd83cd1",
+            "ref": "refs/tags/0.7.3"
+          },
+          {
+            "role": "peeled_tag",
+            "url": "https://api.github.com/repos/Delgan/loguru/git/tags/eb27ef8546577adbb88ad36b62b4eca9e9dae217",
+            "sha256": "9402cb90c04460e1fe27e4202e4da92a974d2947b35c6b77483d0778fe6c88f2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pypi-pyoxigraph-0.5.11-oxigraph-LICENSE-MIT",
+      "ecosystem": "pypi",
+      "name": "pyoxigraph",
+      "version": "0.5.11",
+      "notice_type": "license",
+      "source_url": "https://raw.githubusercontent.com/oxigraph/oxigraph/df37a5c98e2497135cdd4cfce01a049b78ca6740/LICENSE-MIT",
+      "sha256": "1f4f6736adc52ebfda18bb84947e0ef492bd86a408c0e83872efb75ed5e02838",
+      "source_commit": "df37a5c98e2497135cdd4cfce01a049b78ca6740",
+      "locked_archive_url": "https://files.pythonhosted.org/packages/bc/e4/9ae9d8014cf039a12c1d174e202587d2b3947226f9da173391cd3e344fa0/pyoxigraph-0.5.11-cp314-cp314-manylinux_2_28_x86_64.whl",
+      "locked_archive_digest": "sha256:e02906504ad2ac399d1f30cbae2e47b85932d39bf89ef5c7508268faa6ae3bc4",
+      "binding": {
+        "kind": "version_manifest",
+        "repository": "oxigraph/oxigraph",
+        "proofs": [
+          {
+            "role": "version_manifest",
+            "url": "https://raw.githubusercontent.com/oxigraph/oxigraph/df37a5c98e2497135cdd4cfce01a049b78ca6740/Cargo.toml",
+            "sha256": "69204d11a1e080fc94dc19abde7c5973c64b09baf957e3af9a3fe8f0722f6014",
+            "format": "toml",
+            "version_field": "workspace.package.version"
+          },
+          {
+            "role": "package_manifest",
+            "url": "https://raw.githubusercontent.com/oxigraph/oxigraph/df37a5c98e2497135cdd4cfce01a049b78ca6740/python/Cargo.toml",
+            "sha256": "f64a4d671bc04ae9d5d9105444654c4272e324f67cec09c806f087d921639882",
+            "format": "toml",
+            "name_field": "package.name"
+          },
+          {
+            "role": "release_tag",
+            "url": "https://api.github.com/repos/oxigraph/oxigraph/git/matching-refs/tags/v0.5.11",
+            "sha256": "49ef4da517ac8886ed2188513b1340f528c3a71b4409bc7d97b6cd55a4d8f9a5",
+            "ref": "refs/tags/v0.5.11"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pypi-pyoxigraph-0.5.11-oxigraph-LICENSE-APACHE",
+      "ecosystem": "pypi",
+      "name": "pyoxigraph",
+      "version": "0.5.11",
+      "notice_type": "license",
+      "source_url": "https://raw.githubusercontent.com/oxigraph/oxigraph/df37a5c98e2497135cdd4cfce01a049b78ca6740/LICENSE-APACHE",
+      "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2",
+      "source_commit": "df37a5c98e2497135cdd4cfce01a049b78ca6740",
+      "locked_archive_url": "https://files.pythonhosted.org/packages/bc/e4/9ae9d8014cf039a12c1d174e202587d2b3947226f9da173391cd3e344fa0/pyoxigraph-0.5.11-cp314-cp314-manylinux_2_28_x86_64.whl",
+      "locked_archive_digest": "sha256:e02906504ad2ac399d1f30cbae2e47b85932d39bf89ef5c7508268faa6ae3bc4",
+      "binding": {
+        "kind": "version_manifest",
+        "repository": "oxigraph/oxigraph",
+        "proofs": [
+          {
+            "role": "version_manifest",
+            "url": "https://raw.githubusercontent.com/oxigraph/oxigraph/df37a5c98e2497135cdd4cfce01a049b78ca6740/Cargo.toml",
+            "sha256": "69204d11a1e080fc94dc19abde7c5973c64b09baf957e3af9a3fe8f0722f6014",
+            "format": "toml",
+            "version_field": "workspace.package.version"
+          },
+          {
+            "role": "package_manifest",
+            "url": "https://raw.githubusercontent.com/oxigraph/oxigraph/df37a5c98e2497135cdd4cfce01a049b78ca6740/python/Cargo.toml",
+            "sha256": "f64a4d671bc04ae9d5d9105444654c4272e324f67cec09c806f087d921639882",
+            "format": "toml",
+            "name_field": "package.name"
+          },
+          {
+            "role": "release_tag",
+            "url": "https://api.github.com/repos/oxigraph/oxigraph/git/matching-refs/tags/v0.5.11",
+            "sha256": "49ef4da517ac8886ed2188513b1340f528c3a71b4409bc7d97b6cd55a4d8f9a5",
+            "ref": "refs/tags/v0.5.11"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-android-arm-eabi-1.2.12-rolldown-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-android-arm-eabi",
+      "version": "1.2.12",
+      "notice_type": "license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/LICENSE",
+      "sha256": "23ecfff35a5a2e80d92142f75228912c3b1abc4b5a8337a821ff4397e2f9f734",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-android-arm-eabi/-/binding-android-arm-eabi-1.2.12.tgz",
+      "locked_archive_digest": "sha512:741fdad76d78a8a7c73170a982a4783994fe8d2e244f21176d01893eace86ede44c07e6b5f4f34a71137eda96ddd1cef4756dfd58cffc86a917eb600c6e3f0d0",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-android-arm-eabi/1.2.12",
+            "sha256": "904a13ef99987f4ae408117d87fffae94b8d758c1a4a30c98732be185a7c073b"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-android-arm-eabi@1.2.12",
+            "sha256": "9a4f1e57d3b71d0975ddc830d62af0c52a6f8cbb26ee2c5fac79a478a88ec512"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-android-arm-eabi-1.2.12-rolldown-THIRD-PARTY-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-android-arm-eabi",
+      "version": "1.2.12",
+      "notice_type": "third_party_license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/THIRD-PARTY-LICENSE",
+      "sha256": "a877291d800ed43692f3f9ae09d8e01cc6f7293ad39d43896059c188ffbb8b7c",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-android-arm-eabi/-/binding-android-arm-eabi-1.2.12.tgz",
+      "locked_archive_digest": "sha512:741fdad76d78a8a7c73170a982a4783994fe8d2e244f21176d01893eace86ede44c07e6b5f4f34a71137eda96ddd1cef4756dfd58cffc86a917eb600c6e3f0d0",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-android-arm-eabi/1.2.12",
+            "sha256": "904a13ef99987f4ae408117d87fffae94b8d758c1a4a30c98732be185a7c073b"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-android-arm-eabi@1.2.12",
+            "sha256": "9a4f1e57d3b71d0975ddc830d62af0c52a6f8cbb26ee2c5fac79a478a88ec512"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-android-arm64-1.2.12-rolldown-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-android-arm64",
+      "version": "1.2.12",
+      "notice_type": "license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/LICENSE",
+      "sha256": "23ecfff35a5a2e80d92142f75228912c3b1abc4b5a8337a821ff4397e2f9f734",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-android-arm64/-/binding-android-arm64-1.2.12.tgz",
+      "locked_archive_digest": "sha512:eca1c5810e5527120770b96bc2b7375db76cee84cd413ecf822f6040224aaddd9519a6ff524b08398a7a543f0ccc2b2d1b138a32035a98fc1409fc4f74fd4e1e",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-android-arm64/1.2.12",
+            "sha256": "de92e31fcb9353562547e38253648661d8294743b4b1b568fa160705a59879a0"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-android-arm64@1.2.12",
+            "sha256": "57521cc4575caa6b637c15540c15678958b531cc75597c1d5f4f8f39ce16d675"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-android-arm64-1.2.12-rolldown-THIRD-PARTY-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-android-arm64",
+      "version": "1.2.12",
+      "notice_type": "third_party_license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/THIRD-PARTY-LICENSE",
+      "sha256": "a877291d800ed43692f3f9ae09d8e01cc6f7293ad39d43896059c188ffbb8b7c",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-android-arm64/-/binding-android-arm64-1.2.12.tgz",
+      "locked_archive_digest": "sha512:eca1c5810e5527120770b96bc2b7375db76cee84cd413ecf822f6040224aaddd9519a6ff524b08398a7a543f0ccc2b2d1b138a32035a98fc1409fc4f74fd4e1e",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-android-arm64/1.2.12",
+            "sha256": "de92e31fcb9353562547e38253648661d8294743b4b1b568fa160705a59879a0"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-android-arm64@1.2.12",
+            "sha256": "57521cc4575caa6b637c15540c15678958b531cc75597c1d5f4f8f39ce16d675"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-darwin-arm64-1.2.12-rolldown-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-darwin-arm64",
+      "version": "1.2.12",
+      "notice_type": "license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/LICENSE",
+      "sha256": "23ecfff35a5a2e80d92142f75228912c3b1abc4b5a8337a821ff4397e2f9f734",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-darwin-arm64/-/binding-darwin-arm64-1.2.12.tgz",
+      "locked_archive_digest": "sha512:dd8221a870fdea703949a60d441475e879c6bf8a1abd9bd77c3fdac8733ea18674583ffc94102d7facd0b9ae2413202fa6aae5b8a5e5d259ce06888d6f2ef1f7",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-darwin-arm64/1.2.12",
+            "sha256": "ea8a3e8f17c71fccfab8cd63e65d4c9bdcaa00bae8e8d5b16333d3ded84c1bd0"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-darwin-arm64@1.2.12",
+            "sha256": "c5bc48f9d4c2f6a47fdc8486aea47737b1802dbf5d131f56b35382b5af5c8e9d"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-darwin-arm64-1.2.12-rolldown-THIRD-PARTY-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-darwin-arm64",
+      "version": "1.2.12",
+      "notice_type": "third_party_license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/THIRD-PARTY-LICENSE",
+      "sha256": "a877291d800ed43692f3f9ae09d8e01cc6f7293ad39d43896059c188ffbb8b7c",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-darwin-arm64/-/binding-darwin-arm64-1.2.12.tgz",
+      "locked_archive_digest": "sha512:dd8221a870fdea703949a60d441475e879c6bf8a1abd9bd77c3fdac8733ea18674583ffc94102d7facd0b9ae2413202fa6aae5b8a5e5d259ce06888d6f2ef1f7",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-darwin-arm64/1.2.12",
+            "sha256": "ea8a3e8f17c71fccfab8cd63e65d4c9bdcaa00bae8e8d5b16333d3ded84c1bd0"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-darwin-arm64@1.2.12",
+            "sha256": "c5bc48f9d4c2f6a47fdc8486aea47737b1802dbf5d131f56b35382b5af5c8e9d"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-darwin-x64-1.2.12-rolldown-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-darwin-x64",
+      "version": "1.2.12",
+      "notice_type": "license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/LICENSE",
+      "sha256": "23ecfff35a5a2e80d92142f75228912c3b1abc4b5a8337a821ff4397e2f9f734",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-darwin-x64/-/binding-darwin-x64-1.2.12.tgz",
+      "locked_archive_digest": "sha512:52eb89df9305c3882614eac4f6912a215f8adecc882af7a987e41cd7f9631d955da035b8a73fc91d1fde315a26f9364697fe4e3af18939668e095b7765faa1c4",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-darwin-x64/1.2.12",
+            "sha256": "f08a0a9b8722a65941e5e6e3e10dee37dc7947353b8b9d9c1161af638c028f86"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-darwin-x64@1.2.12",
+            "sha256": "8780c93434014f2bd34d2c8d12f580f6c4eebb110007b4c0c73ff765ff321445"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-darwin-x64-1.2.12-rolldown-THIRD-PARTY-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-darwin-x64",
+      "version": "1.2.12",
+      "notice_type": "third_party_license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/THIRD-PARTY-LICENSE",
+      "sha256": "a877291d800ed43692f3f9ae09d8e01cc6f7293ad39d43896059c188ffbb8b7c",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-darwin-x64/-/binding-darwin-x64-1.2.12.tgz",
+      "locked_archive_digest": "sha512:52eb89df9305c3882614eac4f6912a215f8adecc882af7a987e41cd7f9631d955da035b8a73fc91d1fde315a26f9364697fe4e3af18939668e095b7765faa1c4",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-darwin-x64/1.2.12",
+            "sha256": "f08a0a9b8722a65941e5e6e3e10dee37dc7947353b8b9d9c1161af638c028f86"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-darwin-x64@1.2.12",
+            "sha256": "8780c93434014f2bd34d2c8d12f580f6c4eebb110007b4c0c73ff765ff321445"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-freebsd-x64-1.2.12-rolldown-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-freebsd-x64",
+      "version": "1.2.12",
+      "notice_type": "license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/LICENSE",
+      "sha256": "23ecfff35a5a2e80d92142f75228912c3b1abc4b5a8337a821ff4397e2f9f734",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-freebsd-x64/-/binding-freebsd-x64-1.2.12.tgz",
+      "locked_archive_digest": "sha512:b8cbecb22b746b85beffb0fc09b1d4bc6ef5f661f74768f05c0961fd770fbee1d313483ef8bca617cf03086357d07336ac13a7d31af381792d201e9f2d22414d",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-freebsd-x64/1.2.12",
+            "sha256": "d8140b24456052d2fc4e24b5b7f4e6c0877cad5035bdf92eec6f50d4be5aaa8b"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-freebsd-x64@1.2.12",
+            "sha256": "6e2b4e4146de23666343653b13ef4e74aa6d53fdeeab4a811c60b53c6bc4ad5a"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-freebsd-x64-1.2.12-rolldown-THIRD-PARTY-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-freebsd-x64",
+      "version": "1.2.12",
+      "notice_type": "third_party_license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/THIRD-PARTY-LICENSE",
+      "sha256": "a877291d800ed43692f3f9ae09d8e01cc6f7293ad39d43896059c188ffbb8b7c",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-freebsd-x64/-/binding-freebsd-x64-1.2.12.tgz",
+      "locked_archive_digest": "sha512:b8cbecb22b746b85beffb0fc09b1d4bc6ef5f661f74768f05c0961fd770fbee1d313483ef8bca617cf03086357d07336ac13a7d31af381792d201e9f2d22414d",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-freebsd-x64/1.2.12",
+            "sha256": "d8140b24456052d2fc4e24b5b7f4e6c0877cad5035bdf92eec6f50d4be5aaa8b"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-freebsd-x64@1.2.12",
+            "sha256": "6e2b4e4146de23666343653b13ef4e74aa6d53fdeeab4a811c60b53c6bc4ad5a"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-linux-arm-gnueabihf-1.2.12-rolldown-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-arm-gnueabihf",
+      "version": "1.2.12",
+      "notice_type": "license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/LICENSE",
+      "sha256": "23ecfff35a5a2e80d92142f75228912c3b1abc4b5a8337a821ff4397e2f9f734",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-linux-arm-gnueabihf/-/binding-linux-arm-gnueabihf-1.2.12.tgz",
+      "locked_archive_digest": "sha512:5dc16ed11d315a7c3349fe08420147d6b2487243cdd692f2d91fb8afd20307b61fbbfcacf5c56a7dae2906b3078fb6b7825f26211e2744d3e0d1ee48bc456cea",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-linux-arm-gnueabihf/1.2.12",
+            "sha256": "46ccfee665392a3292c57286d80035bb707d3f92b9b8d67e169788330198c086"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-linux-arm-gnueabihf@1.2.12",
+            "sha256": "b78d2a50f48ebd66924f3c1e707112a5e8cadda4e4ce0605b33a6d56de586a52"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-linux-arm-gnueabihf-1.2.12-rolldown-THIRD-PARTY-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-arm-gnueabihf",
+      "version": "1.2.12",
+      "notice_type": "third_party_license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/THIRD-PARTY-LICENSE",
+      "sha256": "a877291d800ed43692f3f9ae09d8e01cc6f7293ad39d43896059c188ffbb8b7c",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-linux-arm-gnueabihf/-/binding-linux-arm-gnueabihf-1.2.12.tgz",
+      "locked_archive_digest": "sha512:5dc16ed11d315a7c3349fe08420147d6b2487243cdd692f2d91fb8afd20307b61fbbfcacf5c56a7dae2906b3078fb6b7825f26211e2744d3e0d1ee48bc456cea",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-linux-arm-gnueabihf/1.2.12",
+            "sha256": "46ccfee665392a3292c57286d80035bb707d3f92b9b8d67e169788330198c086"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-linux-arm-gnueabihf@1.2.12",
+            "sha256": "b78d2a50f48ebd66924f3c1e707112a5e8cadda4e4ce0605b33a6d56de586a52"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-linux-arm64-gnu-1.2.12-rolldown-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-arm64-gnu",
+      "version": "1.2.12",
+      "notice_type": "license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/LICENSE",
+      "sha256": "23ecfff35a5a2e80d92142f75228912c3b1abc4b5a8337a821ff4397e2f9f734",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-linux-arm64-gnu/-/binding-linux-arm64-gnu-1.2.12.tgz",
+      "locked_archive_digest": "sha512:dbad14aca827f2dcf7f5a93e48c0ce8ab2b3afb574e0cf5d58fc399655b4d12c018af099a1671104a57577c7179d1914992640dc17625260475a4efbdf8525a7",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-linux-arm64-gnu/1.2.12",
+            "sha256": "2beeba7a2ecb191aa73d9baf8c2292805ee2f65d3d399f36538894f6bd4fb689"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-linux-arm64-gnu@1.2.12",
+            "sha256": "18ef0c18a6a3bba613034621c2db614e1dba8256a020ad2f8f75eea5c44c6573"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-linux-arm64-gnu-1.2.12-rolldown-THIRD-PARTY-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-arm64-gnu",
+      "version": "1.2.12",
+      "notice_type": "third_party_license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/THIRD-PARTY-LICENSE",
+      "sha256": "a877291d800ed43692f3f9ae09d8e01cc6f7293ad39d43896059c188ffbb8b7c",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-linux-arm64-gnu/-/binding-linux-arm64-gnu-1.2.12.tgz",
+      "locked_archive_digest": "sha512:dbad14aca827f2dcf7f5a93e48c0ce8ab2b3afb574e0cf5d58fc399655b4d12c018af099a1671104a57577c7179d1914992640dc17625260475a4efbdf8525a7",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-linux-arm64-gnu/1.2.12",
+            "sha256": "2beeba7a2ecb191aa73d9baf8c2292805ee2f65d3d399f36538894f6bd4fb689"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-linux-arm64-gnu@1.2.12",
+            "sha256": "18ef0c18a6a3bba613034621c2db614e1dba8256a020ad2f8f75eea5c44c6573"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-linux-arm64-musl-1.2.12-rolldown-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-arm64-musl",
+      "version": "1.2.12",
+      "notice_type": "license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/LICENSE",
+      "sha256": "23ecfff35a5a2e80d92142f75228912c3b1abc4b5a8337a821ff4397e2f9f734",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-linux-arm64-musl/-/binding-linux-arm64-musl-1.2.12.tgz",
+      "locked_archive_digest": "sha512:e582b523d4aa0e46cf81cd4803c0600e5df8b2ea944b6ab42969c1ae2ae6d04e756233ace9ea3a755ea36d07cd13f6ab807452bddd1050682da48a18c7e596a7",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-linux-arm64-musl/1.2.12",
+            "sha256": "bc797c228d91cb83b14696b02de8e67ceecd8fc2e2a1760e92316661ad857c35"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-linux-arm64-musl@1.2.12",
+            "sha256": "81feaea87d8e0c0bba761733d312164d24bfd2c67a5a4638ad86a9da3ca4a6dd"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-linux-arm64-musl-1.2.12-rolldown-THIRD-PARTY-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-arm64-musl",
+      "version": "1.2.12",
+      "notice_type": "third_party_license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/THIRD-PARTY-LICENSE",
+      "sha256": "a877291d800ed43692f3f9ae09d8e01cc6f7293ad39d43896059c188ffbb8b7c",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-linux-arm64-musl/-/binding-linux-arm64-musl-1.2.12.tgz",
+      "locked_archive_digest": "sha512:e582b523d4aa0e46cf81cd4803c0600e5df8b2ea944b6ab42969c1ae2ae6d04e756233ace9ea3a755ea36d07cd13f6ab807452bddd1050682da48a18c7e596a7",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-linux-arm64-musl/1.2.12",
+            "sha256": "bc797c228d91cb83b14696b02de8e67ceecd8fc2e2a1760e92316661ad857c35"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-linux-arm64-musl@1.2.12",
+            "sha256": "81feaea87d8e0c0bba761733d312164d24bfd2c67a5a4638ad86a9da3ca4a6dd"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-linux-ppc64-gnu-1.2.12-rolldown-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-ppc64-gnu",
+      "version": "1.2.12",
+      "notice_type": "license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/LICENSE",
+      "sha256": "23ecfff35a5a2e80d92142f75228912c3b1abc4b5a8337a821ff4397e2f9f734",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-linux-ppc64-gnu/-/binding-linux-ppc64-gnu-1.2.12.tgz",
+      "locked_archive_digest": "sha512:46472b9a9ede15183be322f97d7114f7524459b7443cb7af5b01ad5e99a16e3943d52b5271b59398ef78061972f8ca3e91eb4a624766335bcd50a7964a5c7c71",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-linux-ppc64-gnu/1.2.12",
+            "sha256": "22717c2237e653b5c0359026730fd38c29723b8e764be595ae99b9192f854210"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-linux-ppc64-gnu@1.2.12",
+            "sha256": "914cff4470b936b3f6c0913fea4625fb786ae70b2cfec2400c934a5a68577f42"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-linux-ppc64-gnu-1.2.12-rolldown-THIRD-PARTY-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-ppc64-gnu",
+      "version": "1.2.12",
+      "notice_type": "third_party_license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/THIRD-PARTY-LICENSE",
+      "sha256": "a877291d800ed43692f3f9ae09d8e01cc6f7293ad39d43896059c188ffbb8b7c",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-linux-ppc64-gnu/-/binding-linux-ppc64-gnu-1.2.12.tgz",
+      "locked_archive_digest": "sha512:46472b9a9ede15183be322f97d7114f7524459b7443cb7af5b01ad5e99a16e3943d52b5271b59398ef78061972f8ca3e91eb4a624766335bcd50a7964a5c7c71",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-linux-ppc64-gnu/1.2.12",
+            "sha256": "22717c2237e653b5c0359026730fd38c29723b8e764be595ae99b9192f854210"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-linux-ppc64-gnu@1.2.12",
+            "sha256": "914cff4470b936b3f6c0913fea4625fb786ae70b2cfec2400c934a5a68577f42"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-linux-s390x-gnu-1.2.12-rolldown-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-s390x-gnu",
+      "version": "1.2.12",
+      "notice_type": "license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/LICENSE",
+      "sha256": "23ecfff35a5a2e80d92142f75228912c3b1abc4b5a8337a821ff4397e2f9f734",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-linux-s390x-gnu/-/binding-linux-s390x-gnu-1.2.12.tgz",
+      "locked_archive_digest": "sha512:aaf2b80ee02c41cd814a3971f97afe233388befc5b199ab11707567c6e85e75f04ae3d061884b241b27aa486a9a673b194d3f3347be8fcbd01c01df4199fb357",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-linux-s390x-gnu/1.2.12",
+            "sha256": "439ce9e9e0e4cbb4bd19f6c4ff17508917b2de88e5eb1576693c32128ac405b0"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-linux-s390x-gnu@1.2.12",
+            "sha256": "304bccb17d51cc74341b92fb42ed1e64449c8e578844eb5f861f5db687df634d"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-linux-s390x-gnu-1.2.12-rolldown-THIRD-PARTY-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-s390x-gnu",
+      "version": "1.2.12",
+      "notice_type": "third_party_license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/THIRD-PARTY-LICENSE",
+      "sha256": "a877291d800ed43692f3f9ae09d8e01cc6f7293ad39d43896059c188ffbb8b7c",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-linux-s390x-gnu/-/binding-linux-s390x-gnu-1.2.12.tgz",
+      "locked_archive_digest": "sha512:aaf2b80ee02c41cd814a3971f97afe233388befc5b199ab11707567c6e85e75f04ae3d061884b241b27aa486a9a673b194d3f3347be8fcbd01c01df4199fb357",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-linux-s390x-gnu/1.2.12",
+            "sha256": "439ce9e9e0e4cbb4bd19f6c4ff17508917b2de88e5eb1576693c32128ac405b0"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-linux-s390x-gnu@1.2.12",
+            "sha256": "304bccb17d51cc74341b92fb42ed1e64449c8e578844eb5f861f5db687df634d"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-linux-x64-gnu-1.2.12-rolldown-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-x64-gnu",
+      "version": "1.2.12",
+      "notice_type": "license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/LICENSE",
+      "sha256": "23ecfff35a5a2e80d92142f75228912c3b1abc4b5a8337a821ff4397e2f9f734",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-linux-x64-gnu/-/binding-linux-x64-gnu-1.2.12.tgz",
+      "locked_archive_digest": "sha512:43db8b04ee775dde1022ad563b27154323cfd4ee0786b684576aaa6f7b93ae7570e9066287d76e638bcd5ce8af2f5c68512d7fcfe5bc785e0d31f9766bc49d8f",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-linux-x64-gnu/1.2.12",
+            "sha256": "2b1454c4d8e4ae74df65b80547868420f74fff8c53f627f4c23fab281f7aeb6a"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-linux-x64-gnu@1.2.12",
+            "sha256": "e6c9d401c72112d3d244f29534b23a390f8fc81d03a16bc5cb342c90c6ecebdf"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-linux-x64-gnu-1.2.12-rolldown-THIRD-PARTY-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-x64-gnu",
+      "version": "1.2.12",
+      "notice_type": "third_party_license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/THIRD-PARTY-LICENSE",
+      "sha256": "a877291d800ed43692f3f9ae09d8e01cc6f7293ad39d43896059c188ffbb8b7c",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-linux-x64-gnu/-/binding-linux-x64-gnu-1.2.12.tgz",
+      "locked_archive_digest": "sha512:43db8b04ee775dde1022ad563b27154323cfd4ee0786b684576aaa6f7b93ae7570e9066287d76e638bcd5ce8af2f5c68512d7fcfe5bc785e0d31f9766bc49d8f",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-linux-x64-gnu/1.2.12",
+            "sha256": "2b1454c4d8e4ae74df65b80547868420f74fff8c53f627f4c23fab281f7aeb6a"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-linux-x64-gnu@1.2.12",
+            "sha256": "e6c9d401c72112d3d244f29534b23a390f8fc81d03a16bc5cb342c90c6ecebdf"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-linux-x64-musl-1.2.12-rolldown-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-x64-musl",
+      "version": "1.2.12",
+      "notice_type": "license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/LICENSE",
+      "sha256": "23ecfff35a5a2e80d92142f75228912c3b1abc4b5a8337a821ff4397e2f9f734",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-linux-x64-musl/-/binding-linux-x64-musl-1.2.12.tgz",
+      "locked_archive_digest": "sha512:dc80715853236ce66c9033cabfc2dff410a76a194ab87b615a4627c88c4e1ff41c26b15c4b812671e9ed840a64c2bff9fa712a6652f37986f178c697ec0e6ee2",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-linux-x64-musl/1.2.12",
+            "sha256": "c643d0561126b72ae4375f46e3c379e5c8217c1923bd456e5375a019ae80bef1"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-linux-x64-musl@1.2.12",
+            "sha256": "1ccc2a7aee245b3f24992d7c5cb37318f2663f3612bd49475b74d93a74eb3d49"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-linux-x64-musl-1.2.12-rolldown-THIRD-PARTY-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-linux-x64-musl",
+      "version": "1.2.12",
+      "notice_type": "third_party_license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/THIRD-PARTY-LICENSE",
+      "sha256": "a877291d800ed43692f3f9ae09d8e01cc6f7293ad39d43896059c188ffbb8b7c",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-linux-x64-musl/-/binding-linux-x64-musl-1.2.12.tgz",
+      "locked_archive_digest": "sha512:dc80715853236ce66c9033cabfc2dff410a76a194ab87b615a4627c88c4e1ff41c26b15c4b812671e9ed840a64c2bff9fa712a6652f37986f178c697ec0e6ee2",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-linux-x64-musl/1.2.12",
+            "sha256": "c643d0561126b72ae4375f46e3c379e5c8217c1923bd456e5375a019ae80bef1"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-linux-x64-musl@1.2.12",
+            "sha256": "1ccc2a7aee245b3f24992d7c5cb37318f2663f3612bd49475b74d93a74eb3d49"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-openharmony-arm64-1.2.12-rolldown-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-openharmony-arm64",
+      "version": "1.2.12",
+      "notice_type": "license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/LICENSE",
+      "sha256": "23ecfff35a5a2e80d92142f75228912c3b1abc4b5a8337a821ff4397e2f9f734",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-openharmony-arm64/-/binding-openharmony-arm64-1.2.12.tgz",
+      "locked_archive_digest": "sha512:c6d5fad718382ca3e43d68a5654d729ca0a5cf91a3e1b7fbe0b30be2bdde54b5ae98a9c68e812bd4e48742131d6c10e86138beca3aee8efa597b6a549ea0abac",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-openharmony-arm64/1.2.12",
+            "sha256": "ebdfcc5bd901ae5cd59ca483a1cac0f5b2182fdbecd44b3729f2f8b1f3c513d0"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-openharmony-arm64@1.2.12",
+            "sha256": "64a382428c1cc922c31605e26acebd2e34f85907ccf1f983ed07f02f8b442b83"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-openharmony-arm64-1.2.12-rolldown-THIRD-PARTY-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-openharmony-arm64",
+      "version": "1.2.12",
+      "notice_type": "third_party_license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/THIRD-PARTY-LICENSE",
+      "sha256": "a877291d800ed43692f3f9ae09d8e01cc6f7293ad39d43896059c188ffbb8b7c",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-openharmony-arm64/-/binding-openharmony-arm64-1.2.12.tgz",
+      "locked_archive_digest": "sha512:c6d5fad718382ca3e43d68a5654d729ca0a5cf91a3e1b7fbe0b30be2bdde54b5ae98a9c68e812bd4e48742131d6c10e86138beca3aee8efa597b6a549ea0abac",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-openharmony-arm64/1.2.12",
+            "sha256": "ebdfcc5bd901ae5cd59ca483a1cac0f5b2182fdbecd44b3729f2f8b1f3c513d0"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-openharmony-arm64@1.2.12",
+            "sha256": "64a382428c1cc922c31605e26acebd2e34f85907ccf1f983ed07f02f8b442b83"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-win32-arm64-msvc-1.2.12-rolldown-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-win32-arm64-msvc",
+      "version": "1.2.12",
+      "notice_type": "license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/LICENSE",
+      "sha256": "23ecfff35a5a2e80d92142f75228912c3b1abc4b5a8337a821ff4397e2f9f734",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-win32-arm64-msvc/-/binding-win32-arm64-msvc-1.2.12.tgz",
+      "locked_archive_digest": "sha512:02dedf3c1e8f09a223ce0221119171b93f81045aa24226c90d3e1ddcf8624777f813b6db31917868a6e56c57c4337b044d10ddd58890c7ff94fe0fc1fe8bb913",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-win32-arm64-msvc/1.2.12",
+            "sha256": "31656a1748dcf0b6a58f6f272e68b46e53a2e9cf5b7ed0b3daef421318005adc"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-win32-arm64-msvc@1.2.12",
+            "sha256": "979a01fc58b7b0751ee1c375dd1b10e901b0c403d2936617659a3c201c380bd3"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-win32-arm64-msvc-1.2.12-rolldown-THIRD-PARTY-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-win32-arm64-msvc",
+      "version": "1.2.12",
+      "notice_type": "third_party_license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/THIRD-PARTY-LICENSE",
+      "sha256": "a877291d800ed43692f3f9ae09d8e01cc6f7293ad39d43896059c188ffbb8b7c",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-win32-arm64-msvc/-/binding-win32-arm64-msvc-1.2.12.tgz",
+      "locked_archive_digest": "sha512:02dedf3c1e8f09a223ce0221119171b93f81045aa24226c90d3e1ddcf8624777f813b6db31917868a6e56c57c4337b044d10ddd58890c7ff94fe0fc1fe8bb913",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-win32-arm64-msvc/1.2.12",
+            "sha256": "31656a1748dcf0b6a58f6f272e68b46e53a2e9cf5b7ed0b3daef421318005adc"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-win32-arm64-msvc@1.2.12",
+            "sha256": "979a01fc58b7b0751ee1c375dd1b10e901b0c403d2936617659a3c201c380bd3"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-win32-x64-msvc-1.2.12-rolldown-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-win32-x64-msvc",
+      "version": "1.2.12",
+      "notice_type": "license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/LICENSE",
+      "sha256": "23ecfff35a5a2e80d92142f75228912c3b1abc4b5a8337a821ff4397e2f9f734",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-win32-x64-msvc/-/binding-win32-x64-msvc-1.2.12.tgz",
+      "locked_archive_digest": "sha512:588c3685a54ac23b987579076a80b4985f0b7bbd53b820718eb74aa8b6c919cb5b040063f8295f98dbed6ce9f3a6add1a24368e7e575aa1b52cc9c97a2bb2495",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-win32-x64-msvc/1.2.12",
+            "sha256": "670ab48f67fb69f4eb578ea8b9b911aeefac4e387220f3a1719b983ef5400f73"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-win32-x64-msvc@1.2.12",
+            "sha256": "f65c18c17d93aa68c72e95d580ea538b2736db98e422ba7b0aabbfd5ae783475"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-rolldown-binding-win32-x64-msvc-1.2.12-rolldown-THIRD-PARTY-LICENSE",
+      "ecosystem": "npm",
+      "name": "@rolldown/binding-win32-x64-msvc",
+      "version": "1.2.12",
+      "notice_type": "third_party_license",
+      "source_url": "https://raw.githubusercontent.com/rolldown/rolldown/45e407b177f5885d04a9795f37f8be71d91f6f17/THIRD-PARTY-LICENSE",
+      "sha256": "a877291d800ed43692f3f9ae09d8e01cc6f7293ad39d43896059c188ffbb8b7c",
+      "source_commit": "45e407b177f5885d04a9795f37f8be71d91f6f17",
+      "locked_archive_url": "https://registry.npmjs.org/@rolldown/binding-win32-x64-msvc/-/binding-win32-x64-msvc-1.2.12.tgz",
+      "locked_archive_digest": "sha512:588c3685a54ac23b987579076a80b4985f0b7bbd53b820718eb74aa8b6c919cb5b040063f8295f98dbed6ce9f3a6add1a24368e7e575aa1b52cc9c97a2bb2495",
+      "binding": {
+        "kind": "registry_attestation",
+        "repository": "rolldown/rolldown",
+        "attestation_signatures_verified": false,
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/%40rolldown%2Fbinding-win32-x64-msvc/1.2.12",
+            "sha256": "670ab48f67fb69f4eb578ea8b9b911aeefac4e387220f3a1719b983ef5400f73"
+          },
+          {
+            "role": "attestation",
+            "url": "https://registry.npmjs.org/-/npm/v1/attestations/@rolldown%2fbinding-win32-x64-msvc@1.2.12",
+            "sha256": "f65c18c17d93aa68c72e95d580ea538b2736db98e422ba7b0aabbfd5ae783475"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-callsites-3.1.0-source-license",
+      "ecosystem": "npm",
+      "name": "callsites",
+      "version": "3.1.0",
+      "locked_archive_url": "https://registry.npmjs.org/callsites/-/callsites-3.1.0.tgz",
+      "locked_archive_digest": "sha512:3fc06302c5ef652f95203508d7584709012fef8613ebb6148b924914d588a8bdb7e6c0668d7e3eab1f4cbaf96ce62bf234435cb71e3ac502d0dda4ee13bb2c69",
+      "notice_type": "license",
+      "sha256": "48da2f39e100d4085767e94966b43f4fa95ff6a0698fba57ed460914e35f94a0",
+      "source_commit": "f89815af2e0255094283c86977f1e679a8fb411b",
+      "source_url": "https://raw.githubusercontent.com/sindresorhus/callsites/f89815af2e0255094283c86977f1e679a8fb411b/license",
+      "binding": {
+        "kind": "registry_git_head",
+        "repository": "sindresorhus/callsites",
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/callsites/3.1.0",
+            "sha256": "84010286387d217782be325e57736b9c6b0d405368fceb8b416099e3639e083a"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-clsx-2.1.1-source-license",
+      "ecosystem": "npm",
+      "name": "clsx",
+      "version": "2.1.1",
+      "locked_archive_url": "https://registry.npmjs.org/clsx/-/clsx-2.1.1.tgz",
+      "locked_archive_digest": "sha512:7989b441606d52b0566561b4777f3a386030d7a67df793e2395a3607b6e35926c779d1a5e5ed1959aabae6438681448d7ac1080e407d2126d383f24af5d84264",
+      "notice_type": "license",
+      "sha256": "9a9edad7baae52622bddf3c15b2ef8a33d2c89f2d25408ad13e8a7481c6b0c97",
+      "source_commit": "925494cf31bcd97d3337aacd34e659e80cae7fe2",
+      "source_url": "https://raw.githubusercontent.com/lukeed/clsx/925494cf31bcd97d3337aacd34e659e80cae7fe2/license",
+      "binding": {
+        "kind": "registry_git_head",
+        "repository": "lukeed/clsx",
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/clsx/2.1.1",
+            "sha256": "9c31182e5608173479a064c05a10bfe600724781ae83fad18336a0945839b70a"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-debug-4.4.3-source-license",
+      "ecosystem": "npm",
+      "name": "debug",
+      "version": "4.4.3",
+      "locked_archive_url": "https://registry.npmjs.org/debug/-/debug-4.4.3.tgz",
+      "locked_archive_digest": "sha512:446c305a7c10be455f6af295b76d8518bc3ec5849dcc04709b4aeee83853540dee994e6165cdbc57790ee2cb6062bcab4e52e9baf808f468a28e5b408cd6dca8",
+      "notice_type": "license",
+      "sha256": "3a61c6c96caf5c1d9b623fb9b04c822b783dfcb78aa7e49c76a3f643e6ed7f95",
+      "source_commit": "6b2c5fbdb7d414483d9e306ef234acb4cd7ea67c",
+      "source_url": "https://raw.githubusercontent.com/debug-js/debug/6b2c5fbdb7d414483d9e306ef234acb4cd7ea67c/LICENSE",
+      "binding": {
+        "kind": "registry_git_head",
+        "repository": "debug-js/debug",
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/debug/4.4.3",
+            "sha256": "9dcaa69f6946d12b9f94ad83766fd31029986c18ca9753a15ebdc49031d16dc4"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-detect-libc-2.1.2-source-license",
+      "ecosystem": "npm",
+      "name": "detect-libc",
+      "version": "2.1.2",
+      "locked_archive_url": "https://registry.npmjs.org/detect-libc/-/detect-libc-2.1.2.tgz",
+      "locked_archive_digest": "sha512:06d8f604e38ef37a375b21f9f5ef0c817b3111055c6ab9143a9118aee6c1d2eaf09cdd74c90dfae2bb22072535d67665a966199b4e62fe87fb8a8e26ce2841b5",
+      "notice_type": "license",
+      "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+      "source_commit": "98928b7d26bd5c50dee12af0e433b47825d84df0",
+      "source_url": "https://raw.githubusercontent.com/lovell/detect-libc/98928b7d26bd5c50dee12af0e433b47825d84df0/LICENSE",
+      "binding": {
+        "kind": "registry_git_head",
+        "repository": "lovell/detect-libc",
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/detect-libc/2.1.2",
+            "sha256": "7dd1df313a536173262819967c939cb15ea920a6dd9b1b6f124063f3d74ba463"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-error-ex-1.3.4-source-license",
+      "ecosystem": "npm",
+      "name": "error-ex",
+      "version": "1.3.4",
+      "locked_archive_url": "https://registry.npmjs.org/error-ex/-/error-ex-1.3.4.tgz",
+      "locked_archive_digest": "sha512:b2a41a9809d1d785600abd40eb5f00dec1abca07292be1c46de9c0fc7884024914c1c648201fed816a871715a03b20e1e270782424629a1efd751e58c1cf4c0d",
+      "notice_type": "license",
+      "sha256": "92b07a2e5b0e051d37dde85042c736d6d551cfcbc0983f39d7ef903b3986bbc1",
+      "source_commit": "3c336b9a923d636328e9a7857d11ae0db79f3196",
+      "source_url": "https://raw.githubusercontent.com/qix-/node-error-ex/3c336b9a923d636328e9a7857d11ae0db79f3196/LICENSE",
+      "binding": {
+        "kind": "registry_git_head",
+        "repository": "qix-/node-error-ex",
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/error-ex/1.3.4",
+            "sha256": "210caf3fac52e21213f85674cbcc28ec960a4032df996eb3e7b80e5845bfcad5"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-escape-string-regexp-4.0.0-source-license",
+      "ecosystem": "npm",
+      "name": "escape-string-regexp",
+      "version": "4.0.0",
+      "locked_archive_url": "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-4.0.0.tgz",
+      "locked_archive_digest": "sha512:4eda5c349dd7033c771aaf2c591cc96956a346cd2e57103660091d6f58e6d9890fcf81ba7a05050320379f9bed10865e7cf93959ae145db2ae4b97ca90959d80",
+      "notice_type": "license",
+      "sha256": "5c932d88256b4ab958f64a856fa48e8bd1f55bc1d96b8149c65689e0c61789d3",
+      "source_commit": "71083e89129bcf72a10656508de5442d3f97966d",
+      "source_url": "https://raw.githubusercontent.com/sindresorhus/escape-string-regexp/71083e89129bcf72a10656508de5442d3f97966d/license",
+      "binding": {
+        "kind": "registry_git_head",
+        "repository": "sindresorhus/escape-string-regexp",
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/escape-string-regexp/4.0.0",
+            "sha256": "cfbd7efcc741f2d13af53ded700fff0d8d5dac45c7e436258972d4b86427bb10"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-find-root-1.1.0-source-license",
+      "ecosystem": "npm",
+      "name": "find-root",
+      "version": "1.1.0",
+      "locked_archive_url": "https://registry.npmjs.org/find-root/-/find-root-1.1.0.tgz",
+      "locked_archive_digest": "sha512:34a7d6e9b79ce867ca734486c757b4ed0658f4f13df6ed017edff4af3483e64dec3bfbf09155290d42959b91a9a7951edd87d284f1535f6d3bd2d0ece6407d36",
+      "notice_type": "license",
+      "sha256": "c3b7834a158755947fca791ea34b8a0d5ac01b203d8b43ecf3dfefa368eb8e72",
+      "source_commit": "853727496c7846456cee13f3bf9079ba978bc858",
+      "source_url": "https://raw.githubusercontent.com/js-n/find-root/853727496c7846456cee13f3bf9079ba978bc858/LICENSE.md",
+      "binding": {
+        "kind": "registry_git_head",
+        "repository": "js-n/find-root",
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/find-root/1.1.0",
+            "sha256": "f84023c8b399c1f9871e82f2abbccf39df5c7c9a44a32d8467e7a889bee990cc"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-hoist-non-react-statics-3.3.2-source-license",
+      "ecosystem": "npm",
+      "name": "hoist-non-react-statics",
+      "version": "3.3.2",
+      "locked_archive_url": "https://registry.npmjs.org/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz",
+      "locked_archive_digest": "sha512:fe01a2bf18bc24f296366fd6d234a6cdc30fa5fa4f2dcddd63fe86c615f6850f621a3dda0df925578113ecd8caa528a72e9279bda7daf62886204660d7449f07",
+      "notice_type": "license",
+      "sha256": "eb32ff0ec52b6ea86e3d3e06c6ad1b68ee03798b6729af13919f6d5c14b368f3",
+      "source_commit": "1b5fb0b06856f196544ff2dda54c9a15e451522e",
+      "source_url": "https://raw.githubusercontent.com/mridgway/hoist-non-react-statics/1b5fb0b06856f196544ff2dda54c9a15e451522e/LICENSE.md",
+      "binding": {
+        "kind": "registry_git_head",
+        "repository": "mridgway/hoist-non-react-statics",
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/hoist-non-react-statics/3.3.2",
+            "sha256": "88dc952c91d8f779dfd2da23d36ee60c51ae288fa2998f1150e9500329eca6bf"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-import-fresh-3.3.1-source-license",
+      "ecosystem": "npm",
+      "name": "import-fresh",
+      "version": "3.3.1",
+      "locked_archive_url": "https://registry.npmjs.org/import-fresh/-/import-fresh-3.3.1.tgz",
+      "locked_archive_digest": "sha512:4d1dca7eb4d94d82cf07a8d48dfc7a305f56716ac72fdb2ee5339b2b866462005d58a3ce1684a8408744b93b91f36a66b711f6b29586f61e9eb707ebd692c1a9",
+      "notice_type": "license",
+      "sha256": "5c932d88256b4ab958f64a856fa48e8bd1f55bc1d96b8149c65689e0c61789d3",
+      "source_commit": "1fad065ac60c08a99d69a6b8a6f5f50e1bcdaaa9",
+      "source_url": "https://raw.githubusercontent.com/sindresorhus/import-fresh/1fad065ac60c08a99d69a6b8a6f5f50e1bcdaaa9/license",
+      "binding": {
+        "kind": "registry_git_head",
+        "repository": "sindresorhus/import-fresh",
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/import-fresh/3.3.1",
+            "sha256": "366ee44119b7f50ea7cabf323f5cc7cef73debc8782c3b3f0e550bbac1a787ab"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-js-tokens-4.0.0-source-license",
+      "ecosystem": "npm",
+      "name": "js-tokens",
+      "version": "4.0.0",
+      "locked_archive_url": "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz",
+      "locked_archive_digest": "sha512:45d2547e5704ddc5332a232a420b02bb4e853eef5474824ed1b7986cf84737893a6a9809b627dca02b53f5b7313a9601b690f690233a49bce0e026aeb16fcf29",
+      "notice_type": "license",
+      "sha256": "2213d91c606205c71eb051a199478cdc2adde945893404d7f1421436dd6d5cc1",
+      "source_commit": "0eb6e9daee32160ab0fca979b6dc91a1991b720c",
+      "source_url": "https://raw.githubusercontent.com/lydell/js-tokens/0eb6e9daee32160ab0fca979b6dc91a1991b720c/LICENSE",
+      "binding": {
+        "kind": "registry_git_head",
+        "repository": "lydell/js-tokens",
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/js-tokens/4.0.0",
+            "sha256": "1ac8c68600567100b906c7239a43054d215a4ff536e2f0691a38231e19196015"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-ms-2.1.3-source-license",
+      "ecosystem": "npm",
+      "name": "ms",
+      "version": "2.1.3",
+      "locked_archive_url": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+      "locked_archive_digest": "sha512:e85973b9b4cb646dc9d9afcd542025784863ceae68c601f268253dc985ef70bb2fa1568726afece715c8ebf5d73fab73ed1f7100eb479d23bfb57b45dd645394",
+      "notice_type": "license",
+      "sha256": "1662fae9b5314d11cf51284e2dcd1f006a354f7343f08712a730fcff9a359801",
+      "source_commit": "1c6264b795492e8fdecbc82cb8802fcfbfc08d26",
+      "source_url": "https://raw.githubusercontent.com/vercel/ms/1c6264b795492e8fdecbc82cb8802fcfbfc08d26/license.md",
+      "binding": {
+        "kind": "registry_git_head",
+        "repository": "vercel/ms",
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/ms/2.1.3",
+            "sha256": "9f31c78548e84f877cedb1e0f0652419777d0c036fbb72985da187e2a962b45d"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-nanoid-3.3.19-source-license",
+      "ecosystem": "npm",
+      "name": "nanoid",
+      "version": "3.3.19",
+      "locked_archive_url": "https://registry.npmjs.org/nanoid/-/nanoid-3.3.19.tgz",
+      "locked_archive_digest": "sha512:636b54372e28bb0eadab9a0348a7906063b286450184d39c195ff4d8a0beea477d7831aa75977efa68cc8880e296b058be3127098bd5b6cb870ae3fea2449fba",
+      "notice_type": "license",
+      "sha256": "da4db1480d9beea3483a2eda5c53b22238d0827d57da162b48f122e04d2d9987",
+      "source_commit": "eb63bd6775188dc35d143bf24868be094f19b5ee",
+      "source_url": "https://raw.githubusercontent.com/ai/nanoid/eb63bd6775188dc35d143bf24868be094f19b5ee/LICENSE",
+      "binding": {
+        "kind": "registry_git_head",
+        "repository": "ai/nanoid",
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/nanoid/3.3.19",
+            "sha256": "3c182e622cc33e8df2bb85ffbabae683e452bd8928cdbb3566caf813b36d8f0e"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-object-assign-4.1.1-source-license",
+      "ecosystem": "npm",
+      "name": "object-assign",
+      "version": "4.1.1",
+      "locked_archive_url": "https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz",
+      "locked_archive_digest": "sha512:ac98134279149c7d6c170f324fa552537cc3dec5a6bbab19848b1e63c557f8646edcfe85ec5bbe24d0e85df9251256cb2529dcdc55101d57b8714e618fe05c52",
+      "notice_type": "license",
+      "sha256": "6fb9754611c20f6649f68805e8c990e83261f29316e29de9e6cedae607b8634c",
+      "source_commit": "a89774b252c91612203876984bbd6addbe3b5a0e",
+      "source_url": "https://raw.githubusercontent.com/sindresorhus/object-assign/a89774b252c91612203876984bbd6addbe3b5a0e/license",
+      "binding": {
+        "kind": "registry_git_head",
+        "repository": "sindresorhus/object-assign",
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/object-assign/4.1.1",
+            "sha256": "afbf512984bb9c98e7496d32fe6760a1e1334702782f3a4eec8d168f5a1d5e0e"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-parent-module-1.0.1-source-license",
+      "ecosystem": "npm",
+      "name": "parent-module",
+      "version": "1.0.1",
+      "locked_archive_url": "https://registry.npmjs.org/parent-module/-/parent-module-1.0.1.tgz",
+      "locked_archive_digest": "sha512:190d84591a5057cfe8f80c3c62ab5f6593df3515996246e2744f64e6ba65fe10b7bed1c705f1a6d887e2eaa595f9ca031a4ad42990311372e8b7991cb11961fa",
+      "notice_type": "license",
+      "sha256": "48da2f39e100d4085767e94966b43f4fa95ff6a0698fba57ed460914e35f94a0",
+      "source_commit": "48267d001c4d215ba21a701a6882dba30fb8d614",
+      "source_url": "https://raw.githubusercontent.com/sindresorhus/parent-module/48267d001c4d215ba21a701a6882dba30fb8d614/license",
+      "binding": {
+        "kind": "registry_git_head",
+        "repository": "sindresorhus/parent-module",
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/parent-module/1.0.1",
+            "sha256": "12a7b2d0dd2a4d49d0d86ce81c1f443c94059471f87778d368c3caf4215331d9"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-parse-json-5.2.0-source-license",
+      "ecosystem": "npm",
+      "name": "parse-json",
+      "version": "5.2.0",
+      "locked_archive_url": "https://registry.npmjs.org/parse-json/-/parse-json-5.2.0.tgz",
+      "locked_archive_digest": "sha512:6b208abe6fe98421b13a461148233cda20f072df3f1289d2120092c56c43eef7ba8c7820b059787d955004f44d810a0a8ae57fa1d845ac6cd05d9c1b89f0bc46",
+      "notice_type": "license",
+      "sha256": "5c932d88256b4ab958f64a856fa48e8bd1f55bc1d96b8149c65689e0c61789d3",
+      "source_commit": "b778e2eb368a0b935e0a999f6366e9edd95e4dc7",
+      "source_url": "https://raw.githubusercontent.com/sindresorhus/parse-json/b778e2eb368a0b935e0a999f6366e9edd95e4dc7/license",
+      "binding": {
+        "kind": "registry_git_head",
+        "repository": "sindresorhus/parse-json",
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/parse-json/5.2.0",
+            "sha256": "25c0d650007c97ce5f842fee340d4d8718eba41fe40f206a413e32ad36567ae9"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-path-type-4.0.0-source-license",
+      "ecosystem": "npm",
+      "name": "path-type",
+      "version": "4.0.0",
+      "locked_archive_url": "https://registry.npmjs.org/path-type/-/path-type-4.0.0.tgz",
+      "locked_archive_digest": "sha512:80329bf1a64c0de0ffb595acf4febeab427d33091d97ac4c57c4e39c63f7a89549d3a6dd32091b0652d4f0875f3ac22c173d815b5acd553dd7b8d125f333c0bf",
+      "notice_type": "license",
+      "sha256": "48da2f39e100d4085767e94966b43f4fa95ff6a0698fba57ed460914e35f94a0",
+      "source_commit": "b60678846423629b1293955d88a41f7e1d87c338",
+      "source_url": "https://raw.githubusercontent.com/sindresorhus/path-type/b60678846423629b1293955d88a41f7e1d87c338/license",
+      "binding": {
+        "kind": "registry_git_head",
+        "repository": "sindresorhus/path-type",
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/path-type/4.0.0",
+            "sha256": "7258d4621c6ede17cc1a146d6e64226f99def59c55d187d95a158f76a0551a94"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-picocolors-1.1.1-source-license",
+      "ecosystem": "npm",
+      "name": "picocolors",
+      "version": "1.1.1",
+      "locked_archive_url": "https://registry.npmjs.org/picocolors/-/picocolors-1.1.1.tgz",
+      "locked_archive_digest": "sha512:c5c787dac9e1b5be4cf658aa0ec984c39ea57b7efa993664117fe311bfd1c4d1727a036e97b78db250973fd1438ff2dcbb45fc284c8c71e3f69eda5a1eb0c454",
+      "notice_type": "license",
+      "sha256": "6582629e2979466878f6014313dcc2f3756c9616148682227ce3063dde310750",
+      "source_commit": "6f0a4638348ed20633d623ee973f9c9a96f65104",
+      "source_url": "https://raw.githubusercontent.com/alexeyraspopov/picocolors/6f0a4638348ed20633d623ee973f9c9a96f65104/LICENSE",
+      "binding": {
+        "kind": "registry_git_head",
+        "repository": "alexeyraspopov/picocolors",
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/picocolors/1.1.1",
+            "sha256": "469edbe4663b07f19026f60ec43744bad678caa89a6be7bf6c4692e2967ddf9d"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-resolve-1.22.12-source-license",
+      "ecosystem": "npm",
+      "name": "resolve",
+      "version": "1.22.12",
+      "locked_archive_url": "https://registry.npmjs.org/resolve/-/resolve-1.22.12.tgz",
+      "locked_archive_digest": "sha512:4f2789d7389fe7704f7c7a28b411b03d1613d5152dea8196b1a42bf14c995bf7809bd6caa228edbebb920c49991e6f760b04bd9e3eff7d6b6da8f0a0cdea7c08",
+      "notice_type": "license",
+      "sha256": "60acd7711e6c138e6041836e32d922705254cc1568a30fdf16aa8f59bb87aeaa",
+      "source_commit": "d2d30de86300fa862e7792057b82b59cd44f2b5d",
+      "source_url": "https://raw.githubusercontent.com/browserify/resolve/d2d30de86300fa862e7792057b82b59cd44f2b5d/LICENSE",
+      "binding": {
+        "kind": "registry_git_head",
+        "repository": "browserify/resolve",
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/resolve/1.22.12",
+            "sha256": "89433a592c31111c76b941ad2571fe819bc3ab189113acc8ef10e646ce074cb4"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-resolve-from-4.0.0-source-license",
+      "ecosystem": "npm",
+      "name": "resolve-from",
+      "version": "4.0.0",
+      "locked_archive_url": "https://registry.npmjs.org/resolve-from/-/resolve-from-4.0.0.tgz",
+      "locked_archive_digest": "sha512:a5bfcc6265ecb40932b11171f2988d235b4614d408140def904dc6ab812e035745ea01e9ffebe066ab021896a9bf2f0ddd0fb8a3b170beab8f25c9d9ed1632e2",
+      "notice_type": "license",
+      "sha256": "48da2f39e100d4085767e94966b43f4fa95ff6a0698fba57ed460914e35f94a0",
+      "source_commit": "60cd04e69135b96b98b848fff719b1276a5610c0",
+      "source_url": "https://raw.githubusercontent.com/sindresorhus/resolve-from/60cd04e69135b96b98b848fff719b1276a5610c0/license",
+      "binding": {
+        "kind": "registry_git_head",
+        "repository": "sindresorhus/resolve-from",
+        "proofs": [
+          {
+            "role": "registry",
+            "url": "https://registry.npmjs.org/resolve-from/4.0.0",
+            "sha256": "b3a3ad08059f40d60898afeaf7364fc8404ab7cfdf18f131b711873829c256a7"
+          }
+        ]
+      }
+    },
+    {
+      "id": "npm-popperjs-core-2.11.8-source-license",
+      "ecosystem": "npm",
+      "name": "@popperjs/core",
+      "version": "2.11.8",
+      "notice_type": "license",
+      "source_url": "https://raw.githubusercontent.com/floating-ui/floating-ui/92195083958c9496988ed4526b82b75b7256b5a4/LICENSE.md",
+      "sha256": "bf67e2c9b7974543bb18ced3a0b37f53729aaff953b442dd89a3adaf90fd93e8",
+      "source_commit": "92195083958c9496988ed4526b82b75b7256b5a4",
+      "locked_archive_url": "https://registry.npmjs.org/@popperjs/core/-/core-2.11.8.tgz",
+      "locked_archive_digest": "sha512:3f5b2dd1a92c0ab9fdb06661a7c18c63006742c6ef016b19017e38a1734dbcb1c6a8039ca15c668d98a886cb7043b4aa2a76d1e3b6a474d8beba57960fcfa0e8",
+      "binding": {
+        "kind": "version_manifest",
+        "repository": "floating-ui/floating-ui",
+        "proofs": [
+          {
+            "role": "version_manifest",
+            "url": "https://raw.githubusercontent.com/floating-ui/floating-ui/92195083958c9496988ed4526b82b75b7256b5a4/package.json",
+            "sha256": "88a4f05ff4d145672cdedfb944aae428d81eab4dd7628542234c39ce1fae77f4",
+            "format": "json",
+            "name_field": "name",
+            "version_field": "version"
+          },
+          {
+            "role": "release_tag",
+            "url": "https://api.github.com/repos/floating-ui/floating-ui/git/matching-refs/tags/v2.11.8",
+            "sha256": "03b637114184a91e3decc86c8c01691f94d1c91495be0d334c408e14e55a4595",
+            "ref": "refs/tags/v2.11.8"
+          },
+          {
+            "role": "peeled_tag",
+            "url": "https://api.github.com/repos/floating-ui/floating-ui/git/tags/9a0c05921a6109e9a0ecd00d51b3ccca2de0e748",
+            "sha256": "0ee9c0cd6ab626d3f562b2c701f94ee93c7b10b8fae078171dbc2eea89fd3a0e"
+          }
+        ]
+      }
+    },
+    {
+      "id": "pypi-py-rust-stemmers-0.1.8-source-license",
+      "ecosystem": "pypi",
+      "name": "py-rust-stemmers",
+      "version": "0.1.8",
+      "notice_type": "license",
+      "source_url": "https://raw.githubusercontent.com/qdrant/py-rust-stemmers/3253a079508d0e07426924769f0ed0c89abf929c/LICENSE",
+      "sha256": "f79ad92c0936186de30f349d55f5e4162845793661e5f8b4d07e8734a92fed6a",
+      "source_commit": "3253a079508d0e07426924769f0ed0c89abf929c",
+      "locked_archive_url": "https://files.pythonhosted.org/packages/10/72/fe33e614c114264d1ba54d39da4b5a4abeb6aedd0d26e5a8fd0637d6ddba/py_rust_stemmers-0.1.8-cp314-cp314-manylinux_2_28_x86_64.whl",
+      "locked_archive_digest": "sha256:451ee1c02a3f5cf1e161b46ba9032cdda4ba10a8b03ff9ee61c1d34d42a0bc81",
+      "binding": {
+        "kind": "version_manifest",
+        "repository": "qdrant/py-rust-stemmers",
+        "proofs": [
+          {
+            "role": "version_manifest",
+            "url": "https://raw.githubusercontent.com/qdrant/py-rust-stemmers/3253a079508d0e07426924769f0ed0c89abf929c/pyproject.toml",
+            "sha256": "bce0b7e7775dd08406f6c84ab3b0487919a449c33b60f5057fcb67d549c2b5df",
+            "format": "toml",
+            "name_field": "project.name",
+            "version_field": "project.version"
+          },
+          {
+            "role": "release_tag",
+            "url": "https://api.github.com/repos/qdrant/py-rust-stemmers/git/matching-refs/tags/v0.1.8",
+            "sha256": "93d6456ba52d87a6a344ce07d7a79f4816a865a55674b355c232e95739b4da1b",
+            "ref": "refs/tags/v0.1.8"
+          },
+          {
+            "role": "peeled_tag",
+            "url": "https://api.github.com/repos/qdrant/py-rust-stemmers/git/tags/90cbe23b46e71bd2c19cc5472fa09bb2402efd64",
+            "sha256": "444fdb8b4bae5ab12a740da6b67bf68c04a21764dec38e54711f013ca428ed76"
+          }
+        ]
+      }
+    }
+  ],
+  "archive_members": [],
+  "unresolved": []
+}

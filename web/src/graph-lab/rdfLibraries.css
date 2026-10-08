@@ -1,0 +1,11 @@
+.rdf-library-lab { display: flex; flex-direction: column; height: 100%; min-height: 680px; min-width: 0; }
+.rdf-library-lab__controls { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 10px 12px; border-bottom: 1px solid #d9e2dd; background: #f8faf8; }
+.rdf-library-lab__controls button, .rdf-library-lab__controls select, .rdf-library-lab__file { padding: 6px 10px; border: 1px solid #b8c9bf; border-radius: 5px; background: white; color: #294d44; font: inherit; font-size: 12px; cursor: pointer; }
+.rdf-library-lab__controls button:disabled { cursor: default; opacity: .45; }
+.rdf-library-lab__controls span { font-size: 12px; color: #52675c; }
+.rdf-library-lab__file input { display: none; }
+.rdf-library-lab__canvas { position: relative; flex: 1; min-height: 570px; overflow: hidden; }
+.rdf-library-lab__canvas > .reactodia-workspace, .rdf-library-lab__canvas > .graph-explorer { height: 100%; min-height: 570px; }
+.rdf-library-lab__notice { margin: 0; padding: 7px 12px; font-size: 12px; color: #52675c; border-top: 1px solid #d9e2dd; }
+.rdf-library-lab__error { margin: 0; padding: 8px 12px; color: #9b352e; background: #fff0ee; font-size: 13px; }
+.rdf-library-lab .graph-explorer__workspace { min-height: 570px; }

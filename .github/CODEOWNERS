@@ -1,0 +1,8 @@
+# Review ownership for security, deployment, and semantic contracts.
+* @erickittelson
+/.github/ @erickittelson
+/charts/ @erickittelson
+/src/knowledge_layer/oidc.py @erickittelson
+/src/knowledge_layer/source_policy.py @erickittelson
+/src/knowledge_layer/migrations/ @erickittelson
+/src/knowledge_layer/schemas/ @erickittelson

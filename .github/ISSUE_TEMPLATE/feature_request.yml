@@ -1,0 +1,27 @@
+name: Feature proposal
+description: Propose a bounded source, semantic contract, or agent integration improvement.
+title: "proposal: "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: "Use synthetic examples only. Do not include credentials, customer metadata, or security vulnerabilities."
+  - type: textarea
+    id: problem
+    attributes:
+      label: Customer problem
+      description: Describe the operator or agent workflow that needs improvement.
+    validations:
+      required: true
+  - type: textarea
+    id: boundary
+    attributes:
+      label: Proposed boundary and acceptance criteria
+      description: Describe source scope, evidence, permissions, failure behavior, and how success would be measured.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Include an existing capability if it could meet the need.

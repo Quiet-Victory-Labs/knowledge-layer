@@ -1,0 +1,125 @@
+name: Verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          enable-cache: true
+      - run: uv sync --frozen --all-extras
+      - run: uv run --no-sync ruff check src scripts tests examples
+      - run: python3 scripts/check_secrets.py
+      - run: uv run --no-sync pytest -q
+      - run: uv run --no-sync python examples/enterprise_consumer.py
+      - run: uv run --no-sync python examples/01_quickstart_sdk.py
+      - run: uv run --no-sync python examples/02_catalog_federation.py
+      - run: uv build
+      - run: uv run --no-sync python scripts/verify_distribution.py
+
+  package:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: 26.10.0
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Match the declared npm and container build toolchain
+        run: npm install --global npm@12.2.0
+      - run: npm ci --prefix web
+      - run: npm --prefix web test
+      - run: npm --prefix web run build
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+      - run: uv sync --frozen
+      - run: npm --prefix web exec -- playwright install --with-deps chromium
+      - run: npm --prefix web run test:e2e
+      - uses: azure/setup-helm@9bc31f4ebc9c6b171d7bfbaa5d006ae7abdb4310 # v5
+        with:
+          version: v4.2.2
+      - run: helm lint charts/knowledge-layer -f charts/knowledge-layer/ci-values.yaml
+      - run: helm template pilot charts/knowledge-layer -f charts/knowledge-layer/ci-values.yaml > /dev/null
+      - run: helm template pilot charts/knowledge-layer -f charts/knowledge-layer/ci-values.yaml --set existingSecret.contextReceiptKeysKey=context-receipt-keys > /dev/null
+      - run: python3 scripts/verify_proxy_configuration.py
+
+  self-host-integration:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - run: docker build -t knowledge-layer:verify .
+      - run: docker build --file Dockerfile.postgres -t knowledge-layer-postgres:verify .
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+      - name: Verify offline root configuration capability controls
+        env:
+          KNOWLEDGE_RUNTIME_TEST_IMAGE: knowledge-layer:verify
+          KNOWLEDGE_POSTGRES_TEST_IMAGE: knowledge-layer-postgres:verify
+        run: uvx --from pytest==9.1.1 pytest -q tests/test_container_runtime_root.py tests/test_postgres_runtime.py
+      - name: Exercise the bounded installation and isolated logical restore
+        run: |
+          mkdir -p .local
+          python3 scripts/measure_installation.py --image knowledge-layer:verify --postgres-image knowledge-layer-postgres:verify --sources 2 --tables-per-source 5 --repetitions 10 --concurrency 2 --output .local/installation-ci.json
+      - name: Qualify fresh owner setup, native MCP, exact human acceptance and complete recovery
+        run: python3 scripts/drill_self_host.py --image knowledge-layer:verify --postgres-image knowledge-layer-postgres:verify --output .local/self-host-ci.json
+
+  local-integration:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - run: python3 scripts/init_env.py
+      - run: docker compose up --build -d --wait
+      - run: python3 scripts/drill_schema_migrations.py
+      - run: python3 scripts/drill_refresh_jobs.py
+      - run: python3 scripts/drill_postgres_recovery.py
+      - run: python3 scripts/drill_postgres_connector.py
+      - run: python3 scripts/drill_local_gateway.py
+      - if: always()
+        run: docker compose down -v
+
+  oidc-integration:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+      - run: uv sync --frozen
+      - run: uv run --no-sync python scripts/drill_oidc_keycloak.py
+
+  autonomy-integration:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+      - run: uv sync --frozen
+      - run: uv run --no-sync python scripts/drill_autonomy.py --managed --include-inventory-refresh --include-native-semantic --output .local/autonomy-ci.json

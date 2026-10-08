@@ -1,0 +1,128 @@
+name: knowledge-layer-pilot
+
+x-app: &app
+  image: ${KNOWLEDGE_IMAGE:?Set an immutable image digest}
+  user: "${KNOWLEDGE_RUN_UID:?}:${KNOWLEDGE_RUN_GID:?}"
+  read_only: true
+  tmpfs: [/tmp:size=64m,mode=1777]
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  pids_limit: 128
+  restart: unless-stopped
+  logging:
+    driver: local
+    options: {max-size: 10m, max-file: "3"}
+
+x-registry: &registry
+  KNOWLEDGE_AUTH_MODE: oidc
+  DATABASE_URL_FILE: /run/secrets/database_url
+  KNOWLEDGE_SOURCE_POLICY_FILE: /run/secrets/source_policy
+  KNOWLEDGE_ENABLED_KINDS: ${KNOWLEDGE_ENABLED_KINDS:?}
+
+services:
+  postgres:
+    image: ${KNOWLEDGE_POSTGRES_IMAGE:?Set an immutable PostgreSQL image digest}
+    restart: unless-stopped
+    mem_limit: 768m
+    cpus: 1.0
+    pids_limit: 128
+    shm_size: 128m
+    security_opt: [no-new-privileges:true]
+    environment:
+      POSTGRES_USER: knowledge_layer
+      POSTGRES_DB: knowledge_layer
+      POSTGRES_PASSWORD_FILE: /run/secrets/database_password
+    command: [postgres, -c, shared_buffers=128MB, -c, max_connections=40]
+    volumes:
+      - ${KNOWLEDGE_DATA_ROOT:?}/postgres:/var/lib/postgresql
+      - ./secrets/database_password:/run/secrets/database_password:ro
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U knowledge_layer -d knowledge_layer]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    logging:
+      driver: local
+      options: {max-size: 10m, max-file: "3"}
+
+  migrate:
+    <<: *app
+    profiles: [tools]
+    restart: "no"
+    mem_limit: 384m
+    cpus: 1.0
+    command: [python, -m, knowledge_layer.migrate, upgrade]
+    environment:
+      DATABASE_URL_FILE: /run/secrets/database_url
+    volumes: [./secrets/database_url:/run/secrets/database_url:ro]
+    depends_on:
+      postgres: {condition: service_healthy}
+
+  api:
+    <<: *app
+    mem_limit: 512m
+    cpus: 1.0
+    environment:
+      <<: *registry
+      KNOWLEDGE_PUBLIC_URL: ${KNOWLEDGE_PUBLIC_URL:?}
+      KNOWLEDGE_OIDC_ISSUER: ${KNOWLEDGE_OIDC_ISSUER:?}
+      KNOWLEDGE_OIDC_CLIENT_ID: ${KNOWLEDGE_OIDC_CLIENT_ID:?}
+      KNOWLEDGE_OIDC_CLIENT_SECRET_FILE: /run/secrets/oidc_client_secret
+      KNOWLEDGE_OIDC_SESSION_KEY_FILE: /run/secrets/session_key
+      KNOWLEDGE_OIDC_AUDIENCE: ${KNOWLEDGE_OIDC_AUDIENCE:?}
+      KNOWLEDGE_OIDC_JWKS_URI: ${KNOWLEDGE_OIDC_JWKS_URI:?}
+      KNOWLEDGE_OIDC_ALLOWED_GROUP: ${KNOWLEDGE_OIDC_ALLOWED_GROUP:?}
+      KNOWLEDGE_OIDC_STEWARD_GROUP: ${KNOWLEDGE_OIDC_STEWARD_GROUP:?}
+      KNOWLEDGE_OIDC_LOGIN_SCOPES: ${KNOWLEDGE_OIDC_LOGIN_SCOPES:-openid profile email}
+      KNOWLEDGE_OIDC_BROWSER_SESSION_SECONDS: "900"
+      KNOWLEDGE_AGENT_SOURCE_MANAGEMENT: "0"
+      KNOWLEDGE_AGENT_AUTONOMY: "0"
+    volumes:
+      - ./secrets/database_url:/run/secrets/database_url:ro
+      - ./secrets/source_policy:/run/secrets/source_policy:ro
+      - ./secrets/oidc_client_secret:/run/secrets/oidc_client_secret:ro
+      - ./secrets/session_key:/run/secrets/session_key:ro
+    ports: [127.0.0.1:8273:8000]
+    depends_on:
+      postgres: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/ready', timeout=2)"]
+      interval: 10s
+      timeout: 3s
+      retries: 12
+
+  worker:
+    <<: *app
+    mem_limit: 768m
+    cpus: 1.0
+    command: [python, -m, knowledge_layer.worker]
+    environment:
+      <<: *registry
+      # Configure source credential files and read-only mounts in an operator
+      # override on the worker only. No source secrets are mounted on the API.
+    volumes:
+      - ./secrets/database_url:/run/secrets/database_url:ro
+      - ./secrets/source_policy:/run/secrets/source_policy:ro
+    depends_on:
+      api: {condition: service_healthy}
+
+  proxy:
+    profiles: [https]
+    image: ${KNOWLEDGE_PROXY_IMAGE:?Set an immutable Caddy image digest}
+    restart: unless-stopped
+    mem_limit: 128m
+    cpus: 0.5
+    pids_limit: 64
+    security_opt: [no-new-privileges:true]
+    environment:
+      KNOWLEDGE_HOST: ${KNOWLEDGE_HOST:?}
+    ports: [80:80, 443:443]
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ${KNOWLEDGE_DATA_ROOT:?}/caddy-data:/data
+      - ${KNOWLEDGE_DATA_ROOT:?}/caddy-config:/config
+    depends_on:
+      api: {condition: service_healthy}
+    logging:
+      driver: local
+      options: {max-size: 10m, max-file: "3"}

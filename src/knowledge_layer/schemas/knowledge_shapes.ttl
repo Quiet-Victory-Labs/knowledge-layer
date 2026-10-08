@@ -1,0 +1,126 @@
+@prefix kl: <https://knowledge-layer.example/ontology#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Knowledge Layer snapshot projection v1, using SHACL Core (2017).
+# These are structural checks, not proof of truth, authorization or freshness.
+# Unknown source metadata may be absent; external/historical targets are IRIs
+# without requiring their private records to appear in this bounded export.
+
+kl:SnapshotSetShape a sh:NodeShape ;
+  sh:targetNode kl:Snapshot ;
+  sh:property [ sh:path [ sh:inversePath rdf:type ] ;
+    sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ;
+    sh:message "A projection must contain exactly one snapshot IRI." ] .
+
+kl:ConnectionSetShape a sh:NodeShape ;
+  sh:targetNode kl:Connection ;
+  sh:property [ sh:path [ sh:inversePath rdf:type ] ;
+    sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ;
+    sh:message "A projection must contain exactly one local connection IRI." ] .
+
+kl:SnapshotShape a sh:NodeShape ;
+  sh:targetClass kl:Snapshot ; sh:nodeKind sh:IRI ;
+  sh:property [ sh:path kl:sourceConnection ; sh:minCount 1 ; sh:maxCount 1 ;
+    sh:nodeKind sh:IRI ; sh:class kl:Connection ] ;
+  sh:property [ sh:path kl:status ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path kl:agentReady ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:boolean ] ;
+  sh:property [ sh:path kl:version ; sh:maxCount 1 ; sh:datatype xsd:integer ; sh:minInclusive 1 ] ;
+  sh:property [ sh:path kl:createdAt ; sh:maxCount 1 ; sh:datatype xsd:string ] .
+
+kl:GeneratedNodeShape a sh:NodeShape ;
+  sh:targetClass kl:Asset, kl:Field, kl:Concept, kl:Evidence, kl:Relationship,
+    kl:Metric, kl:Proposal, kl:QueryExample, kl:EvidenceCitation, kl:InventoryEvidenceCitation ;
+  sh:nodeKind sh:IRI ;
+  sh:property [ sh:path prov:wasGeneratedBy ; sh:minCount 1 ; sh:maxCount 1 ;
+    sh:nodeKind sh:IRI ; sh:class kl:Snapshot ] ;
+  sh:property [ sh:path prov:wasDerivedFrom ; sh:nodeKind sh:IRI ] ;
+  sh:property [ sh:path kl:status ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path kl:trustState ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path kl:effectiveOnCurrentSnapshot ; sh:maxCount 1 ; sh:datatype xsd:boolean ] ;
+  sh:property [ sh:path kl:sourceSnapshot ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] .
+
+kl:AssetShape a sh:NodeShape ; sh:targetClass kl:Asset ;
+  sh:property [ sh:path kl:hasField ; sh:nodeKind sh:IRI ; sh:class kl:Field ] .
+
+kl:ConceptShape a sh:NodeShape ; sh:targetClass kl:Concept ;
+  sh:property [ sh:path rdf:type ; sh:hasValue skos:Concept ] ;
+  sh:property [ sh:path kl:status ; sh:minCount 1 ] ;
+  sh:property [ sh:path skos:prefLabel ; sh:minCount 1 ; sh:maxCount 1 ;
+    sh:datatype xsd:string ; sh:minLength 1 ] ;
+  sh:property [ sh:path skos:definition ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path prov:wasDerivedFrom ; sh:minCount 1 ] ;
+  sh:property [ sh:path kl:definitionStatus ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path kl:definitionEvidence ; sh:nodeKind sh:IRI ] ;
+  sh:property [ sh:path kl:definitionProposal ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
+  # Definition review is independent of the candidate identity/mapping status.
+  sh:or (
+    [ sh:not [ sh:property [ sh:path kl:definitionStatus ; sh:hasValue "approved" ] ] ]
+    [ sh:property [ sh:path skos:definition ; sh:minCount 1 ; sh:minLength 1 ] ;
+      sh:property [ sh:path kl:definitionEvidence ; sh:minCount 1 ] ;
+      sh:property [ sh:path kl:definitionProposal ; sh:minCount 1 ] ]
+  ) ;
+  sh:message "Reviewed definitions require definition text, evidence and a proposal reference; candidate definitions may be absent." .
+
+kl:RelationshipShape a sh:NodeShape ; sh:targetClass kl:Relationship ;
+  sh:property [ sh:path kl:subject ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
+  sh:property [ sh:path kl:object ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
+  sh:property [ sh:path kl:predicateName ; sh:minCount 1 ; sh:maxCount 1 ;
+    sh:datatype xsd:string ; sh:minLength 1 ] ;
+  sh:property [ sh:path kl:status ; sh:minCount 1 ] ;
+  sh:property [ sh:path prov:wasDerivedFrom ; sh:minCount 1 ] .
+
+kl:MetricShape a sh:NodeShape ; sh:targetClass kl:Metric ;
+  sh:property [ sh:path kl:certified ; sh:minCount 1 ; sh:maxCount 1 ;
+    sh:datatype xsd:boolean ; sh:hasValue false ;
+    sh:message "Exported metric definitions are not certified analytical results." ] ;
+  sh:property [ sh:path prov:wasDerivedFrom ; sh:minCount 1 ] ;
+  sh:property [ sh:path kl:sourceAsset ; sh:maxCount 1 ; sh:nodeKind sh:IRI ; sh:class kl:Asset ] ;
+  sh:property [ sh:path kl:measuredField ; sh:maxCount 1 ; sh:nodeKind sh:IRI ; sh:class kl:Field ] .
+
+kl:FieldShape a sh:NodeShape ; sh:targetClass kl:Field ;
+  sh:property [ sh:path rdfs:label ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path kl:status ; sh:minCount 1 ] ;
+  sh:property [ sh:path prov:wasDerivedFrom ; sh:minCount 1 ] ;
+  sh:property [ sh:path kl:nullable ; sh:maxCount 1 ; sh:datatype xsd:boolean ] ;
+  sh:property [ sh:path kl:nativeType ; sh:maxCount 1 ; sh:datatype xsd:string ] .
+
+kl:ProposalShape a sh:NodeShape ; sh:targetClass kl:Proposal ;
+  sh:property [ sh:path kl:status ; sh:minCount 1 ] ;
+  sh:property [ sh:path kl:assertionPayload ; sh:maxCount 1 ; sh:datatype rdf:JSON ] ;
+  sh:property [ sh:path kl:targetAsset ; sh:maxCount 1 ; sh:nodeKind sh:IRI ; sh:class kl:Asset ] ;
+  sh:property [ sh:path kl:targetConcept ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
+  sh:property [ sh:path kl:hasEvidenceCitation ; sh:nodeKind sh:IRI ;
+    sh:or ( [ sh:class kl:EvidenceCitation ] [ sh:class kl:InventoryEvidenceCitation ] ) ] .
+
+kl:EvidenceCitationShape a sh:NodeShape ; sh:targetClass kl:EvidenceCitation ;
+  sh:property [ sh:path kl:sourceConnection ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
+  sh:property [ sh:path kl:sourceSnapshot ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
+  sh:property [ sh:path kl:evidence ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] .
+
+kl:InventoryEvidenceCitationShape a sh:NodeShape ; sh:targetClass kl:InventoryEvidenceCitation ;
+  sh:property [ sh:path kl:sourceConnection ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
+  sh:property [ sh:path kl:sourceInventory ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
+  sh:property [ sh:path kl:sourceEntity ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
+  sh:property [ sh:path kl:evidence ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
+  sh:property [ sh:path kl:manifestDigest ; sh:minCount 1 ; sh:maxCount 1 ;
+    sh:datatype xsd:string ; sh:pattern "^[0-9a-f]{64}$" ] ;
+  sh:property [ sh:path kl:sourceTextAuthority ; sh:minCount 1 ; sh:maxCount 1 ;
+    sh:hasValue "untrusted_evidence" ] ;
+  sh:property [ sh:path kl:sourceSnapshot ; sh:maxCount 0 ;
+    sh:message "Inventory citations bind a manifest, not an invented semantic snapshot." ] .
+
+kl:QueryExampleShape a sh:NodeShape ; sh:targetClass kl:QueryExample ;
+  sh:property [ sh:path kl:executionVerified ; sh:minCount 1 ; sh:maxCount 1 ;
+    sh:datatype xsd:boolean ; sh:hasValue false ;
+    sh:message "A reviewed query example has not been executed by Knowledge Layer." ] ;
+  sh:property [ sh:path prov:wasDerivedFrom ; sh:minCount 1 ] .
+
+kl:NoAutomaticIdentityShape a sh:NodeShape ; sh:targetSubjectsOf owl:sameAs ;
+  sh:property [ sh:path owl:sameAs ; sh:maxCount 0 ;
+    sh:message "Snapshot projections do not establish owl:sameAs identity." ] .

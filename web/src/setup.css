@@ -1,0 +1,17 @@
+.setup-auth { width: min(100% - 40px, 400px); margin: 12vh auto; display: grid; gap: var(--space-4); }
+.app-header, .app-navigation { flex-wrap: wrap; }
+.setup-auth p, .setup-guide p { margin: 0; }
+.setup-auth-form, .setup-field { display: grid; gap: var(--space-2); }
+.setup-auth-form { gap: var(--space-4); }
+.setup-guide { display: grid; gap: var(--space-5); max-width: 680px; }
+.setup-step { display: grid; gap: var(--space-4); padding-top: var(--space-5); }
+.setup-config { font-family: var(--code-font-family); }
+.setup-config { min-height: 180px; }
+.setup-details { margin-top: var(--space-4); font-size: var(--font-size-2); color: var(--gray-11); overflow-wrap: anywhere; }
+.setup-details summary { cursor: pointer; }
+.setup-details pre { padding: var(--space-3); background: var(--gray-2); white-space: pre-wrap; overflow-wrap: anywhere; }
+.setup-details p { margin-top: var(--space-2); }
+.setup-details ul { padding-left: var(--space-4); }
+.setup-details li + li { margin-top: var(--space-3); }
+.setup-details summary:focus-visible { outline: 2px solid var(--accent-9); outline-offset: 3px; }
+@media (max-width: 520px) { .setup-auth { margin-top: 8vh; } }

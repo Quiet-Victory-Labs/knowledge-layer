@@ -1,0 +1,14 @@
+{
+  "image": "ghcr.io/quiet-victory-labs/knowledge-layer@sha256:REPLACE_WITH_VERIFIED_DIGEST",
+  "postgres_image": "postgres@sha256:REPLACE_WITH_VERIFIED_DIGEST",
+  "proxy_image": "caddy@sha256:REPLACE_WITH_VERIFIED_DIGEST",
+  "public_url": "https://knowledge.example.org",
+  "issuer": "https://identity.example.org/realms/company",
+  "client_id": "knowledge-web",
+  "audience": "knowledge-agents",
+  "jwks_uri": "https://identity.example.org/realms/company/protocol/openid-connect/certs",
+  "allowed_group": "knowledge-users",
+  "steward_group": "knowledge-stewards",
+  "enabled_kinds": ["postgres", "sql_catalog", "external_adapter"],
+  "data_root": "/srv/knowledge-layer"
+}

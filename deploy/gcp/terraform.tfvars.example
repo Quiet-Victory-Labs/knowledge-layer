@@ -1,0 +1,8 @@
+project_id = "YOUR_APPROVED_PROJECT"
+region     = "us-central1"
+zone       = "us-central1-a"
+# Includes PostgreSQL. Sizing is a pilot starting point, not a scale claim.
+machine_type = "e2-medium"
+data_disk_gb = 30
+# Restrict this when your agent clients have stable egress IPs.
+https_source_ranges = ["0.0.0.0/0"]

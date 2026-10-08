@@ -1,0 +1,46 @@
+{
+  "title": "Synthetic sales analysis",
+  "description": "A synthetic procedure template for analyzing historical account revenue using separately authorized, read-only sources.",
+  "business_units": [
+    "synthetic-analytics"
+  ],
+  "tasks": [
+    "sales-analysis"
+  ],
+  "connection_ids": [],
+  "audience": {
+    "company_wide": true,
+    "subjects": [],
+    "groups": []
+  },
+  "skills": [
+    {
+      "name": "historical-sales-analysis",
+      "description": "Compare account revenue and forecasts with approved definitions and exact source evidence.",
+      "instructions": "1. Resolve current company guidance for business_unit=synthetic-analytics and task=sales-analysis. Stop if blocked. Record revisions and digests.\n2. Establish the reporting period and observation cutoff from authorized evidence. Later data cannot establish earlier availability.\n3. Retrieve approved knowledge contracts for account identity, revenue and forecasts. Record source snapshots, joins, grain and timing. Do not invent missing definitions.\n4. Use separately authorized read-only query tools. Verify account crosswalks, schema, types, cardinality, timing and row counts. Keep forecasts separate from actual revenue.\n5. State unknown values explicitly. Reconcile returned rows and measures, and provide source and as-of evidence with every finding.",
+      "required_capabilities": [
+        "knowledge_context",
+        "read_only_sql",
+        "result_validation"
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "key": "research-input-timing",
+      "value": "verified-cutoff",
+      "statement": "Earlier-availability claims require observation timestamps before the reporting cutoff."
+    },
+    {
+      "key": "research-missingness",
+      "value": "explicit-unknown",
+      "statement": "Absence, zero, empty and checked-with-no-results are distinct. Never invent an identifier, forecast or result."
+    },
+    {
+      "key": "source-mutation",
+      "value": "read-only",
+      "statement": "Source-native credentials and query tools must enforce read-only access independently of these instructions."
+    }
+  ],
+  "dependencies": []
+}

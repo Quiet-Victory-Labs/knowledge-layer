@@ -1,0 +1,54 @@
+{
+  "manifest_version": "knowledge-curation-evaluator-truth-v1",
+  "not_for_agent_or_customer_api": true,
+  "source_domains": [
+    {
+      "tenant_id": "juniper",
+      "domain": "grocery_product_and_order_operations",
+      "fixture_root": "data/connectable/juniper",
+      "expected_concepts": [
+        {"source_pointer": "products.csv", "field": "product_id", "semantic_type": "identifier"},
+        {"source_pointer": "products.csv", "field": "gtin", "semantic_type": "identifier"},
+        {"source_pointer": "orders.jsonl", "field": "quantity", "semantic_type": "numeric_measure_candidate"},
+        {"source_pointer": "orders.jsonl", "field": "ordered_at", "semantic_type": "event_time"},
+        {"source_pointer": "supplier_item_spec.md", "term": "Juniper Market oat milk specification", "semantic_type": "document_business_term"}
+      ],
+      "expected_relationships": [
+        {"source_asset": "orders.jsonl", "source_field": "product_id", "target_asset": "products.csv", "target_field": "product_id", "expected_status": "candidate"}
+      ],
+      "must_remain_unresolved": [
+        {"claim": "A supplier note certifies order-level product identity", "reason": "The note describes an item but provides no independently verified order-to-item identity evidence."}
+      ]
+    },
+    {
+      "tenant_id": "northstar",
+      "domain": "field_service_work_orders_and_asset_registry",
+      "fixture_root": "data/connectable/northstar",
+      "expected_concepts": [
+        {"source_pointer": "work_orders.csv", "field": "work_order_id", "semantic_type": "identifier"},
+        {"source_pointer": "work_orders.csv", "field": "labor_hours", "semantic_type": "numeric_measure_candidate", "unit": "hour"},
+        {"source_pointer": "sla_policy.md", "term": "first response target", "semantic_type": "document_business_term"}
+      ],
+      "expected_relationships": [
+        {"source_asset": "work_orders.csv", "source_field": "asset_id", "target_asset": "active_assets.csv", "target_field": "asset_id", "expected_status": "candidate"},
+        {"source_asset": "work_orders.csv", "source_field": "asset_id", "target_asset": "retired_assets.csv", "target_field": "asset_id", "expected_status": "candidate", "ambiguity": "multiple_targets"}
+      ],
+      "deliberate_ambiguous_false_merge": {
+        "field": "asset_id",
+        "value": "AST-102",
+        "assets": ["active_assets.csv", "retired_assets.csv"],
+        "expected_status": "unresolved_candidate",
+        "must_not_become": "confirmed_same_asset",
+        "reason": "A reused asset identifier occurs in active and retired registers, and effective-date/source-system context is required."
+      },
+      "definition_conflict": {
+        "term": "first response target",
+        "claims": [
+          {"source_pointer": "sla_policy.md", "value": 4, "unit": "hour"},
+          {"source_pointer": "legacy_service_notes.md", "value": 8, "unit": "hour"}
+        ],
+        "expected_status": "pending_review"
+      }
+    }
+  ]
+}

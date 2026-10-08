@@ -1,0 +1,4 @@
+.knowledge-build-page { max-width: 48rem; min-width: 0; }
+.knowledge-build-details-text { overflow-wrap: anywhere; }
+.knowledge-build-outcomes { display: grid; gap: 1rem; margin: 0; padding: 0; list-style: none; }
+.knowledge-build-settings > summary { cursor: pointer; font-size: var(--font-size-2); color: var(--gray-11); }

@@ -1,0 +1,5 @@
+work_order_id,asset_id,client_id,opened_at,closed_at,labor_hours,parts_cost_usd,status
+WO-4101,AST-102,CL-22,2026-06-02T08:30:00Z,2026-06-02T12:30:00Z,4.0,185.50,closed
+WO-4102,AST-108,CL-31,2026-06-03T10:00:00Z,,2.5,0.00,in_progress
+WO-4103,AST-115,CL-22,2026-06-04T07:15:00Z,2026-06-04T09:45:00Z,2.5,48.25,closed
+WO-4104,AST-102,CL-44,2026-06-05T13:00:00Z,,1.0,22.00,open

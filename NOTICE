@@ -1,0 +1,13 @@
+Knowledge Layer
+Copyright 2026 Knowledge Layer contributors
+
+This distribution includes a pinned copy of the Apache Ossie (incubating)
+development JSON schema in src/knowledge_layer/schemas/. The upstream NOTICE is:
+
+Apache Ossie (incubating)
+Copyright 2026 The Apache Software Foundation
+
+This product includes software developed at
+The Apache Software Foundation (http://www.apache.org/).
+
+See src/knowledge_layer/schemas/README.md for the exact source commit.

@@ -1,0 +1,91 @@
+name: knowledge-layer-oidc-pilot
+
+# Single-organization pilot behind an operator-managed HTTPS reverse proxy.
+# PostgreSQL and the OIDC provider are customer-managed; no demo credentials.
+services:
+  knowledge:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    user: "${KNOWLEDGE_RUN_UID:-10001}:${KNOWLEDGE_RUN_GID:-10001}"
+    read_only: true
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/ready', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 5s
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 128
+    environment:
+      DATABASE_URL_FILE: /run/secrets/database_url
+      KNOWLEDGE_SOURCE_POLICY_FILE: /run/secrets/source_policy
+      KNOWLEDGE_ENABLED_KINDS: ${KNOWLEDGE_ENABLED_KINDS:?Set an explicit connector allowlist}
+      KNOWLEDGE_AUTH_MODE: oidc
+      KNOWLEDGE_PUBLIC_URL: ${KNOWLEDGE_PUBLIC_URL:?Set the external HTTPS origin}
+      KNOWLEDGE_OIDC_ISSUER: ${KNOWLEDGE_OIDC_ISSUER:?Set the OIDC issuer}
+      KNOWLEDGE_OIDC_CLIENT_ID: ${KNOWLEDGE_OIDC_CLIENT_ID:?Set the OIDC web client id}
+      KNOWLEDGE_OIDC_CLIENT_SECRET_FILE: /run/secrets/oidc_client_secret
+      KNOWLEDGE_OIDC_SESSION_KEY_FILE: /run/secrets/session_key
+      KNOWLEDGE_OIDC_AUDIENCE: ${KNOWLEDGE_OIDC_AUDIENCE:?Set the agent API audience}
+      KNOWLEDGE_OIDC_JWKS_URI: ${KNOWLEDGE_OIDC_JWKS_URI:?Set the issuer JWKS URL}
+      KNOWLEDGE_OIDC_ALLOWED_GROUP: ${KNOWLEDGE_OIDC_ALLOWED_GROUP:?Set the user group}
+      KNOWLEDGE_OIDC_STEWARD_GROUP: ${KNOWLEDGE_OIDC_STEWARD_GROUP:?Set the steward group}
+      KNOWLEDGE_OIDC_LOGIN_SCOPES: ${KNOWLEDGE_OIDC_LOGIN_SCOPES:-openid profile email}
+      KNOWLEDGE_OIDC_BROWSER_SESSION_SECONDS: ${KNOWLEDGE_OIDC_BROWSER_SESSION_SECONDS:-900}
+      KNOWLEDGE_AGENT_SOURCE_MANAGEMENT: ${KNOWLEDGE_AGENT_SOURCE_MANAGEMENT:-0}
+      KNOWLEDGE_AGENT_AUTONOMY: ${KNOWLEDGE_AGENT_AUTONOMY:-0}
+      KNOWLEDGE_AGENT_ALLOWED_KINDS: ${KNOWLEDGE_AGENT_ALLOWED_KINDS:-}
+    volumes:
+      - type: bind
+        source: ${KNOWLEDGE_DATABASE_URL_FILE:?Set an owner-only database URL file}
+        target: /run/secrets/database_url
+        read_only: true
+      - type: bind
+        source: ${KNOWLEDGE_SOURCE_POLICY_FILE:?Set an owner-only source policy file}
+        target: /run/secrets/source_policy
+        read_only: true
+      - type: bind
+        source: ${KNOWLEDGE_OIDC_CLIENT_SECRET_FILE:?Set an owner-only client secret file}
+        target: /run/secrets/oidc_client_secret
+        read_only: true
+      - type: bind
+        source: ${KNOWLEDGE_OIDC_SESSION_KEY_FILE:?Set an owner-only session key file}
+        target: /run/secrets/session_key
+        read_only: true
+    ports:
+      - "127.0.0.1:${KNOWLEDGE_PILOT_PORT:-8273}:8000"
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["python", "-m", "knowledge_layer.worker"]
+    user: "${KNOWLEDGE_RUN_UID:-10001}:${KNOWLEDGE_RUN_GID:-10001}"
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 128
+    restart: unless-stopped
+    depends_on:
+      knowledge:
+        condition: service_healthy
+    environment:
+      KNOWLEDGE_AUTH_MODE: oidc
+      DATABASE_URL_FILE: /run/secrets/database_url
+      KNOWLEDGE_SOURCE_POLICY_FILE: /run/secrets/source_policy
+      KNOWLEDGE_ENABLED_KINDS: ${KNOWLEDGE_ENABLED_KINDS:?Set an explicit connector allowlist}
+    volumes:
+      - type: bind
+        source: ${KNOWLEDGE_DATABASE_URL_FILE:?Set an owner-only database URL file}
+        target: /run/secrets/database_url
+        read_only: true
+      - type: bind
+        source: ${KNOWLEDGE_SOURCE_POLICY_FILE:?Set an owner-only source policy file}
+        target: /run/secrets/source_policy
+        read_only: true

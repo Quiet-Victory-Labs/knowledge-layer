@@ -1,0 +1,380 @@
+name: OSS release
+
+# Nothing publishes on push. Select the exact signed release tag when dispatching.
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Exact signed annotated tag (vMAJOR.MINOR.PATCH)
+        required: true
+        type: string
+      publish:
+        description: Publish the verified artifacts to GitHub Releases and GHCR
+        required: true
+        default: false
+        type: boolean
+      channel:
+        description: Stable requires >=1.0 Production/Stable metadata and independent exact-commit GA review
+        required: true
+        default: prerelease
+        type: choice
+        options: [prerelease, stable]
+      ga_review_id:
+        description: Independent GA review reference (required for stable preparation and publication)
+        required: false
+        type: string
+      legal_review_id:
+        description: Independent license, notice and fixture-rights review reference (required to publish)
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: oss-release-${{ inputs.tag }}
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    # Tag-only required independent review protects the workflow before it can
+    # request an OIDC identity. Configure this environment before any dispatch.
+    environment: oss-release-candidate
+    permissions:
+      contents: read
+      actions: read
+      id-token: write
+      attestations: write
+    outputs:
+      commit: ${{ steps.identity.outputs.commit }}
+      channel: ${{ steps.identity.outputs.channel }}
+    env:
+      RELEASE_CHANNEL: ${{ inputs.channel }}
+      GA_REVIEW_ID: ${{ inputs.ga_review_id }}
+      RELEASE_GA_ENVIRONMENT_READY: ${{ vars.RELEASE_GA_ENVIRONMENT_READY }}
+      RELEASE_GA_REVIEW_ID: ${{ vars.RELEASE_GA_REVIEW_ID }}
+      RELEASE_GA_REVIEW_COMMIT: ${{ vars.RELEASE_GA_REVIEW_COMMIT }}
+    steps:
+      - name: Require dispatch from the exact release tag before checkout
+        env:
+          RELEASE_TAG: ${{ inputs.tag }}
+          RELEASE_CANDIDATE_ENVIRONMENT_READY: ${{ vars.RELEASE_CANDIDATE_ENVIRONMENT_READY }}
+        run: |
+          set -euo pipefail
+          test "$RELEASE_CANDIDATE_ENVIRONMENT_READY" = true
+          [[ "$RELEASE_TAG" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]
+          test "$GITHUB_REF" = "refs/tags/$RELEASE_TAG"
+          [[ "$RELEASE_CHANNEL" = prerelease || "$RELEASE_CHANNEL" = stable ]]
+          if [[ "$RELEASE_CHANNEL" = stable ]]; then
+            test "$RELEASE_GA_ENVIRONMENT_READY" = true
+            test -n "$GA_REVIEW_ID"
+            test "$GA_REVIEW_ID" = "$RELEASE_GA_REVIEW_ID"
+          fi
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ inputs.tag }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+      - name: Verify actual branch and both protected environment controls
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_CONTROLS_READ_TOKEN }}
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          test -n "$GH_TOKEN"
+          python3 scripts/check_release_controls.py --repository "$GITHUB_REPOSITORY" --actor "$GITHUB_ACTOR" --tag "$RELEASE_TAG" --output .local/release/release-controls.json
+      - name: Verify signed tag, versions, main ancestry and exact-commit CI
+        id: identity
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.tag }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          RELEASE_GPG_PUBLIC_KEY: ${{ vars.RELEASE_GPG_PUBLIC_KEY }}
+          RELEASE_GPG_FINGERPRINT: ${{ vars.RELEASE_GPG_FINGERPRINT }}
+        run: |
+          set -euo pipefail
+          commit=$(git rev-parse HEAD)
+          git merge-base --is-ancestor "$commit" "refs/remotes/origin/$DEFAULT_BRANCH"
+          python3 scripts/release_gate.py --tag "$RELEASE_TAG" --commit "$commit" --repository "$GITHUB_REPOSITORY" --channel "$RELEASE_CHANNEL" --ga-review-id "$GA_REVIEW_ID" --output .local/release/release-gate.json
+          echo "commit=$commit" >> "$GITHUB_OUTPUT"
+          echo "channel=$RELEASE_CHANNEL" >> "$GITHUB_OUTPUT"
+      - name: Scan complete fetched history and current files
+        run: |
+          set -euo pipefail
+          python3 scripts/check_secrets.py
+          uv run --no-project --with detect-secrets==1.5.0 python scripts/check_release_history.py --output .local/release/history-scan.json
+      - name: Build and smoke Python artifacts
+        run: |
+          set -euo pipefail
+          uv sync --frozen --all-extras
+          uv run --no-sync ruff check src scripts tests
+          uv run --no-sync pytest -q
+          uv build --out-dir .local/release
+          uv run --no-sync python scripts/verify_distribution.py --dist .local/release
+      - name: Audit exact Python runtime versions including every non-dev extra
+        run: |
+          set -euo pipefail
+          mkdir -p .local/release-tools
+          uv export --frozen --no-dev --all-extras --no-extra dev --no-emit-package knowledge-layer --no-hashes --format requirements-txt --output-file .local/release-tools/python-runtime-requirements.txt > /dev/null
+          uvx --from pip-audit==2.10.1 pip-audit --strict --no-deps --disable-pip --progress-spinner off --requirement .local/release-tools/python-runtime-requirements.txt --format json --output .local/release/python-vulnerabilities.json
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: 26.10.0
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Match the declared npm and container build toolchain
+        run: npm install --global npm@12.2.0
+      - name: Build static web artifact and scoped SBOMs
+        run: |
+          set -euo pipefail
+          npm ci --prefix web
+          npm audit --prefix web --audit-level low --json > .local/release/web-vulnerabilities.json
+          npm --prefix web run build
+          epoch=$(git show -s --format=%ct HEAD)
+          tar --sort=name --mtime="@$epoch" --owner=0 --group=0 --numeric-owner -czf .local/release/web-static.tar.gz -C web/dist .
+          scripts/generate_sbom.sh .local/release/sbom
+      - uses: azure/setup-helm@9bc31f4ebc9c6b171d7bfbaa5d006ae7abdb4310 # v5
+        with:
+          version: v4.2.2
+      - name: Package Helm chart
+        run: |
+          set -euo pipefail
+          helm lint charts/knowledge-layer -f charts/knowledge-layer/ci-values.yaml
+          helm package charts/knowledge-layer --destination .local/release
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - name: Build an OCI archive without publishing
+        run: |
+          set -euo pipefail
+          docker buildx build --platform linux/amd64 --provenance=mode=max --metadata-file .local/release/container-build.json --output type=oci,dest=.local/release/container.oci.tar .
+          python3 - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          digest = json.loads(Path('.local/release/container-build.json').read_text())['containerimage.digest']
+          assert re.fullmatch(r'sha256:[a-f0-9]{64}', digest)
+          image = 'ghcr.io/' + os.environ['GITHUB_REPOSITORY'].lower()
+          Path('.local/release/container-reference.txt').write_text(image + '@' + digest + '\n')
+          PY
+      - name: Build the shipped PostgreSQL derivative for the exact release platform
+        run: |
+          set -euo pipefail
+          # Keep the OCI transient: the published app artifacts retain the
+          # derivative's signed build identity, SBOM, license and scan evidence.
+          docker buildx build --platform linux/amd64 --file Dockerfile.postgres --provenance=mode=max --metadata-file .local/release/postgres-build.json --output type=oci,dest=.local/release-tools/postgres.oci.tar .
+      - uses: anchore/sbom-action/download-syft@e22c389904149dbc22b58101806040fa8d37a610 # v0
+        with:
+          syft-version: v1.54.0
+      - name: Inventory container OS/runtime dependencies
+        run: |
+          set -euo pipefail
+          syft oci-archive:.local/release/container.oci.tar -o cyclonedx-json=.local/release/sbom/container.cdx.json
+          syft oci-archive:.local/release-tools/postgres.oci.tar -o cyclonedx-json=.local/release/sbom/postgres.cdx.json
+          printf 'ignore: []\n' > .local/release-tools/grype.yaml
+          cp security/container-risk-decisions.json .local/release/container-risk-decisions.json
+      - name: Inventory scoped licenses including missing optional and platform wheels
+        run: |
+          set -euo pipefail
+          uv run --no-sync python scripts/fetch_license_metadata.py --sbom-dir .local/release/sbom --output .local/release/locked-license-metadata.json
+          uv run --no-sync python scripts/dependency_licenses.py --sbom-dir .local/release/sbom --artifact-metadata .local/release/locked-license-metadata.json --output .local/release/dependency-licenses.json
+      - name: Collect exact locked third-party texts without executing archive code
+        run: |
+          set -euo pipefail
+          uv export --frozen --no-dev --all-extras --no-extra dev --no-emit-package knowledge-layer --no-hashes --format requirements-txt --output-file .local/release/notice-requirements.txt > /dev/null
+          uv run --no-sync python scripts/fetch_release_archives.py --sbom-dir .local/release/sbom --scope python-all-runtime-extras.cdx.json --scope web.cdx.json --platform linux/amd64 --requirements .local/release/notice-requirements.txt --source-package tokenizers --output-dir .local/release-tools/notice-archives
+          uv run --no-sync python scripts/fetch_publisher_notices.py --catalog docs/publisher-notices.json --uv-lock uv.lock --npm-lock web/package-lock.json --output-dir .local/release-tools/publisher-notices
+          uv run --no-sync python scripts/collect_release_notices.py --sbom-dir .local/release/sbom --scope python-all-runtime-extras.cdx.json --scope web.cdx.json --uv-lock uv.lock --npm-lock web/package-lock.json --platform linux/amd64 --requirements .local/release/notice-requirements.txt --wheel-dir .local/release-tools/notice-archives/wheels --sdist-dir .local/release-tools/notice-archives/sdists --npm-dir .local/release-tools/notice-archives/npm --publisher-catalog docs/publisher-notices.json --publisher-dir .local/release-tools/publisher-notices --output-dir .local/release/notices
+          uv run --no-sync python scripts/collect_release_notices.py --check --require-source-pointers --sbom-dir .local/release/sbom --scope python-all-runtime-extras.cdx.json --scope web.cdx.json --uv-lock uv.lock --npm-lock web/package-lock.json --platform linux/amd64 --requirements .local/release/notice-requirements.txt --publisher-catalog docs/publisher-notices.json --output-dir .local/release/notices
+          tar -czf .local/release/third-party-notices.tar.gz -C .local/release/notices .
+      - name: Record raw application container findings
+        uses: anchore/scan-action@27805bf3b4e84b4a5c980df22ed233c00390a439 # v7.4.2
+        with:
+          sbom: .local/release/sbom/container.cdx.json
+          grype-version: v0.120.0
+          config: .local/release-tools/grype.yaml
+          fail-build: false
+          severity-cutoff: negligible
+          only-fixed: false
+          output-format: json
+          output-file: .local/release/container-vulnerabilities.json
+      - name: Record raw shipped PostgreSQL findings
+        uses: anchore/scan-action@27805bf3b4e84b4a5c980df22ed233c00390a439 # v7.4.2
+        with:
+          sbom: .local/release/sbom/postgres.cdx.json
+          grype-version: v0.120.0
+          config: .local/release-tools/grype.yaml
+          fail-build: false
+          severity-cutoff: negligible
+          only-fixed: false
+          output-format: json
+          output-file: .local/release/postgres-vulnerabilities.json
+      - name: Evaluate container risk and preserve complete scans
+        run: |
+          set -euo pipefail
+          python3 scripts/release_manifest.py .local/release --check-container-scans
+          tar -czf .local/release/sbom-bundle.tar.gz -C .local/release/sbom .
+          uv run --no-sync python scripts/release_manifest.py .local/release --channel "$RELEASE_CHANNEL" --repository "$GITHUB_REPOSITORY"
+      - name: Retain scan evidence when preparation is blocked
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: oss-release-scan-review
+          path: |
+            .local/release/container-vulnerabilities.json
+            .local/release/postgres-vulnerabilities.json
+            .local/release/container-risk-decisions.json
+            .local/release/container-risk-evaluation.json
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Keyless provenance for every file, manifest and checksum list
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
+        with:
+          subject-path: '${{ github.workspace }}/.local/release/**/*'
+      - name: Bind the base dependency SBOM to the Python wheel
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
+        with:
+          subject-path: '${{ github.workspace }}/.local/release/*.whl'
+          sbom-path: .local/release/sbom/python.cdx.json
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: oss-release-${{ steps.identity.outputs.channel }}
+          path: .local/release/
+          if-no-files-found: error
+          retention-days: 14
+
+  publish:
+    if: inputs.publish
+    needs: prepare
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    # Configure required independent reviewers and tag-only deployment rules
+    # before use. This environment must not be an unprotected implicit default.
+    environment: oss-release
+    permissions:
+      contents: write
+      actions: read
+      packages: write
+      id-token: write
+      attestations: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      RELEASE_TAG: ${{ inputs.tag }}
+      RELEASE_COMMIT: ${{ needs.prepare.outputs.commit }}
+      RELEASE_CHANNEL: ${{ needs.prepare.outputs.channel }}
+      REQUESTED_RELEASE_CHANNEL: ${{ inputs.channel }}
+      GA_REVIEW_ID: ${{ inputs.ga_review_id }}
+      RELEASE_GA_ENVIRONMENT_READY: ${{ vars.RELEASE_GA_ENVIRONMENT_READY }}
+      RELEASE_GA_REVIEW_ID: ${{ vars.RELEASE_GA_REVIEW_ID }}
+      RELEASE_GA_REVIEW_COMMIT: ${{ vars.RELEASE_GA_REVIEW_COMMIT }}
+      LEGAL_REVIEW_ID: ${{ inputs.legal_review_id }}
+      APPROVED_LEGAL_REVIEW_ID: ${{ vars.RELEASE_LEGAL_REVIEW_ID }}
+      APPROVED_LEGAL_REVIEW_COMMIT: ${{ vars.RELEASE_LEGAL_REVIEW_COMMIT }}
+      RELEASE_ENVIRONMENT_READY: ${{ vars.RELEASE_ENVIRONMENT_READY }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ needs.prepare.outputs.commit }}
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+      - name: Require recorded independent approval for this exact commit
+        run: |
+          set -euo pipefail
+          test "$RELEASE_ENVIRONMENT_READY" = true
+          test -n "$LEGAL_REVIEW_ID"
+          test "$LEGAL_REVIEW_ID" = "$APPROVED_LEGAL_REVIEW_ID"
+          test "$RELEASE_COMMIT" = "$APPROVED_LEGAL_REVIEW_COMMIT"
+          test "$RELEASE_CHANNEL" = "$REQUESTED_RELEASE_CHANNEL"
+          [[ "$RELEASE_CHANNEL" = prerelease || "$RELEASE_CHANNEL" = stable ]]
+          if [[ "$RELEASE_CHANNEL" = stable ]]; then
+            test "$RELEASE_GA_ENVIRONMENT_READY" = true
+            test -n "$GA_REVIEW_ID"
+            test "$GA_REVIEW_ID" = "$RELEASE_GA_REVIEW_ID"
+            test "$RELEASE_COMMIT" = "$RELEASE_GA_REVIEW_COMMIT"
+          fi
+      - name: Recheck actual protection controls before publication
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_CONTROLS_READ_TOKEN }}
+        run: |
+          set -euo pipefail
+          test -n "$GH_TOKEN"
+          python3 scripts/check_release_controls.py --repository "$GITHUB_REPOSITORY" --actor "$GITHUB_ACTOR" --tag "$RELEASE_TAG" --output .local/publication-controls.json
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        with:
+          name: oss-release-${{ needs.prepare.outputs.channel }}
+          path: .local/release
+      - name: Verify all file signatures and exact builder identity before publication
+        run: |
+          set -euo pipefail
+          uv run --no-project --with packaging==26.3 python scripts/release_manifest.py .local/release --verify --repository "$GITHUB_REPOSITORY" --channel "$RELEASE_CHANNEL" --ga-review-id "$GA_REVIEW_ID"
+          uv run --no-project --with packaging==26.3 python scripts/verify_release_attestations.py .local/release --repository "$GITHUB_REPOSITORY" --tag "$RELEASE_TAG" --commit "$RELEASE_COMMIT"
+      - uses: sigstore/cosign-installer@ba7bc0a3fef59531c69a25acd34668d6d3fe6f22 # v4.1.0
+        with:
+          cosign-release: v3.0.5
+      - name: Publish the exact OCI archive and verify its keyless signature
+        id: container
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y skopeo
+          image="ghcr.io/${GITHUB_REPOSITORY,,}"
+          printf '%s' "$GH_TOKEN" | skopeo login --username "$GITHUB_ACTOR" --password-stdin ghcr.io
+          export PUBLICATION_IMAGE="$image"
+          python3 - <<'PY'
+          import os, re, subprocess
+          repository, tag, image = (os.environ[name] for name in ('GITHUB_REPOSITORY', 'RELEASE_TAG', 'PUBLICATION_IMAGE'))
+          result = subprocess.run(['gh', 'api', '--include', f'repos/{repository}/releases/tags/{tag}'], capture_output=True, text=True, timeout=60)
+          status = re.search(r'^HTTP/\S+\s+(\d+)', result.stdout, re.MULTILINE)
+          if not status or status.group(1) != '404':
+              raise SystemExit('Release already exists or absence cannot be verified; refusing publication')
+          result = subprocess.run(['skopeo', 'inspect', '--raw', f'docker://{image}:{tag}'], capture_output=True, text=True, timeout=60)
+          if result.returncode == 0 or 'manifest unknown' not in result.stderr.lower():
+              raise SystemExit('Image tag already exists or absence cannot be verified; refusing publication')
+          PY
+          skopeo copy --all --preserve-digests oci-archive:.local/release/container.oci.tar "docker://$image:$RELEASE_TAG"
+          digest=$(skopeo inspect --raw "docker://$image:$RELEASE_TAG" | sha256sum | cut -d ' ' -f 1)
+          test "$(cat .local/release/container-reference.txt)" = "$image@sha256:$digest"
+          echo "image=$image" >> "$GITHUB_OUTPUT"
+          echo "digest=sha256:$digest" >> "$GITHUB_OUTPUT"
+          printf '%s' "$GH_TOKEN" | docker login --username "$GITHUB_ACTOR" --password-stdin ghcr.io
+          cosign sign --yes "$image@sha256:$digest"
+          cosign verify --certificate-identity "https://github.com/$GITHUB_REPOSITORY/.github/workflows/release.yaml@refs/tags/$RELEASE_TAG" --certificate-oidc-issuer https://token.actions.githubusercontent.com "$image@sha256:$digest" > /dev/null
+      - name: Keyless OCI provenance in the registry
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
+        with:
+          subject-name: ${{ steps.container.outputs.image }}
+          subject-digest: ${{ steps.container.outputs.digest }}
+          push-to-registry: true
+          create-storage-record: false
+      - name: Bind the container SBOM to the published OCI digest
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4
+        with:
+          subject-name: ${{ steps.container.outputs.image }}
+          subject-digest: ${{ steps.container.outputs.digest }}
+          sbom-path: .local/release/sbom/container.cdx.json
+          push-to-registry: true
+          create-storage-record: false
+      - name: Create the selected release only after image verification
+        run: |
+          set -euo pipefail
+          release_options=(--prerelease --title "Knowledge Layer $RELEASE_TAG alpha")
+          if [[ "$RELEASE_CHANNEL" = stable ]]; then
+            release_options=(--title "Knowledge Layer $RELEASE_TAG")
+          fi
+          gh release create "$RELEASE_TAG" .local/release/*.whl .local/release/*.tar.gz .local/release/*.tar .local/release/*.tgz .local/release/*.json .local/release/SHA256SUMS .local/release/container-reference.txt .local/release/notice-requirements.txt --verify-tag "${release_options[@]}" --notes-file CHANGELOG.md
+          mkdir -p .local/published-readback
+          gh release download "$RELEASE_TAG" --dir .local/published-readback
+          mkdir -p .local/published-readback/sbom
+          tar -xzf .local/published-readback/sbom-bundle.tar.gz -C .local/published-readback/sbom
+          mkdir -p .local/published-readback/notices
+          tar -xzf .local/published-readback/third-party-notices.tar.gz -C .local/published-readback/notices
+          uv run --no-project --with packaging==26.3 python scripts/release_manifest.py .local/published-readback --verify --repository "$GITHUB_REPOSITORY" --channel "$RELEASE_CHANNEL" --ga-review-id "$GA_REVIEW_ID"
+          uv run --no-project --with packaging==26.3 python scripts/verify_release_attestations.py .local/published-readback --repository "$GITHUB_REPOSITORY" --tag "$RELEASE_TAG" --commit "$RELEASE_COMMIT"
+          python3 - <<'PY'
+          import json, os, subprocess
+          repository, tag, channel = (os.environ[name] for name in ('GITHUB_REPOSITORY', 'RELEASE_TAG', 'RELEASE_CHANNEL'))
+          result = subprocess.run(['gh', 'api', f'repos/{repository}/releases/tags/{tag}'], check=True, capture_output=True, text=True, timeout=60)
+          release = json.loads(result.stdout)
+          if release.get('tag_name') != tag or release.get('prerelease') is not (channel == 'prerelease'):
+              raise SystemExit('Published release channel disagrees with signed preparation')
+          PY

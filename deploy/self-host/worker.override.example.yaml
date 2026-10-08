@@ -1,0 +1,11 @@
+# Copy this into the installation directory as worker.override.yaml. It is
+# included automatically. Provision only credentials for approved sources.
+services:
+  worker:
+    environment:
+      KNOWLEDGE_SOURCE_EXAMPLE_FILE: /run/source-secrets/example
+    volumes:
+      - ./source-secrets/example:/run/source-secrets/example:ro
+# Keep source secret files owner-only, owned by the configured runtime UID.
+# Enable the matching source kind in init and provide an explicit source policy.
+# Do not mount source credentials on api or migrate.
