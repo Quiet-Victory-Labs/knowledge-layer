@@ -22,3 +22,6 @@ dist/
 *.tfstate.*
 *.tfplan
 terraform.tfvars
+
+# Local Vercel project links and deployment metadata
+.vercel/

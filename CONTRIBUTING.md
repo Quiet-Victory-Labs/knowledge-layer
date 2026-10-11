@@ -1,8 +1,40 @@
 # Contributing
 
+Contributions to documentation, synthetic examples, semantic models, connectors
+and the review experience are welcome. Try the
+[getting-started walkthrough](docs/getting-started.md) first, then choose a
+small change with a clear user outcome.
+
 The product boundary is a small self-hosted knowledge service: connect scoped sources, preserve versioned metadata and evidence, let external agents draft semantic meaning, and require owner review before accepting business claims. Keep the main UI focused on connection, status, and decisions.
 
-## Local verification
+## Choose a contribution
+
+Use [GitHub Discussions](https://github.com/Quiet-Victory-Labs/knowledge-layer/discussions)
+for usage questions and early ideas. Open a
+[bug report or feature proposal](https://github.com/Quiet-Victory-Labs/knowledge-layer/issues/new/choose)
+for reproducible behavior or a concrete change. For significant public contracts,
+schema or permission changes, describe the intended behavior in an issue before
+implementation. Report vulnerabilities [privately](SECURITY.md).
+
+Useful starting points include clarifying an installation step, adding an
+original synthetic example, preserving better evidence for a semantic claim, or
+improving a bounded connector response. Read the
+[architecture](docs/architecture.md), [knowledge graph](docs/collective-knowledge-graph.md)
+and [fixture provenance](docs/public-fixture-provenance.md) for their boundaries.
+Do not copy customer records or private operational findings into contributions.
+
+## Set up a development checkout
+
+Fork the public repository, clone your fork, and create a branch for the change.
+Native Python development uses Python 3.14 and `uv`; the frontend uses Node
+26.10 and npm 12.2. The Docker-based end-user installer has separate, smaller
+host requirements in the [self-hosting guide](docs/self-host.md).
+
+## Verify the affected workflow
+
+Run checks appropriate to your change. The following commands reproduce the
+core backend, example, frontend and chart checks; a documentation-only change
+usually needs accurate commands, working links and a review of its claims.
 
 ```sh
 uv sync --frozen --all-extras
@@ -57,6 +89,8 @@ image. A cleanup failure retains private retry files and fails qualification.
 It invokes no model or cloud service; client configuration checks do not qualify
 Codex, Claude or Cursor inference behavior or customer source permissions.
 
+## Preserve semantic and connector boundaries
+
 Connectors must declare their scan scope, retention behavior, permissions, limits, change signal, and safe failure mode. Keep source credentials behind named operator references. Do not add a menu choice as a claim of vendor support; use a real credentialed compatibility test before calling a dialect qualified. New ontology assertions need source identity, snapshot version, evidence handles, trust state, and a review path. Tests should cover denied access, stale evidence, source drift, and false merges rather than simply mirroring implementation code.
 
 External adapter contributors can run the [offline contract check](docs/adapter-conformance.md)
@@ -68,6 +102,12 @@ require independent qualification. No vendor SDK or hosted model is required.
 
 Decision-provider adapters implement the small `DecisionProvider.assess(packet)` contract in `src/knowledge_layer/decisions.py`. Keep them optional and outside the base image when they need model runtimes. Bound outbound metadata, require explicit permission for remote egress, validate typed options and probability distributions, and preserve the steward approval boundary. A new provider or routing policy needs a held-out labeled evaluation that reports false skipped work and calibration against the rules baseline. A high model score is not source evidence.
 
-Open a focused issue or pull request with the customer scenario, observed behavior, test evidence, and any compatibility or security limits. Do not include private customer data or credentials. See [SECURITY.md](SECURITY.md) for private vulnerability reporting.
+## Open a pull request
+
+Explain the user scenario, resulting behavior, evidence from relevant checks and
+any compatibility or security limits. Link the issue when there is one and
+update the affected documentation. Keep changes focused enough to review.
+Do not include private customer data or credentials. See [SECURITY.md](SECURITY.md)
+for private vulnerability reporting.
 
 QVL maintainers review pull requests under [GOVERNANCE.md](GOVERNANCE.md). Changes to security boundaries, public contracts, migrations, or publication behavior need an explicit compatibility and threat review in the pull request. Keep the changelog current for user-visible changes. Releases follow [RELEASING.md](RELEASING.md); contributors must not move release tags or publish artifacts from unreviewed branches.
