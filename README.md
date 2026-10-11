@@ -13,7 +13,7 @@ relationships and metrics through Model Context Protocol (MCP).
 [![Verify CI](https://github.com/Quiet-Victory-Labs/knowledge-layer/actions/workflows/verify.yaml/badge.svg)](https://github.com/Quiet-Victory-Labs/knowledge-layer/actions/workflows/verify.yaml)
 [![Apache 2.0](https://img.shields.io/badge/license-Apache_2.0-blue.svg)](LICENSE)
 
-[Project website](https://quiet-victory-labs.github.io/knowledge-layer/) ·
+[Project website](https://knowledge-layer.quietvictorylabs.com/) ·
 [Get started](docs/getting-started.md) · [Documentation](docs/README.md) ·
 [Ask a question](https://github.com/Quiet-Victory-Labs/knowledge-layer/discussions) ·
 [Contribute](CONTRIBUTING.md)

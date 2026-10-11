@@ -66,6 +66,7 @@ available features, local checks and customer qualification.
 - [Schema migrations](schema-migrations.md) — controlled upgrades and drift checks.
 - [Secret candidate scanning](secret-scanning.md) — tracked-file and history checks with explicit limits.
 - [Repository operations](repository-operations.md) — public source controls and separation from private development history.
+- [Project website hosting](marketing-site.md) — the static marketing page, QVL Vercel project and verified deployment process.
 
 ## Contribute and assess readiness
 

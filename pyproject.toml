@@ -36,7 +36,7 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://quiet-victory-labs.github.io/knowledge-layer/"
+Homepage = "https://knowledge-layer.quietvictorylabs.com/"
 Repository = "https://github.com/Quiet-Victory-Labs/knowledge-layer"
 Issues = "https://github.com/Quiet-Victory-Labs/knowledge-layer/issues"
 Documentation = "https://github.com/Quiet-Victory-Labs/knowledge-layer/blob/main/docs/README.md"
