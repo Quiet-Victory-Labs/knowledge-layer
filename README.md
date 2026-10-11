@@ -14,7 +14,9 @@ and cited evidence, and lets agents propose definitions, relationships and
 metrics for human review. Reviewed, current context can be published through
 Model Context Protocol (MCP), HTTP APIs and graph exports.
 
-The project is **alpha**. Connector availability, offline conformance tests,
+The project is a **public open source alpha**, licensed under Apache 2.0.
+Its public history starts from a sanitized source snapshot; private development
+and pilot history are preserved separately. Connector availability, offline conformance tests,
 local installation checks and customer production qualification are distinct.
 See the [capability matrix](docs/capability-support-matrix.md) for supported
 paths and their limits.

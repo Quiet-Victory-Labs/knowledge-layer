@@ -8,7 +8,14 @@ Optional decision or generative model providers may receive bounded evidence sum
 
 ## Reporting a vulnerability
 
-Email **[hello@quietvictorylabs.com](mailto:hello@quietvictorylabs.com)** with the
+Use [GitHub private vulnerability reporting](https://github.com/Quiet-Victory-Labs/knowledge-layer/security/advisories/new)
+to report a vulnerability privately to the repository maintainer, Eric Kittelson
+(@erickittelson). Send the affected commit or version, the violated boundary,
+and a minimal reproduction using synthetic data. Do not include credentials or
+customer records. Keep vulnerability details private until a fix and disclosure
+plan are ready.
+
+The alternative email contact is **[hello@quietvictorylabs.com](mailto:hello@quietvictorylabs.com)** with the
 subject `Knowledge Layer security report`. This is the existing contact
 published on [QVL's website](https://www.quietvictorylabs.com/); Eric Kittelson is
 the current repository administrator. Send the affected commit or version,
@@ -18,17 +25,11 @@ issue, pull request, discussion, or ordinary support ticket. The administrator
 coordinates a restricted fix and rotates any exposed credential.
 
 This address is publicly documented; inbox delivery, monitoring and escalation
-have **not yet been verified for this project**. Before public launch, the
+have **not yet been verified for this project**. Before relying on email, the
 maintainer must send the content-free test in
 [the release review packet](docs/ga-review-packet.md), confirm private receipt,
-record the monitoring owner and complete the acknowledgment check. Public
-release remains blocked until that check succeeds.
-
-Also enable GitHub private vulnerability reporting when making this repository
-public and configure administrator security-alert notifications. The
-[GitHub reporting form](https://github.com/Quiet-Victory-Labs/knowledge-layer/security/advisories/new)
-becomes a second route only after it is enabled and tested. That feature is for
-public repositories and is unavailable in the current private setup. Keep
-vulnerability details private until a fix and disclosure plan are ready.
+record the monitoring owner and complete the acknowledgment check. Use the
+GitHub private reporting route in the meantime. Enabling that route establishes
+private submission availability, not a guaranteed response time.
 
 For a suspected credential leak, rotate the affected credential at its source and review access logs. For a suspected authorization bypass, disable remote exposure until the boundary is verified. The local demo bearer token protects only its agent endpoints; never publish demo mode to the internet.

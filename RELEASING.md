@@ -67,15 +67,17 @@ this checker. Unknown values and API permission failures refuse; ready
 variables cannot replace a successful readback. The signed manifest retains
 the preparation receipt, and publication performs a fresh check.
 
-The current private repository has both named environments, but neither has
+The private development archive has both named environments, but neither has
 required independent reviewers and both currently allow administrator bypass.
 They do not satisfy the release control checker. Administrator enforcement,
 code-owner review and latest-push approval are enabled on `main`; an independent
-eligible code reviewer still needs to be added. The intended public source alpha
-has a separate [source-publication checklist](docs/public-alpha-readiness.md).
-Security contact delivery and monitoring, source/fixture rights and the selected
-public history must be settled before visibility changes. No subscription
-upgrade or policy bypass is part of this preparation.
+eligible code reviewer still needs to be added. The public source alpha uses a
+fresh sanitized history and has a separate [source-publication record](docs/public-alpha-readiness.md).
+Release environments and secrets were not copied to the public source repository.
+Independent review, security-contact monitoring and source/fixture and dependency
+rights review remain requirements for the signed binary release lane. Source
+publication does not approve that lane. No subscription upgrade is part of this
+publication.
 
 ## Stable channel
 

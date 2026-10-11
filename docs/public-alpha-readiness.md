@@ -1,8 +1,10 @@
-# Public source alpha preparation — October 8, 2026
+# Public source alpha — October 11, 2026
 
-The publishable product is a `0.1.x` alpha evaluation. The repository is still
-private. Source visibility does not imply a signed binary release or enterprise
-qualification.
+The public product is a `0.1.x` alpha evaluation under Apache 2.0. The owner
+requested public source availability on October 11, 2026. Public history begins
+with the sanitized source snapshot; the original development repository and
+its pilot history remain private. Source visibility does not imply a signed
+binary release or enterprise qualification.
 
 ## Prepared
 
@@ -20,22 +22,21 @@ qualification.
 - Main protection is enforced for administrators and requires code-owner review,
   latest-push approval and six strict CI checks. See [repository operations](repository-operations.md).
 
-## Required decisions and review
+## Remaining review and release work
 
 1. Name an independent GitHub reviewer and add that reviewer to repository access
    and CODEOWNERS. Review and merge the exact change after all six Verify jobs pass.
-2. Choose public history: a fresh source snapshot preserving this private original,
-   or an explicitly reviewed disclosure of the original full history. Removing
-   current files does not remove older Git objects. The prepared snapshot is for
-   review; it does not authorize publishing either history.
+2. Keep the private development history separate. Public development must start
+   from this sanitized repository; do not push branches or tags from the private
+   original into it. Removed pilot files must not be reintroduced.
 3. Record first-party/source/fixture rights and dependency obligations for the
    exact intended snapshot. LGPL-declared psycopg packages and corresponding-source
    obligations remain review inputs; notice coverage is a technical inventory.
 4. Specify the sender for a content-free security-contact test, confirm private
    delivery, and name the monitoring/escalation owner. Verify the acknowledgment
    procedure. See [SECURITY.md](../SECURITY.md).
-5. On the chosen public repository, enable/test private vulnerability reporting,
-   apply the required branch/reviewer protections and verify their actual readback.
+5. Maintain private vulnerability reporting and the required branch/reviewer
+   protections, and verify actual settings before each release.
 
 The [signed release procedure](../RELEASING.md) additionally requires qualified
 release environments, current image vulnerability review and signed artifact

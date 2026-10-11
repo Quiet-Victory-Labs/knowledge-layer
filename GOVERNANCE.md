@@ -1,6 +1,6 @@
 # Governance
 
-Knowledge Layer is maintained by Quiet Victory Labs (QVL). The repository is private during its alpha qualification; the Apache-2.0 license and contribution process are in place for a later public release. Repository access does not imply that the service is qualified for a customer's production data.
+Knowledge Layer is a public Apache-2.0 source alpha maintained by Quiet Victory Labs (QVL). Eric Kittelson (@erickittelson) is the repository maintainer. Source availability does not imply that the service is qualified for a customer's production data.
 
 ## Decision rights
 
@@ -13,4 +13,4 @@ Knowledge Layer is maintained by Quiet Victory Labs (QVL). The repository is pri
 
 Open an issue for significant behavior or contract changes, then send a focused pull request. The author supplies tests for changed behavior and updates the relevant operator documentation. A maintainer reviews the change and its evidence before merge. Security reports follow [SECURITY.md](SECURITY.md), outside public issues.
 
-The default branch is the integration branch. Releases use immutable `vMAJOR.MINOR.PATCH` tags and the procedure in [RELEASING.md](RELEASING.md). Before public launch, QVL will publish named maintainer and security contacts, verify license compatibility, and revisit this governance document with prospective contributors.
+The default branch is the integration branch. Releases use immutable `vMAJOR.MINOR.PATCH` tags and the procedure in [RELEASING.md](RELEASING.md). Private vulnerability reports follow [SECURITY.md](SECURITY.md). Independent reviewer coverage and the additional binary-release qualifications remain open; QVL will revisit governance with prospective contributors.
