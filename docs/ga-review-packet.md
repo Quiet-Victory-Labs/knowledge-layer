@@ -215,7 +215,13 @@ mail-routing configuration and does not prove that the published security
 inbox delivers, is monitored, or has an escalation owner. The content-free
 test above remains pending an authorized sender and private acknowledgment.
 
-## Repository controls and cost
+## Historical private-repository controls and cost
+
+This section records the private development repository's preflight before
+public source publication. The source alpha now uses a separate sanitized
+public history; see [current repository operations](repository-operations.md).
+The historical refusals below remain binary-release evidence, not a claim that
+the current source repository is private.
 
 Run the read-only actual-control checker with an authorized read token:
 
@@ -236,17 +242,17 @@ replace the actual readback. Give `RELEASE_CONTROLS_READ_TOKEN` read access to
 repository Administration and Actions in both protected environments; no private
 signing key belongs in CI.
 
-The current private GitHub Team repository cannot supply required environment
+The private GitHub Team repository could not supply required environment
 reviewers or private artifact attestations on this plan. Environment secrets on a
 private Team repository do not provide the required independent-review gate.
 Private/internal artifact attestations require GitHub Enterprise Cloud. GitHub documents
 [environment reviewer availability](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/review-deployments)
 and [attestation availability](https://docs.github.com/en/actions/concepts/security/artifact-attestations).
-The intended OSS public repository can use these features without an Enterprise
-upgrade. Visibility must change only after the security, history, rights and
-contact review succeeds. This implementation does not change visibility, buy an
-upgrade or configure imaginary approvals. It leaves public launch blocked until
-those concrete requirements are met.
+The OSS public repository can use these features without an Enterprise upgrade.
+The source publication preserves the original private history and does not copy
+its release secrets or environments. Signed binary publication still requires
+the security, rights, contact and independent review qualifications in this
+packet. Public source availability does not infer those approvals.
 
 ## Retained operator evidence
 
