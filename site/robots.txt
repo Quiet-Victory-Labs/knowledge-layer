@@ -1,0 +1,6 @@
+# This file is published at a GitHub Pages project path. Robots directives are
+# effective only at the origin root; page-level indexing uses HTML metadata.
+User-agent: *
+Allow: /knowledge-layer/
+
+Sitemap: https://quiet-victory-labs.github.io/knowledge-layer/sitemap.xml

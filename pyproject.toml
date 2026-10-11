@@ -1,8 +1,9 @@
 [project]
 name = "knowledge-layer"
 version = "0.1.0"
-description = "Self-hosted, evidence-backed semantic context for external agents"
+description = "Open source, self-hosted semantic layer and knowledge graph for AI agents"
 readme = "README.md"
+keywords = ["semantic-layer", "knowledge-graph", "ai-agents", "mcp", "rdf", "data-governance", "provenance"]
 requires-python = ">=3.14,<3.15"
 license = "Apache-2.0"
 authors = [
@@ -35,10 +36,11 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/Quiet-Victory-Labs/knowledge-layer"
+Homepage = "https://quiet-victory-labs.github.io/knowledge-layer/"
 Repository = "https://github.com/Quiet-Victory-Labs/knowledge-layer"
 Issues = "https://github.com/Quiet-Victory-Labs/knowledge-layer/issues"
-Documentation = "https://github.com/Quiet-Victory-Labs/knowledge-layer#readme"
+Documentation = "https://github.com/Quiet-Victory-Labs/knowledge-layer/blob/main/docs/README.md"
+Discussions = "https://github.com/Quiet-Victory-Labs/knowledge-layer/discussions"
 
 [project.optional-dependencies]
 iceberg = ["pyiceberg[pyarrow,s3fs]>=0.10,<1", "pyarrow>=20,<24", "boto3>=1.38,<2"]

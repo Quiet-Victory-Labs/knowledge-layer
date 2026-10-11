@@ -1,8 +1,11 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Security issue
-    url: https://github.com/Quiet-Victory-Labs/knowledge-layer/security/policy
-    about: Follow the private reporting instructions; do not open a public issue.
-  - name: Usage and support
-    url: https://github.com/Quiet-Victory-Labs/knowledge-layer/blob/main/SUPPORT.md
-    about: Check the support guide before opening a reproducible bug report.
+  - name: Usage questions and ideas
+    url: https://github.com/Quiet-Victory-Labs/knowledge-layer/discussions
+    about: Ask about installation, agent setup and semantic workflows in Discussions.
+  - name: Getting started and documentation
+    url: https://github.com/Quiet-Victory-Labs/knowledge-layer/blob/main/docs/getting-started.md
+    about: Install locally, connect an agent and review your first evidence-backed knowledge.
+  - name: Report a vulnerability privately
+    url: https://github.com/Quiet-Victory-Labs/knowledge-layer/security/advisories/new
+    about: Use private vulnerability reporting; keep security details out of public issues.

@@ -4,87 +4,129 @@
 
 # Knowledge Layer
 
-Self-hosted, evidence-backed semantic context for external agents.
+**Give your agents context they can trace.**
+
+An open source, self-hosted semantic layer for AI agents. Connect scoped data and
+document sources, build a shared knowledge graph, and publish reviewed definitions,
+relationships and metrics through Model Context Protocol (MCP).
 
 [![Verify CI](https://github.com/Quiet-Victory-Labs/knowledge-layer/actions/workflows/verify.yaml/badge.svg)](https://github.com/Quiet-Victory-Labs/knowledge-layer/actions/workflows/verify.yaml)
 [![Apache 2.0](https://img.shields.io/badge/license-Apache_2.0-blue.svg)](LICENSE)
 
-Knowledge Layer connects scoped data and document sources, preserves metadata
-and cited evidence, and lets agents propose definitions, relationships and
-metrics for human review. Reviewed, current context can be published through
-Model Context Protocol (MCP), HTTP APIs and graph exports.
+[Project website](https://quiet-victory-labs.github.io/knowledge-layer/) ·
+[Get started](docs/getting-started.md) · [Documentation](docs/README.md) ·
+[Ask a question](https://github.com/Quiet-Victory-Labs/knowledge-layer/discussions) ·
+[Contribute](CONTRIBUTING.md)
 
-The project is a **public open source alpha**, licensed under Apache 2.0.
-Its public history starts from a sanitized source snapshot; private development
-and pilot history are preserved separately. Connector availability, offline conformance tests,
-local installation checks and customer production qualification are distinct.
-See the [capability matrix](docs/capability-support-matrix.md) for supported
-paths and their limits.
+Knowledge Layer is a **public source alpha**. Evaluate it with synthetic or
+appropriately scoped sources; check the [capability matrix](docs/capability-support-matrix.md)
+for connector support and qualification limits.
 
-## What it provides
+## Why use Knowledge Layer?
 
-- Versioned connections, discovery status, source evidence and drift tracking.
-- Typed table, field, grain, join and metric proposals with exact evidence bindings.
-- Human review and separate publication of current context for agent use.
-- Scoped glossary and ontology records, a collective knowledge map, and
-  Resource Description Framework (RDF) exports. Optional Shapes Constraint
-  Language (SHACL) validation checks exported graph structure.
-- Bounded work handoffs for external agents, with drafts and uncertainties kept
-  separate from accepted knowledge.
-- One-way catalog export translation for selected Alation, Collibra, Atlan,
-  OpenMetadata and DataHub payloads. Translation alone does not import or
-  publish records.
+A table name does not tell an agent what a customer means by “active.” Two columns
+with the same label may use different units. A document can describe a metric
+without showing which source version supports it.
 
-The service supplies context and query guidance. Actual source queries and
-verification of analytical results belong to separately authorized source tools.
-Publication records owner review; it does not certify business truth or promise
-hallucination-free answers.
+Knowledge Layer makes those questions explicit. Agents draft meaning from cited
+source evidence. People review the definitions and relationships, then publish
+current context for reuse. Conflicting, stale and unresolved claims stay visible.
 
-## Start a local installation
+| What you need | What the layer provides |
+| --- | --- |
+| Shared business definitions | A scoped glossary and ontology with evidence, review state and source versions. |
+| Relationships you can inspect | A collective knowledge graph with source neighborhoods, provenance and reviewed term bindings. |
+| Consistent analytical context | Typed grain, join and metric proposals with exact evidence bindings and human review. |
+| Context your agents can reuse | Bounded MCP and HTTP handoffs, published retrieval and graph exports. |
 
-The portable installer requires Docker Engine with Compose and Python 3.11 or
-newer on Linux or macOS. It builds the application from this checkout. Native
-Python development requires Python 3.14; frontend development uses Node 26.10
-and npm 12.2.
+## From source evidence to reusable context
+
+```mermaid
+flowchart LR
+    A[Scoped sources] --> B[Metadata and cited evidence]
+    B --> C[Agent drafts]
+    C --> D[Human review]
+    D --> E[Published semantic context]
+    E --> F[Your agents via MCP]
+```
+
+1. **Connect** the sources and scopes you want to evaluate.
+2. **Draft** definitions, relationships and supported metric contracts with your agent.
+3. **Review** the exact claims and their evidence; leave uncertain meaning unresolved.
+4. **Publish** current reviewed context for authorized agents to consume.
+
+The layer supplies context and query guidance. Source queries and analytical result
+verification use separately authorized source tools. Review records an accountable
+decision; it does not certify business truth.
+
+## Start with the bundled examples
+
+You need Docker Engine with Compose and Python 3.11 or newer on Linux or macOS.
+The installer builds from this checkout; the default profile needs no model account
+or cloud service.
 
 ```sh
 git clone https://github.com/Quiet-Victory-Labs/knowledge-layer.git
 cd knowledge-layer
+./knowledge-layer init --examples
 ./knowledge-layer start
 ```
 
 Open [http://127.0.0.1:4173/](http://127.0.0.1:4173/), use the private bootstrap
-token from the launcher to create the local owner account, and follow Setup.
-Add source folders to the installation's read-only `sources/` mount before
-connecting them. The default profile enables local files; remote connectors
-require operator configuration.
+token from the file shown by the launcher, and create your owner account. Setup
+can connect the bundled synthetic sources. Follow the
+[first-context walkthrough](docs/getting-started.md) to draft, review and publish.
 
-To configure an agent for a project:
+Configure your existing agent client for a project:
 
 ```sh
 ./knowledge-layer agent --client codex --project /absolute/path/to/project
 # Also supports --client claude and --client cursor.
 ```
 
-Use the configuration and credential reference shown by Setup, then ask the
-agent to call `get_build_handoff` and report its visible sources. A saved config
-file alone does not prove a working connection. Agents draft knowledge; the
-human reviews and publishes it.
+Load the credential reference printed by Setup, confirm the client's server trust
+prompt, then ask it to call `get_build_handoff` and identify its visible sources.
+Configuration helpers do not prove a live client connection. Agents draft; the
+owner reviews and publishes.
 
-```sh
-./knowledge-layer stop
-```
+Stop the local installation with `./knowledge-layer stop`. See
+[self-hosting](docs/self-host.md) for source folders, remote connectors, credentials,
+backup and recovery.
 
-See [self-hosting](docs/self-host.md) for source configuration, credentials,
-backup and recovery. Organization identity and cloud deployment require the
-additional controls in the [OIDC pilot](docs/oidc-pilot.md) and
-[cloud deployment guide](docs/cloud-deployment.md).
+## Open semantics, inspectable evidence
+
+- **Resource Description Framework (RDF)** exports represent source-backed graph records.
+- **Simple Knowledge Organization System (SKOS)** represents concepts and definitions.
+- **PROV Ontology (PROV-O)** records source and snapshot provenance.
+- Optional **Shapes Constraint Language (SHACL)** validation checks saved graph structure.
+
+Explore the [collective graph](docs/collective-knowledge-graph.md),
+[semantic contracts](docs/semantic-contract-agent-loop.md) and
+[offline RDF validation](docs/rdf-validation.md). Graph structure, current evidence
+and human approval remain distinct checks.
+
+## Connectors and catalog context
+
+Start with mounted structured files and documents. Other paths include database
+and lakehouse metadata, scoped external adapters, and selected catalog export
+translations. Availability and qualification vary by connector and deployment.
+
+[Supported paths and limits](docs/capability-support-matrix.md) ·
+[Catalog integrations](docs/catalog-integrations.md) ·
+[External adapter contract](docs/external-connector-protocol.md)
+
+Knowledge Layer does not write connected enterprise sources. Local profiling can
+read rows, document evidence retains cited passages, and optional semantic sampling
+can retain bounded values. Choose source credentials, retention and agent egress
+policy deliberately. Registry grants do not mirror native row, field or document
+permissions. See [trust boundaries](docs/architecture.md) and
+[source access](docs/source-access.md).
 
 ## Try the Python SDK
 
-Install from the checkout; **PyPI publication is not configured**. There is no
-`knowledge-mcp` console executable. Use the running HTTP MCP endpoint or embed
-the Python server explicitly.
+The disposable synthetic example discovers a source, reviews a specific grain
+assertion, publishes it, and verifies SDK MCP retrieval of that same source.
+It runs no model and queries no customer system.
 
 ```sh
 uv sync --frozen --all-extras
@@ -92,66 +134,24 @@ uv run --no-sync python examples/01_quickstart_sdk.py
 uv run --no-sync python examples/02_catalog_federation.py
 ```
 
-The [SDK example](examples/01_quickstart_sdk.py) creates disposable synthetic
-files, discovers metadata, reviews a specific grain assertion, publishes the
-current reviewed snapshot, and checks that the SDK's MCP server can retrieve
-that same source. It neither runs a model nor queries a customer system.
+Native Python development requires Python 3.14. Install from this checkout;
+PyPI publication is not configured. The catalog example translates scoped
+synthetic exports without persisting records; incomplete pagination is refused.
 
-The [catalog example](examples/02_catalog_federation.py) translates synthetic
-exports with explicit scope and completeness. It checks that translation does
-not persist records. Incomplete pagination is refused, and unknown observation
-metadata stays unknown. See [catalog integrations](docs/catalog-integrations.md)
-for the distinct translation and adapter-ingestion steps.
+## Help shape the project
 
-## Source access and retention
+- [Ask a usage question or share feedback](https://github.com/Quiet-Victory-Labs/knowledge-layer/discussions).
+- [Report a reproducible bug](https://github.com/Quiet-Victory-Labs/knowledge-layer/issues/new?template=bug_report.yml).
+- [Propose a feature](https://github.com/Quiet-Victory-Labs/knowledge-layer/issues/new?template=feature_request.yml)
+  or [request a connector](https://github.com/Quiet-Victory-Labs/knowledge-layer/issues/new?template=connector_request.yml).
+- [Contribute](CONTRIBUTING.md) documentation, synthetic examples or focused fixes.
+- Report vulnerabilities through the private route in [SECURITY.md](SECURITY.md).
 
-Knowledge Layer does not write connected enterprise sources. Native database
-and Iceberg discovery use metadata paths; local structured-file profiling reads
-rows to compute bounded profiles. Document evidence retains cited passages.
-Optional semantic sampling can retain bounded entity IDs, labels and edge
-values. This is **not an unconditional zero-row or zero-content guarantee**.
-
-Provision restricted source credentials, choose excerpt/sample retention and
-agent egress policy, and split connections along audience boundaries. Registry
-grants do not mirror upstream row, field or document permissions. See
-[architecture and trust boundaries](docs/architecture.md),
-[source grants](docs/source-access.md), and
-[connector qualification](docs/native-connector-qualification.md).
-
-## Evidence and qualification
-
-The repository includes offline tests, synthetic consumer/evaluation fixtures,
-local installation and recovery drills, and scoped connector qualification
-records. These establish the declared behaviors and workloads, not a general
-production-scale latency benchmark, billion-row processing performance, model
-uplift, or customer authorization.
-
-Start with the [capability matrix](docs/capability-support-matrix.md),
-[local qualification runbook](docs/local-qualification-runbook.md), and
-[release readiness requirements](docs/release-readiness.md). Graph validation
-checks structure; human review and source evidence remain necessary.
-
-## Development
-
-```sh
-uv sync --frozen --all-extras
-uv run --no-sync ruff check src scripts tests examples
-uv run --no-sync pytest -q
-npm ci --prefix web
-npm --prefix web test
-npm --prefix web run build
-```
-
-[Contributing](CONTRIBUTING.md) includes the backend/Vite development flow,
-browser smoke tests and integration checks. Verify CI runs the Python suite,
-SDK examples, frontend tests/build, browser smoke and deployment drills.
-
-## Documentation and governance
-
-- [Documentation index](docs/README.md)
-- [Agent build, review and consumption](docs/agent-build-flow.md)
-- [Catalog and lakehouse integrations](docs/catalog-integrations.md)
-- [Security reporting](SECURITY.md) and [audit event limits](docs/audit-events.md)
-- [Release process](RELEASING.md), [support](SUPPORT.md) and [governance](GOVERNANCE.md)
+For maintainers: [verification and development](CONTRIBUTING.md),
+[release requirements](RELEASING.md), [governance](GOVERNANCE.md) and
+[release readiness](docs/release-readiness.md). Tests and synthetic drills establish
+declared behaviors, rather than general production-scale performance or model uplift.
 
 Released under [Apache 2.0](LICENSE). Third-party notices are in [NOTICE](NOTICE).
+Public development starts from a sanitized source snapshot; original private pilot
+and development history remain separate.
