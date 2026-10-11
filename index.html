@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Knowledge Layer — Self-hosted semantic context for agents</title>
+    <meta name="description" content="Open source, self-hosted semantic context for agents. Connect source evidence, review definitions, and publish context through Model Context Protocol (MCP)." />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#101c2f" />
+    <link rel="canonical" href="https://quiet-victory-labs.github.io/knowledge-layer/" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+    <link rel="stylesheet" href="styles.css" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Knowledge Layer" />
+    <meta property="og:title" content="Give your agents context they can trace." />
+    <meta property="og:description" content="Open source, self-hosted semantic context. Connect source evidence, agent drafts, and human review—then publish context through Model Context Protocol." />
+    <meta property="og:url" content="https://quiet-victory-labs.github.io/knowledge-layer/" />
+    <meta property="og:image" content="https://quiet-victory-labs.github.io/knowledge-layer/assets/social-preview.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Knowledge Layer: Give your agents context they can trace. Open source. Self-hosted. Apache 2.0." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Give your agents context they can trace." />
+    <meta name="twitter:description" content="Open source, self-hosted semantic context for external agents. Source evidence → agent drafts → human review → published context." />
+    <meta name="twitter:image" content="https://quiet-victory-labs.github.io/knowledge-layer/assets/social-preview.jpg" />
+    <meta name="twitter:image:alt" content="Knowledge Layer: Give your agents context they can trace. Open source. Self-hosted. Apache 2.0." />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "Knowledge Layer",
+        "description": "Open source, self-hosted semantic context for external agents, with source evidence, typed semantic drafts, human review, and published Model Context Protocol context.",
+        "url": "https://quiet-victory-labs.github.io/knowledge-layer/",
+        "codeRepository": "https://github.com/Quiet-Victory-Labs/knowledge-layer",
+        "license": "https://www.apache.org/licenses/LICENSE-2.0",
+        "programmingLanguage": ["Python", "TypeScript"],
+        "runtimePlatform": "Docker Engine with Docker Compose on Linux or macOS",
+        "isAccessibleForFree": true,
+        "image": "https://quiet-victory-labs.github.io/knowledge-layer/assets/social-preview.jpg",
+        "author": {
+          "@type": "Organization",
+          "name": "Quiet Victory Labs",
+          "url": "https://github.com/Quiet-Victory-Labs"
+        }
+      }
+    </script>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header container">
+      <a class="brand" href="./" aria-label="Knowledge Layer home">
+        <span class="brand-mark"><img src="assets/knowledge-layer-logo.jpg" width="48" height="48" alt="" /></span>
+        <span>Knowledge Layer</span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="#how-it-works">How it works</a>
+        <a href="#semantics">Semantics</a>
+        <a href="https://github.com/Quiet-Victory-Labs/knowledge-layer/blob/main/docs/README.md">Docs</a>
+        <a class="external-link nav-github" href="https://github.com/Quiet-Victory-Labs/knowledge-layer">GitHub <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 18 18 6M7 6h11v11" /></svg></a>
+      </nav>
+    </header>
+
+    <main id="main" class="container">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <h1 id="hero-title">Give your agents context they can trace.</h1>
+          <p class="hero-description">A self-hosted semantic layer that connects source evidence, agent drafts, and human review—then publishes context your agents can use.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#get-started">Get started</a>
+            <a class="button button-secondary external-link" href="https://github.com/Quiet-Victory-Labs/knowledge-layer">Explore on GitHub <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 18 18 6M7 6h11v11" /></svg></a>
+          </div>
+          <p class="project-status">Open source · Apache 2.0 · Public alpha</p>
+        </div>
+        <div class="hero-art"><img src="assets/knowledge-layer-logo.jpg" width="1024" height="1024" alt="Abstract cyan, blue, and green layers connected in a geometric knowledge structure" fetchpriority="high" /></div>
+      </section>
+
+      <section id="how-it-works" class="workflow section" aria-labelledby="workflow-title">
+        <h2 id="workflow-title">From source to shared context.</h2>
+        <p class="section-intro">Build with your agents. Keep review and publication in human hands.</p>
+        <ol class="workflow-rail">
+          <li>
+            <div class="step-mark" aria-hidden="true"><span>01</span></div>
+            <h3>Connect sources</h3>
+            <p>Scoped metadata and cited document evidence.</p>
+          </li>
+          <li>
+            <div class="step-mark" aria-hidden="true"><span>02</span></div>
+            <h3>Agents draft</h3>
+            <p>Definitions, joins, and metrics with evidence.</p>
+          </li>
+          <li>
+            <div class="step-mark" aria-hidden="true"><span>03</span></div>
+            <h3>Humans review</h3>
+            <p>Accept supported claims. Keep uncertainty visible.</p>
+          </li>
+          <li>
+            <div class="step-mark" aria-hidden="true"><span>04</span></div>
+            <h3>Publish context</h3>
+            <p>Share reviewed, current knowledge through Model Context Protocol (MCP).</p>
+          </li>
+        </ol>
+        <p class="workflow-note">Models run in your chosen agent harness. Your separately authorized source tools execute queries and verify results. <a href="https://github.com/Quiet-Victory-Labs/knowledge-layer/blob/main/docs/agent-build-flow.md">Read the build and review flow</a>.</p>
+      </section>
+
+      <section id="semantics" class="semantics section two-column" aria-labelledby="semantics-title">
+        <div class="section-copy">
+          <h2 id="semantics-title">Make meaning explicit.</h2>
+          <p class="section-intro">A shared knowledge graph connects definitions, source bindings, evidence, and review state—so meaning stays inspectable.</p>
+          <a class="text-link external-link" href="https://github.com/Quiet-Victory-Labs/knowledge-layer/blob/main/docs/collective-knowledge-graph.md">Explore the knowledge graph <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 18 18 6M7 6h11v11" /></svg></a>
+        </div>
+        <dl class="semantic-definitions">
+          <div>
+            <dt>Typed contracts</dt>
+            <dd>Define grain, joins, and metrics with exact evidence bindings.</dd>
+          </div>
+          <div>
+            <dt>Open graph standards</dt>
+            <dd>Resource Description Framework (RDF) exports use Simple Knowledge Organization System (SKOS) vocabulary and PROV Ontology (PROV-O) provenance.</dd>
+          </div>
+          <div>
+            <dt>Optional validation</dt>
+            <dd>Shapes Constraint Language (SHACL) checks graph structure. Evidence and human review still matter.</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section id="get-started" class="get-started section two-column" aria-labelledby="get-started-title">
+        <div class="section-copy">
+          <h2 id="get-started-title">Get started locally.</h2>
+          <p class="section-intro">Docker Engine with Compose and Python 3.11+ on Linux or macOS.</p>
+          <div class="setup-links">
+            <a class="text-link external-link" href="https://github.com/Quiet-Victory-Labs/knowledge-layer/blob/main/docs/self-host.md">Read setup guide <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 18 18 6M7 6h11v11" /></svg></a>
+            <a class="text-link external-link" href="https://github.com/Quiet-Victory-Labs/knowledge-layer/blob/main/docs/agent-skill-install.md">Connect your agent <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 18 18 6M7 6h11v11" /></svg></a>
+          </div>
+        </div>
+        <div class="setup-detail">
+          <div class="terminal">
+            <div class="terminal-header">
+              <span>Terminal</span>
+              <button id="copy-commands" type="button" hidden><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 5H6a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1h-3M9 3h6v4H9z" /></svg><span>Copy commands</span></button>
+            </div>
+            <pre><code id="install-commands">git clone https://github.com/Quiet-Victory-Labs/knowledge-layer.git
+cd knowledge-layer
+./knowledge-layer init --examples
+./knowledge-layer start</code></pre>
+          </div>
+          <p class="setup-caption">Open <code>127.0.0.1:4173</code>, use the launcher’s private bootstrap token to create your local owner account, and follow Setup.</p>
+          <p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer container">
+      <div class="footer-copy">
+        <p class="footer-brand">Knowledge Layer</p>
+        <p>Public alpha. Self-hosted. Apache 2.0.</p>
+        <p>Connector support is scoped. Customer production, native permissions, and cloud operations need separate qualification.</p>
+        <p class="footer-note">Built for evidence, review, and reuse.</p>
+      </div>
+      <nav aria-label="Footer navigation">
+        <a href="https://github.com/Quiet-Victory-Labs/knowledge-layer/blob/main/docs/README.md">Documentation</a>
+        <a href="https://github.com/Quiet-Victory-Labs/knowledge-layer/blob/main/docs/capability-support-matrix.md">Supported capabilities</a>
+        <a href="https://github.com/Quiet-Victory-Labs/knowledge-layer/blob/main/CONTRIBUTING.md">Contributing</a>
+        <a class="external-link" href="https://github.com/Quiet-Victory-Labs/knowledge-layer">GitHub <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 18 18 6M7 6h11v11" /></svg></a>
+      </nav>
+    </footer>
+  </body>
+</html>
