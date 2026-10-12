@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 from types import TracebackType
-from typing import Any, Self
+from typing import Any, Literal, Self
 
 from knowledge_layer.adapters.catalog_presets import translate_catalog_export
 from knowledge_layer.contracts import (
@@ -143,8 +143,13 @@ class KnowledgeClient:
         *,
         connection_id: str | None = None,
         limit: int = 5,
+        match_mode: Literal["all", "ranked"] = "all",
     ) -> list[dict[str, Any]]:
-        """Search bounded document and metadata passages with source locators."""
+        """Search bounded evidence; ranked document candidates expose missing terms."""
+        if match_mode not in {"all", "ranked"}:
+            raise ValueError("match_mode must be all or ranked")
+        if connection_id and match_mode != "all":
+            raise ValueError("ranked mode requires cross-source document search; omit connection_id")
         clean_query = query.strip()
         if not clean_query:
             return []
@@ -153,7 +158,8 @@ class KnowledgeClient:
                 self.store, tenant_id=self.tenant_id, connection_id=connection_id, query=clean_query, limit=limit,
             )
             return result.get("matches", [])
-        result = search_document_evidence(self.store, tenant_id=self.tenant_id, query=clean_query, limit=limit)
+        result = search_document_evidence(self.store, tenant_id=self.tenant_id, query=clean_query,
+                                         limit=limit, match_mode=match_mode)
         return result.get("matches", [])
 
     def propose_assertion(

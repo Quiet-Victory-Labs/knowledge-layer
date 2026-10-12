@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import json
-from typing import Any
+from typing import Any, Literal
 
 from mcp.types import ToolAnnotations
 from pydantic import StrictBool
@@ -242,11 +242,14 @@ def build_knowledge_mcp_server(
         return _bound(search_source_evidence(store, tenant_id=tenant_id, connection_id=connection_id,
                                              query=query, limit=limit))
 
-    @server.tool(name="search_document_evidence", description="Search bounded current document excerpts across connected sources; returns snapshot-pinned citation refs.", annotations=READ_ONLY_ANNOTATIONS)
-    def search_document_evidence_tool(query: str, limit: int = 5) -> dict[str, Any]:
+    @server.tool(name="search_document_evidence", description="Search authorized projected document evidence with snapshot-pinned citations. Default all requires every meaningful query term; ranked may return clearly labeled partial candidates when no full match exists. Read the cited passage before drawing conclusions.", annotations=READ_ONLY_ANNOTATIONS)
+    def search_document_evidence_tool(query: str, limit: int = 5,
+                                      match_mode: Literal["all", "ranked"] = "all") -> dict[str, Any]:
         from knowledge_layer.contracts import search_document_evidence
 
-        return _bound(search_document_evidence(store, tenant_id=tenant_id, query=query, limit=limit))
+        return _contract_tool_response(search_document_evidence(
+            store, tenant_id=tenant_id, query=query, limit=limit, match_mode=match_mode,
+        ))
 
     @server.tool(name="get_semantic_contract", description="Read source bindings, glossary, approved contract assertions, and pending drafts with trust state.", annotations=READ_ONLY_ANNOTATIONS)
     def get_semantic_contract_tool(connection_id: str) -> dict[str, Any]:

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from fastapi import FastAPI, HTTPException, Query, Request, Response
 from pydantic import BaseModel, ConfigDict, Field, StrictBool
@@ -294,8 +294,14 @@ def build_agent_api(
 
     @app.get("/document-evidence/search")
     def document_evidence_search(q: str = Query(min_length=2, max_length=120),
-                                 limit: int = Query(default=5, ge=1, le=10)) -> dict[str, Any]:
-        return _bound(search_document_evidence(store, tenant_id="demo", query=q, limit=limit))
+                                 limit: int = Query(default=5, ge=1, le=10),
+                                 match_mode: Literal["all", "ranked"] = "all") -> dict[str, Any]:
+        try:
+            return _complete_contract_response(search_document_evidence(
+                store, tenant_id="demo", query=q, limit=limit, match_mode=match_mode,
+            ))
+        except ContractResponseTooLarge as exc:
+            raise HTTPException(status_code=413, detail=str(exc)) from exc
 
     @app.get("/sources/{connection_id}/ontology.ttl")
     def ontology(

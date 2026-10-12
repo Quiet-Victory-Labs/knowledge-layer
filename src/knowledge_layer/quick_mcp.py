@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import StrictBool
 
@@ -169,8 +169,9 @@ def build_quick_mcp_server(
             return _bound(result)
         raise ValueError("track must be meaning or contract")
 
-    @server.tool(description="Search snapshot-pinned evidence. Omit connection_id for documents across authorized sources; include connection_id for that source's metadata. Explicit scope may be documents or source.", annotations=READ_ONLY_ANNOTATIONS)
-    def search_evidence(query: str, connection_id: str | None = None, scope: str = "auto", limit: int = 3) -> dict[str, Any]:
+    @server.tool(description="Search snapshot-pinned evidence. Omit connection_id for documents across authorized sources; include connection_id for that source's metadata. Explicit scope may be documents or source. Documents support opt-in ranked partial candidates with missing terms when no full match exists; inspect citations before using them.", annotations=READ_ONLY_ANNOTATIONS)
+    def search_evidence(query: str, connection_id: str | None = None, scope: str = "auto", limit: int = 3,
+                        match_mode: Literal["all", "ranked"] = "all") -> dict[str, Any]:
         from mcp.server.mcpserver.exceptions import ToolError
 
         from knowledge_layer.contracts import (
@@ -183,10 +184,14 @@ def build_quick_mcp_server(
         if scope == "source":
             if not connection_id:
                 raise ToolError("connection_id is required when scope is source")
+            if match_mode != "all":
+                raise ToolError("ranked mode requires scope documents")
             return _bound(search_source_evidence(store, tenant_id="demo", connection_id=connection_id,
                                                  query=query, limit=limit))
         if scope == "documents":
-            return _bound(search_document_evidence(store, tenant_id="demo", query=query, limit=limit))
+            return _contract_tool_response(search_document_evidence(
+                store, tenant_id="demo", query=query, limit=limit, match_mode=match_mode,
+            ))
         raise ToolError("scope must be auto, source or documents")
 
     @server.tool(description="Propose a cited concept definition or relationship mapping for owner review.")
