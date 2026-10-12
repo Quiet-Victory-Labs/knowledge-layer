@@ -79,3 +79,4 @@ available features, local checks and customer qualification.
 - [Public source alpha record](public-alpha-readiness.md) — sanitized public scope and remaining review work.
 - [Public fixture provenance](public-fixture-provenance.md) — synthetic examples, excluded private material and the limits of sanitation.
 - [Platform completion and research plan](platform-completion-plan-2026-10-03.md) — dated roadmap and open technical work.
+- [Recent knowledge repository research](research/2026-10-11-recent-knowledge-repos.md) — WeKnora and eleven related projects, dated source evidence and adaptations.

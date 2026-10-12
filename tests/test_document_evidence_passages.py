@@ -73,6 +73,31 @@ def test_later_paragraph_is_retrievable_with_exact_revision_bound_locator(tmp_pa
         store.close()
 
 
+@pytest.mark.parametrize("query", [
+    "Please tell me about frozen controls",
+    "Tell me about frozen controls",
+    "What do we know about frozen controls?",
+    "What can you tell me about frozen controls?",
+])
+def test_conversational_question_retrieves_the_same_revision_bound_passage(tmp_path, query):
+    body = "# Policy\n\nFrozen controls require review.\n"
+    (tmp_path / "policy.md").write_text(body)
+    store, _, snapshot = _registry(tmp_path)
+    try:
+        direct = search_document_evidence(store, tenant_id="test", query="frozen controls")
+        question = search_document_evidence(store, tenant_id="test", query=query)
+        assert question["matches"] == direct["matches"]
+        assert question["total_matches"] == 1
+        match = question["matches"][0]
+        assert _located_text(body.splitlines(keepends=True), match["source_locator"]) == match["excerpt"]
+        assert match["source_revision"] == snapshot["assets"][0]["revision"]
+        assert match["evidence_ref"]["snapshot_id"] == snapshot["id"]
+        assert match["match_type"] == "full"
+        assert all(item["status"] == "candidate" for item in snapshot["concepts"])
+    finally:
+        store.close()
+
+
 @pytest.mark.parametrize("suffix", [".md", ".txt"])
 def test_long_line_and_headingless_text_keep_late_words_and_exact_chunks(suffix):
     body = ("Long policy introduction " * 55) + "eventual escrow policy applies.\n"

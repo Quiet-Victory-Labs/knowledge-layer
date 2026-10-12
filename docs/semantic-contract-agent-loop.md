@@ -15,6 +15,40 @@ An external agent connects through the [bundled skill](../skills/knowledge-layer
 
 Document headings and bounded excerpts become glossary candidates. A document can be connected by itself or alongside tables. `search_document_evidence` returns a current `connection_id`, `snapshot_id`, and `evidence_id`; a structured-source assertion can cite these via `evidence_refs`. If that document connection changes, its accepted assertion no longer applies to the current contract. The old proposal stays visible as stale. The default connector setting does not retain source values or excerpts; the operator or user must explicitly allow bounded retention when they want document text to ground semantics.
 
+### Search document evidence
+
+Document search accepts complete leading conversational phrases such as “Please
+tell me about account identity”. Its default `match_mode="all"` requires every
+meaningful query term to appear in the projected heading or retained passage.
+This is lexical evidence retrieval, independent of review and publication.
+
+For exploratory retrieval, explicitly request `match_mode="ranked"`. If no full
+match exists across the authorized scan, it can return partial candidates with
+at least two matching terms, at least three meaningful query terms and two-thirds
+term coverage. Quoted terms and recognized numeric, identifier, negation, modal,
+currency and measurement constraints require their normalized tokens. These
+guards check token presence; they do not interpret logic or convert units.
+
+```python
+# With an already configured native KnowledgeClient:
+matches = client.search_evidence("account identity interpretation", match_mode="ranked")
+```
+
+Compact MCP `search_evidence` supports this option with `scope="documents"`;
+advanced MCP `search_document_evidence` and HTTP
+`GET /agent/api/document-evidence/search` accept the same `match_mode`. Source
+metadata endpoints keep their existing behavior. SDK and compact MCP calls
+reject ranked mode when source-metadata scope is selected.
+
+Every document match reports `match_type`, `matched_terms` and `unmatched_terms`.
+Responses distinguish `lexical_all_query_terms` from `lexical_ranked_partial_terms`
+and retain complete query diagnostics within the existing JSON byte budget.
+Read the cited passage before proposing meaning, especially when terms are
+unmatched. A result certifies neither an answer nor approval or current upstream
+truth; the last stored snapshot can remain available after a failed refresh.
+Missing text or a missing match cannot establish what the complete source says.
+Exact evidence pins are revalidated when cited in a proposal.
+
 Protocol 1.3 inventory observations can also support an existing target assertion
 through [exact manifest, entity and proof references](inventory-semantic-citations.md).
 The target reviewer approves the local interpretation; native metadata remains

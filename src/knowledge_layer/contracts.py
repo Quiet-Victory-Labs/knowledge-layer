@@ -566,19 +566,73 @@ def search_source_evidence(
     ], "total_matches": len(matches), "snapshot_id": snapshot.get("id")}
 
 
-def search_document_evidence(
-    store: Any, *, tenant_id: str, query: str, limit: int = 5,
-) -> dict[str, Any]:
-    """Search current connected documents and return portable evidence refs."""
-    if not isinstance(query, str) or not 2 <= len(query.strip()) <= 120 or not 1 <= limit <= 10:
-        raise ValueError("query must be 2-120 characters and limit must be 1-10")
-    words = set(normalize_name(query).split())
+def _document_query_terms(query: str) -> tuple[str, set[str], set[str]]:
+    # Strip complete leading conversational phrases, not modal/domain words
+    # elsewhere in the request. Quoted leading text is never a prefix.
+    request = re.sub(
+        r"^\s*(?:please\s+)?(?:tell\s+me\s+about|what\s+do\s+we\s+know\s+about|"
+        r"what\s+can\s+you\s+tell\s+me\s+about)\s+", "", query, flags=re.IGNORECASE,
+    ).strip()
+    normalized = normalize_name(request)
+    words = set(normalized.split())
     stop_words = {"a", "an", "the", "and", "or", "of", "for", "in", "to", "is", "are",
                   "what", "which", "how", "does"}
     words = words - stop_words or words
+    mandatory = set(normalized.split()) & {
+        "no", "not", "never", "without", "except", "exclude", "excluding", "cannot",
+        "can", "should", "must", "may", "could", "would", "shall",
+        "usd", "eur", "gbp", "cad", "aud", "nzd", "chf", "jpy", "cny", "inr",
+        "sek", "nok", "dkk", "dollar", "dollars", "euro", "euros",
+        "kg", "kilogram", "kilograms", "g", "gram", "grams", "lb", "lbs",
+        "km", "kilometer", "kilometers", "m", "meter", "meters", "cm", "mm",
+        "l", "ml", "liter", "liters", "pct", "percent", "percentage",
+        "s", "ms", "second", "seconds", "minute", "minutes", "hour", "hours",
+        "day", "days", "week", "weeks", "month", "months", "year", "years",
+    }
+    # Unknown unit/currency names following a numeric amount are constraints
+    # too. These are token-presence guards, not unit conversion or logical
+    # interpretation of the amount and its relationship to the passage.
+    for amount in re.finditer(
+        r"\b\d+(?:[.,]\d+)*\s+([A-Za-z][A-Za-z0-9_]*(?:[/.-][A-Za-z0-9_]+)*)", request,
+    ):
+        mandatory.update(normalize_name(amount[1]).split())
+    # Ranked fallback must retain every token in quoted spans. Apostrophes
+    # within words are contractions, not quote delimiters.
+    for opener, closer in (("\"", "\""), ("'", "'"), ("`", "`"), ("“", "”"), ("‘", "’")):
+        pattern = rf"(?<!\w){re.escape(opener)}(.+?){re.escape(closer)}(?!\w)"
+        for quoted in re.finditer(pattern, request):
+            mandatory.update(normalize_name(quoted[1]).split())
+    for contraction in re.finditer(r"\b\w+n['’]t\b", request, flags=re.IGNORECASE):
+        mandatory.update(normalize_name(contraction[0]).split())
+    for token in re.findall(r"[A-Za-z0-9_]+(?:[./:-][A-Za-z0-9_]+)*", request):
+        if (any(character.isdigit() for character in token)
+                or any(character in token for character in "_./:-")
+                or re.search(r"[a-z][A-Z]", token) or token.isupper()):
+            mandatory.update(normalize_name(token).split())
+    return normalized, words, mandatory
 
-    matches: list[tuple[tuple[int, str, str, int], dict[str, Any]]] = []
-    total_matches = 0
+
+def search_document_evidence(
+    store: Any, *, tenant_id: str, query: str, limit: int = 5, match_mode: str = "all",
+) -> dict[str, Any]:
+    """Search connected document evidence with optional lexical fallback.
+
+    Ranked mode falls back only when no full meaningful-term match exists.
+    Quoted spans and protected constraints require their normalized tokens;
+    this is not phrase interpretation, synonym resolution or semantic search.
+    Evidence matches do not establish approval, freshness or an answer.
+    """
+    if not isinstance(query, str) or not 2 <= len(query.strip()) <= 120 or not 1 <= limit <= 10:
+        raise ValueError("query must be 2-120 characters and limit must be 1-10")
+    if match_mode not in ("all", "ranked"):
+        raise ValueError("match_mode must be all or ranked")
+    normalized, words, mandatory = _document_query_terms(query)
+    if match_mode == "ranked":
+        words |= mandatory
+
+    matches: list[tuple[tuple[int, int, str, str, int], dict[str, Any]]] = []
+    partials: list[tuple[tuple[int, int, str, str, int], dict[str, Any]]] = []
+    full_count = partial_count = 0
     scanned = 0
     incomplete = 0
     unknown_coverage = 0
@@ -596,10 +650,20 @@ def search_document_evidence(
                 incomplete += 1
             elif details.get("extraction_complete") is None or details.get("retention_complete") is None:
                 unknown_coverage += 1
-            # A single generic token such as "identity" cannot answer "player identity".
-            if words and words.issubset(content_words):
-                score = len(words) + int(normalize_name(query) in content)
-                total_matches += 1
+            matched = words & content_words
+            full = bool(words) and words.issubset(content_words)
+            # One/two meaningful-term requests retain their all-term guard.
+            # A lone generic token cannot become an answer-shaped candidate.
+            partial = (match_mode == "ranked" and not full and not full_count
+                       and len(words) >= 3 and len(matched) >= 2
+                       and 3 * len(matched) >= 2 * len(words)
+                       and mandatory.issubset(content_words))
+            if full or partial:
+                if full:
+                    full_count += 1
+                    partials.clear()
+                else:
+                    partial_count += 1
                 match = {
                     "connection_id": source["connection_id"], "connection_name": source["connection_name"],
                     "asset_id": item.get("asset_id"), "source_pointer": item.get("source_pointer"),
@@ -610,16 +674,24 @@ def search_document_evidence(
                     "source_revision": details.get("source_revision"),
                     "extraction_complete": details.get("extraction_complete"),
                     "retention_complete": details.get("retention_complete"),
+                    "match_type": "full" if full else "partial",
+                    "matched_terms": sorted(matched), "unmatched_terms": sorted(words - content_words),
                     "evidence_ref": {"connection_id": source["connection_id"],
                                      "snapshot_id": source["snapshot_id"],
                                      "evidence_id": item["id"]},
                 }
-                key = (-score, source["connection_id"], str(item["id"]), total_matches)
-                insort(matches, (key, match))
-                if len(matches) > limit:
-                    matches.pop()
-    return {"query": query, "matches": [match for _, match in matches],
-            "total_matches": total_matches, "search_mode": "lexical_all_query_terms",
+                key = (-len(matched), -int(normalized in content), source["connection_id"],
+                       str(item["id"]), full_count + partial_count)
+                selected = matches if full else partials
+                insort(selected, (key, match))
+                if len(selected) > limit:
+                    selected.pop()
+    partial_fallback = bool(partials) and not full_count
+    selected = matches if full_count else partials
+    return {"query": query, "matches": [match for _, match in selected],
+            "total_matches": full_count if full_count else partial_count,
+            "match_mode": match_mode,
+            "search_mode": "lexical_ranked_partial_terms" if partial_fallback else "lexical_all_query_terms",
             "query_terms": sorted(words), "document_evidence_scanned": scanned,
             "incomplete_text_evidence": incomplete, "unknown_text_coverage_evidence": unknown_coverage,
             "search_scope": "Current authorized projected headings and explicitly retained source passages. "
