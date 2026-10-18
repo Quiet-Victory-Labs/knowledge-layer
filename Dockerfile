@@ -1,4 +1,4 @@
-FROM node:26.10.0-alpine@sha256:0b36e8c136b94cd4fcf02188228e76c31ad5872eef3fec8cbd2eee500cfd9e80 AS web-build
+FROM node:26.12.0-alpine@sha256:6f08a523443ddedf52941874c203475b0ad503e859ad70cb26ab8be9a517dbd5 AS web-build
 WORKDIR /web
 RUN npm install --global npm@12.2.0
 COPY web/package.json web/package-lock.json ./
